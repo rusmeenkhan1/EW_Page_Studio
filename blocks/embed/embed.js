@@ -60,11 +60,10 @@ const loadEmbed = async (block, link, autoplay) => {
   if (config) {
     const embedHtml = config.embed(url, autoplay);
     block.innerHTML = window.DOMPurify.sanitize(embedHtml, EMBED_DOMPURIFY);
-    block.classList = `block embed embed-${config.match[0]}`;
+    block.classList.add(`embed-${config.match[0]}`); // the author's variants stay
   } else {
     const defaultHtml = getDefaultEmbed(url);
     block.innerHTML = window.DOMPurify.sanitize(defaultHtml, EMBED_DOMPURIFY);
-    block.classList = 'block embed';
   }
   block.classList.add('embed-is-loaded');
 };

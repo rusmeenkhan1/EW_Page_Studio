@@ -27,19 +27,31 @@ against this repository's own blocks. `tests/` is in `.hlxignore`: none of it is
   variant of the main blocks), `/page-studio/buttons`, `/page-studio/sections`, `/page-studio/empty` (empty lines to add
   things), `/fragments/sample` (for the Fragment block), `/nav`, `/footer`.
 
-The variants are the site's own: the `==== variants ====` part of `blocks/{cards,columns,hero,quote,accordion,tabs,carousel}/*.css`.
+The variants are the site's own: the `==== variants ====` part of each block's CSS (`blocks/<block>/<block>.css`, its
+tokens in `<block>-tokens.css`).
 
 | Block | Variants |
 |---|---|
 | Cards | `two-up`, `three-up`, `four-up`; `borderless`, `overlay`, `horizontal`; `shadow`, `rounded` |
+| Card Carousel | `two-up`, `three-up`, `four-up` (cards in view); `borderless`, `overlay`; `shadow`, `rounded` |
 | Columns | `boxed`, `divided`; `image-wide`, `text-wide`; `align-top`, `align-bottom` |
 | Hero | `centered`, `split` (+ `image-left`); `short`, `tall`; `dark-overlay` |
 | Quote | `large`, `boxed`, `bordered` |
 | Accordion | `flush`; `compact`, `plus` |
 | Tabs | `pills`, `underline`, `vertical` |
 | Carousel | `light`, `content-below`; `compact` |
+| Table | `striped`, `bordered`, `no-header` (the boilerplate's); `compact`, `first-column`, `centered`; `header-dark` |
+| Video, Embed | `small`, `wide`; `rounded`, `shadow` (Video also `autoplay`) |
+| Search | `minimal` (the boilerplate's); `large`, `rounded`; `list` |
+| Section title | `underline`, `bordered`, `divider`; `subtitle-above`, `uppercase` (size, alignment and colour are its `key \| value` properties) |
+| Fragment | `boxed`, `bordered`; `narrow` |
 
-Any block also takes the site's utility classes: `center` / `left` / `right`, `center-mobile`, `center-desktop`,
+Two blocks needed code for their variants to survive: Embed kept only `embed embed-<kind>` once loaded (it now adds to
+the classes), and a Fragment is replaced by its content, so `fragment.js` gives that content the variants as
+`fragment-<variant>` (on the fragment's sections, or on its wrappers when it shares a section). For the same reason the
+utility classes below don't apply to a Fragment.
+
+Any other block also takes the site's utility classes: `center` / `left` / `right`, `center-mobile`, `center-desktop`,
 `left-desktop`, `right-desktop`, `brand-primary`, `brand-secondary`, `hide-mobile`, `hide-desktop`.
 
 ## Changing it

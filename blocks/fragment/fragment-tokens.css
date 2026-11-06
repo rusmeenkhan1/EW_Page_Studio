@@ -1,4 +1,10 @@
 /* fragment design tokens (structural; no visual customization) */
 :root { /* @boilerplate */
   /* Reserved for future fragment-specific tokens */
+
+  /* variants (Page Studio test site) */
+  --fragment-box-background: var(--light-color);
+  --fragment-box-padding: var(--spacing-xl);
+  --fragment-accent-border: 4px solid var(--link-color);
+  --fragment-narrow-max-width: 800px;
 }

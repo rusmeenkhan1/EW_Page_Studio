@@ -3,4 +3,9 @@
   --table-header-border-width: 2px; /* @boilerplate */
   --table-row-border-width: var(--border-width-s); /* @boilerplate */
   --table-cell-padding: 0.5em; /* @boilerplate */
+
+  /* variants (Page Studio test site) */
+  --table-compact-cell-padding: 0.25em 0.5em;
+  --table-dark-header-background: var(--dark-color);
+  --table-dark-header-color: var(--background-color);
 }

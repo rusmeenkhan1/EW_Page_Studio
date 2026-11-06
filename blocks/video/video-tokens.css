@@ -8,4 +8,9 @@
   --video-placeholder-play-triangle-height: 24px; /* @boilerplate */
   --video-placeholder-play-triangle-width: 18px; /* @boilerplate */
   --video-placeholder-play-left-offset: 2px; /* @boilerplate */
+
+  /* variants (Page Studio test site) */
+  --video-small-max-width: 560px;
+  --video-radius: 8px;
+  --video-shadow: 0 4px 16px rgb(19 19 19 / 25%);
 }

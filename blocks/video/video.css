@@ -71,3 +71,25 @@
   left: calc(50% + var(--video-placeholder-play-left-offset)); /* @boilerplate */
   transform: translate(-50%, -50%); /* @boilerplate */
 }
+
+/* ==== variants ==== */
+
+/* size: small, wide (the full content width) */
+.video.small {
+  max-width: var(--video-small-max-width);
+}
+
+.video.wide {
+  max-width: none;
+}
+
+/* options: rounded corners, shadow */
+.video.rounded > div,
+.video.rounded .video-placeholder {
+  border-radius: var(--video-radius);
+  overflow: hidden;
+}
+
+.video.shadow > div {
+  box-shadow: var(--video-shadow);
+}

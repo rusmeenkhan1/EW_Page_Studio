@@ -128,3 +128,60 @@
     right: var(--card-carousel-nav-inset-desktop); /* @boilerplate */
   }
 }
+
+/* ==== variants ==== */
+
+/* cards in view from 900px: two, three or four (a slide is never narrower than its minimum) */
+@media (width >= 900px) {
+  .card-carousel.two-up .card-carousel-slides-container > ul.card-carousel-slides {
+    grid-auto-columns: calc((100% - var(--card-carousel-gap)) / 2);
+  }
+
+  .card-carousel.three-up .card-carousel-slides-container > ul.card-carousel-slides {
+    grid-auto-columns: calc((100% - 2 * var(--card-carousel-gap)) / 3);
+  }
+
+  .card-carousel.four-up .card-carousel-slides-container > ul.card-carousel-slides {
+    grid-auto-columns: calc((100% - 3 * var(--card-carousel-gap)) / 4);
+  }
+}
+
+/* card style: borderless, overlay (text on the image) */
+.card-carousel.borderless .card-carousel-slide {
+  border: 0;
+  background-color: transparent;
+}
+
+.card-carousel.borderless .cards-card-body {
+  margin: var(--card-carousel-card-body-margin) 0;
+}
+
+.card-carousel.overlay .card-carousel-slide {
+  position: relative;
+  overflow: hidden;
+  border: 0;
+}
+
+.card-carousel.overlay .cards-card-body {
+  position: absolute;
+  inset: auto 0 0;
+  margin: 0;
+  padding: var(--spacing-xl) var(--spacing-m) var(--spacing-s);
+  background: var(--card-carousel-overlay-background);
+  color: var(--background-color);
+}
+
+/* options: shadow, rounded corners */
+.card-carousel.shadow .card-carousel-slides-container > ul.card-carousel-slides {
+  padding: var(--spacing-xs);
+}
+
+.card-carousel.shadow .card-carousel-slide {
+  border-color: transparent;
+  box-shadow: var(--card-carousel-shadow);
+}
+
+.card-carousel.rounded .card-carousel-slide {
+  border-radius: var(--card-carousel-radius);
+  overflow: hidden;
+}

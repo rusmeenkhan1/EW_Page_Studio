@@ -67,3 +67,26 @@
 .table.block.bordered table td { /* @boilerplate */
   border: var(--table-row-border-width) solid; /* @boilerplate */
 }
+
+/* ==== variants ==== */
+
+/* options: compact rows, a bold first column, centred cells */
+.table.block.compact table th,
+.table.block.compact table td {
+  padding: var(--table-compact-cell-padding);
+}
+
+.table.block.first-column table td:first-child {
+  font-weight: 700;
+}
+
+.table.block.centered table th,
+.table.block.centered table td {
+  text-align: center;
+}
+
+/* header style: dark */
+.table.block.header-dark table thead tr {
+  background-color: var(--table-dark-header-background);
+  color: var(--table-dark-header-color);
+}

@@ -1,4 +1,5 @@
 /* Section title: scoped to main; sizes use global heading tokens; text colors use :root palette tokens */
+@import url('./section-title-tokens.css');
 
 main .section-title { /* @boilerplate */
   margin: 0; /* @boilerplate */
@@ -95,3 +96,45 @@ main .section-title .icon img { /* @boilerplate */
 main .section-title.center { text-align: center; } /* @boilerplate */
 main .section-title.right { text-align: right; } /* @boilerplate */
 main .section-title.left { text-align: left; } /* @boilerplate */
+
+/* ==== variants ==== */
+
+/* style: underline (a short bar under the title), bordered (a line on its left), divider (a rule under it all) */
+main .section-title.underline .title::after {
+  content: '';
+  display: block;
+  width: var(--section-title-underline-width);
+  height: var(--section-title-line-thickness);
+  margin-top: var(--spacing-s);
+  background-color: var(--section-title-accent-color);
+}
+
+main .section-title.underline.center .title::after {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+main .section-title.underline.right .title::after {
+  margin-left: auto;
+}
+
+main .section-title.bordered {
+  border-left: var(--section-title-line-thickness) solid var(--section-title-accent-color);
+  padding-left: var(--spacing-m);
+}
+
+main .section-title.divider {
+  border-bottom: var(--section-title-divider);
+  padding-bottom: var(--spacing-s);
+}
+
+/* options: the subtitle above the title (an eyebrow), the subtitle in capitals */
+main .section-title.subtitle-above {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+main .section-title.uppercase .subtitle {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}

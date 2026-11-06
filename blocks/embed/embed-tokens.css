@@ -8,4 +8,9 @@
   --embed-placeholder-play-border-radius: 20px; /* @boilerplate */
   --embed-placeholder-play-triangle-width: 6px; /* @boilerplate */
   --embed-placeholder-play-triangle-height: 10px; /* @boilerplate */
+
+  /* variants (Page Studio test site) */
+  --embed-small-max-width: 560px;
+  --embed-radius: 8px;
+  --embed-shadow: 0 4px 16px rgb(19 19 19 / 25%);
 }

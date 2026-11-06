@@ -21,4 +21,9 @@
   --card-carousel-nav-arrow-thickness: 2px; /* @boilerplate */
   --card-carousel-nav-arrow-offset: 2px; /* @boilerplate */
   --card-carousel-transition-duration: var(--transition-duration); /* @boilerplate */
+
+  /* variants (Page Studio test site) */
+  --card-carousel-radius: 8px;
+  --card-carousel-shadow: 0 2px 12px rgb(19 19 19 / 15%);
+  --card-carousel-overlay-background: linear-gradient(to top, rgb(19 19 19 / 85%), rgb(19 19 19 / 0%) 70%);
 }

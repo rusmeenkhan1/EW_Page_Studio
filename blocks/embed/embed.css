@@ -62,3 +62,25 @@
   top: 4px; /* @boilerplate */
   left: 7px; /* @boilerplate */
 }
+
+/* ==== variants ==== */
+
+/* size: small, wide (the full content width) */
+.embed.small {
+  max-width: var(--embed-small-max-width);
+}
+
+.embed.wide {
+  max-width: none;
+}
+
+/* options: rounded corners, shadow */
+.embed.rounded > div,
+.embed.rounded .embed-placeholder {
+  border-radius: var(--embed-radius);
+  overflow: hidden;
+}
+
+.embed.shadow > div {
+  box-shadow: var(--embed-shadow);
+}

@@ -9,4 +9,9 @@
   --search-minimal-indent: 34px; /* @boilerplate */
   --search-minimal-thumbnail-size: 24px; /* @boilerplate */
   --search-transition-duration: var(--transition-duration); /* @boilerplate */
+
+  /* variants (Page Studio test site) */
+  --search-large-font-size: var(--body-font-size-m);
+  --search-rounded-radius: 999px;
+  --search-list-image-width: 160px;
 }

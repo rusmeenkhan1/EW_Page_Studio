@@ -71,8 +71,8 @@
   ]
  },
  "options": {
-  "total": 40,
-  "limit": 40,
+  "total": 53,
+  "limit": 53,
   "offset": 0,
   "data": [
    {
@@ -140,7 +140,7 @@
    },
    {
     "key": "visibility",
-    "blocks": "accordion, cards, card-carousel, carousel, columns, embed, fragment, hero, quote, search, section-title, table, tabs, video",
+    "blocks": "accordion, cards, card-carousel, carousel, columns, embed, hero, quote, search, section-title, table, tabs, video",
     "values": "Hide on mobile=hide-mobile | Hide on desktop=hide-desktop",
     "type": "variants",
     "label": "Visibility",
@@ -317,6 +317,123 @@
     "label": "Slide text",
     "when": "",
     "description": "light=A light box on the image. | content-below=The text under the image, not on it."
+   },
+   {
+    "key": "layout",
+    "blocks": "card-carousel",
+    "values": "Two in view=two-up | Three in view=three-up | Four in view=four-up",
+    "type": "variant",
+    "label": "Cards in view",
+    "when": "",
+    "description": "From 900px wide. | Default: as many as fit."
+   },
+   {
+    "key": "card-style",
+    "blocks": "card-carousel",
+    "values": "Borderless=borderless | Text on image=overlay",
+    "type": "variant",
+    "label": "Card style",
+    "when": "",
+    "description": "borderless=No border or background. | overlay=The text sits on the image, on a dark fade."
+   },
+   {
+    "key": "card-options",
+    "blocks": "card-carousel",
+    "values": "Shadow=shadow | Rounded corners=rounded",
+    "type": "variants",
+    "label": "Card options",
+    "when": "",
+    "description": ""
+   },
+   {
+    "key": "table-options",
+    "blocks": "table",
+    "values": "Compact rows=compact | Bold first column=first-column | Centred cells=centered",
+    "type": "variants",
+    "label": "Table options",
+    "when": "",
+    "description": ""
+   },
+   {
+    "key": "header-style",
+    "blocks": "table",
+    "values": "Dark header=header-dark",
+    "type": "variant",
+    "label": "Header style",
+    "when": "",
+    "description": "header-dark=White text on a dark header row."
+   },
+   {
+    "key": "size",
+    "blocks": "video, embed",
+    "values": "Small=small | Wide=wide",
+    "type": "variant",
+    "label": "Size",
+    "when": "",
+    "description": "small=At most 560px wide. | wide=The full content width. | Default: at most 900px (video) or 800px (embed)."
+   },
+   {
+    "key": "frame",
+    "blocks": "video, embed",
+    "values": "Rounded corners=rounded | Shadow=shadow",
+    "type": "variants",
+    "label": "Frame",
+    "when": "",
+    "description": ""
+   },
+   {
+    "key": "search-box",
+    "blocks": "search",
+    "values": "Large=large | Rounded=rounded",
+    "type": "variants",
+    "label": "Search box",
+    "when": "",
+    "description": "large=A bigger field and text. | rounded=A pill-shaped field."
+   },
+   {
+    "key": "results",
+    "blocks": "search",
+    "values": "List=list",
+    "type": "variant",
+    "label": "Results",
+    "when": "",
+    "description": "list=One result per row, its image beside the text."
+   },
+   {
+    "key": "title-style",
+    "blocks": "section-title",
+    "values": "Underline=underline | Line on the left=bordered | Divider below=divider",
+    "type": "variant",
+    "label": "Title style",
+    "when": "",
+    "description": "underline=A short coloured bar under the title. | bordered=A coloured line on the left. | divider=A thin rule under the title and subtitle."
+   },
+   {
+    "key": "subtitle-style",
+    "blocks": "section-title",
+    "values": "Subtitle above=subtitle-above | Capitals=uppercase",
+    "type": "variants",
+    "label": "Subtitle",
+    "when": "",
+    "description": "subtitle-above=The subtitle above the title, as an eyebrow. | uppercase=The subtitle in capitals."
+   },
+   {
+    "key": "fragment-style",
+    "blocks": "fragment",
+    "values": "Boxed=boxed | Line on the left=bordered",
+    "type": "variant",
+    "label": "Fragment style",
+    "when": "",
+    "description": "boxed=The fragment on a light panel. | bordered=A coloured line on its left."
+   },
+   {
+    "key": "width",
+    "blocks": "fragment",
+    "values": "Narrow=narrow",
+    "type": "variants",
+    "label": "Width",
+    "when": "",
+    "description": "narrow=At most 800px wide, centred."
    },
    {
     "key": "slide-height",

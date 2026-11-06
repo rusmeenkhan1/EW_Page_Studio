@@ -1,0 +1,8 @@
+/* section-title design tokens */
+:root {
+  /* variants (Page Studio test site) */
+  --section-title-accent-color: var(--link-color);
+  --section-title-underline-width: 64px;
+  --section-title-line-thickness: 4px;
+  --section-title-divider: var(--border-width-s) solid var(--dark-color);
+}

@@ -17,3 +17,32 @@
 .fragment.block { /* @boilerplate */
   display: none; /* @boilerplate */
 }
+
+/* ==== variants ==== */
+
+/*
+ * The block is replaced by the fragment's content: its variants go to that content as
+ * fragment-<variant> (fragment.js): on the fragment's sections, or on its wrappers when the
+ * fragment shares a section with other content.
+ */
+main > .section.fragment-boxed,
+main > .section > div.fragment-boxed {
+  box-sizing: border-box;
+  padding: var(--fragment-box-padding);
+  background-color: var(--fragment-box-background);
+}
+
+main > .section.fragment-bordered,
+main > .section > div.fragment-bordered {
+  box-sizing: border-box;
+  border-left: var(--fragment-accent-border);
+  padding-left: var(--fragment-box-padding);
+}
+
+/* (as specific as the section's own `main > .section > div:not(.bg-image)`, and later) */
+main > .section.fragment-narrow,
+main > .section > div.fragment-narrow {
+  max-width: var(--fragment-narrow-max-width);
+  margin-left: auto;
+  margin-right: auto;
+}

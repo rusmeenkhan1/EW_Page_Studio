@@ -87,5 +87,16 @@ export default async function decorate(block) {
   if (!fragment) return;
 
   const wrapper = block.closest('.fragment-wrapper');
-  replaceWithFragment(wrapper, wrapper.closest('.section'), fragment);
+  const section = wrapper.closest('.section');
+  // the block's variants (`Fragment (boxed)`) style what replaces it, as `fragment-boxed`: the
+  // fragment's sections when they replace this section, else the wrappers moved into it
+  const variants = [...block.classList].filter((c) => !['fragment', 'block'].includes(c))
+    .map((c) => `fragment-${c}`);
+  if (variants.length) {
+    const alone = section?.children.length === 1;
+    fragment.querySelectorAll(':scope > .section').forEach((fragSection) => {
+      (alone ? [fragSection] : [...fragSection.children]).forEach((el) => el.classList.add(...variants));
+    });
+  }
+  replaceWithFragment(wrapper, section, fragment);
 }

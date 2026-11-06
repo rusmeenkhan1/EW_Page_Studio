@@ -137,3 +137,33 @@
   width: var(--search-minimal-thumbnail-size); /* @boilerplate */
   border-radius: 50%; /* @boilerplate */
 }
+
+/* ==== variants ==== */
+
+/* search box: large, rounded */
+.search.large .search-box input {
+  padding: 0.75em 1em;
+  font-size: var(--search-large-font-size);
+}
+
+.search.rounded .search-box input {
+  border-radius: var(--search-rounded-radius);
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+/* results: list (one per row, the image beside the text, from 600px) */
+.search.list ul.search-results {
+  grid-template-columns: 1fr;
+}
+
+@media (width >= 600px) {
+  .search.list ul.search-results > li > a {
+    display: flex;
+    gap: var(--search-results-gap);
+  }
+
+  .search.list ul.search-results > li .search-result-image {
+    flex: 0 0 var(--search-list-image-width);
+  }
+}
