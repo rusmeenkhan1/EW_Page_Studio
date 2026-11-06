@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Page Studio</title>
+  <link rel="stylesheet" href="/tools/page-studio/shared/ui.css">
+  <link rel="stylesheet" href="/tools/page-studio/page-studio.css">
+  <script type="module" src="/tools/page-studio/page-studio.js"></script>
+</head>
+<body>
+  <!-- One panel for buttons, blocks and sections: the three panels run in the frames below,
+       sharing this page's DA connection; the view follows what the cursor is on. -->
+  <main class="ss-plugin sb-shell">
+    <header class="sb-head">
+      <div class="ss-plugin-title-row">
+        <h1 id="sb-title"><svg class="ss-plugin-icon" width="20" height="20" aria-hidden="true" focusable="false"><use href="/tools/page-studio/page-studio.svg#icon"></use></svg>Page Studio</h1>
+        <button type="button" class="sb-back" hidden>All choices</button>
+      </div>
+      <!-- where the cursor is: Page › Section › Block › Button (built by style-builder.js) -->
+      <nav class="sb-path" aria-label="Where the cursor is"
+        data-page="Page" data-section="Section {n}" data-section-any="Section"
+        data-button="Button: {label}" data-button-any="Button">
+        <ol></ol>
+      </nav>
+      <!-- with the cursor in a block: that section's settings (the Section view's words) -->
+      <p class="sb-context" hidden data-has="{section}: {settings}" data-none="{section} has no settings."></p>
+    </header>
+
+    <section class="sb-home" aria-labelledby="sb-home-title">
+      <!-- after an add: what was added; cleared when another view shows -->
+      <p class="ss-plugin-message sb-home-message" role="status" data-tone="success"
+        data-added-block="✓ Block added. Click an empty line to add something else."
+        data-added-button="✓ Button added. Click an empty line to add something else."
+        data-added-section="✓ Section settings added. Click an empty line to add something else."></p>
+      <h2 id="sb-home-title">Add here</h2>
+      <p class="ss-plugin-lead">Click an empty line in the page, then choose what to add there.</p>
+      <div class="sb-choices">
+        <button type="button" class="sb-choice" data-view="block">
+          <span class="sb-choice-title">Block</span>
+          <span class="sb-choice-text">Cards, hero, columns, quote, table and more.</span>
+        </button>
+        <button type="button" class="sb-choice" data-view="button">
+          <span class="sb-choice-title">Button</span>
+          <span class="sb-choice-text">A call-to-action button or a text link.</span>
+        </button>
+        <button type="button" class="sb-choice" data-view="section">
+          <span class="sb-choice-title">Section settings</span>
+          <span class="sb-choice-text">Background, layout and spacing of this section.</span>
+        </button>
+      </div>
+      <h2 class="sb-change-title">Change what is on the page</h2>
+      <ul class="sb-hints">
+        <li>Click in a block to style it.</li>
+        <li>Highlight any part of a button's text to change the button.</li>
+        <li>Highlight a value in a section's settings table to change its settings.</li>
+      </ul>
+      <p class="ss-plugin-status" role="status"
+        data-standalone="Open Page Studio from the Experience Workspace editor to style the page."></p>
+    </section>
+
+    <!-- loaded once this page's DA connection is ready (style-builder.js), so each panel uses it -->
+    <div class="sb-views">
+      <iframe class="sb-view" data-view="block" title="Block" data-src="/tools/page-studio/views/block/block.html" hidden></iframe>
+      <iframe class="sb-view" data-view="button" title="Button" data-src="/tools/page-studio/views/button/button.html" hidden></iframe>
+      <iframe class="sb-view" data-view="section" title="Section settings" data-src="/tools/page-studio/views/section/section.html" hidden></iframe>
+    </div>
+  </main>
+</body>
+</html>

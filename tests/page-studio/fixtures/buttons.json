@@ -1,0 +1,20 @@
+{
+  "presets": {
+    "total": 3,
+    "data": [
+      { "name": "Primary button", "style": "primary", "color": "", "text-color": "", "label": "Learn more", "description": "The main call to action.", "options": "" },
+      { "name": "Orange secondary", "style": "secondary", "color": "#e87722", "text-color": "", "label": "Donate", "description": "A secondary button in orange.", "options": "" },
+      { "name": "Download", "style": "primary", "color": "", "text-color": "", "label": "Download PDF", "description": "With a download icon.", "options": "icon=\"download\"" }
+    ]
+  },
+  "options": {
+    "total": 3,
+    "data": [
+      { "key": "color", "values": "Brand blue=#0373f3 | Orange=#e87722 | Lime=#cfff05" },
+      { "key": "text-color", "values": "White=#ffffff | Black=#000000" },
+      { "key": "icon", "values": "Download=download | star" }
+    ]
+  },
+  ":names": ["presets", "options"],
+  ":type": "multi-sheet"
+}

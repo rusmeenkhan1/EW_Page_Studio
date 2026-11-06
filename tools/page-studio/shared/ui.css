@@ -1,0 +1,1028 @@
+/*
+ * the Section view panel (DA library), styled like the Buttons panel
+ * (Adobe Spectrum 2 look) so it sits naturally inside the DA editor. The Block view
+ * panel links this file too: the tokens, the section cards, fields, messages and the
+ * action bar are shared; each view's CSS adds its own parts.
+ */
+.ss-plugin {
+  /* colour */
+  --ss-gray-25: #fff;
+  --ss-gray-50: #fafafa;
+  --ss-gray-75: #f3f3f3;
+  --ss-gray-100: #ebebeb;
+  --ss-gray-200: #e1e1e1;
+  --ss-gray-300: #cacaca;
+  --ss-gray-700: #505050;
+  --ss-gray-900: #131313;
+  --ss-accent: #3b63fb;
+  --ss-accent-hover: #274dea;
+  --ss-accent-soft: #eef2ff;
+  --ss-success: #0b6b4b;
+  --ss-success-bg: #e6f6ee;
+  --ss-warning: #8a4b00;
+  --ss-warning-bg: #fff4e0;
+  --ss-error: #b0141d;
+  --ss-error-bg: #fdeceb;
+  --ss-info-bg: #eaf0ff;
+
+  /* type, shape, depth */
+  --ss-font: "Adobe Clean", adobe-clean, "Source Sans Pro", -apple-system, "Segoe UI", roboto, sans-serif;
+  --ss-text-s: 12px;
+  --ss-text-m: 13px;
+  --ss-text-l: 14px;
+  --ss-radius-field: 8px;
+  --ss-radius-card: 12px;
+  --ss-radius-pill: 999px;
+  --ss-shadow-card: 0 0 0 1px var(--ss-gray-200), 0 1px 2px rgb(0 0 0 / 5%);
+  --ss-gap: 12px;
+
+  box-sizing: border-box;
+  min-height: 100vh;
+  margin: 0;
+  padding: 16px 16px 0;
+  background-color: var(--ss-gray-75);
+  color: var(--ss-gray-900);
+  font-family: var(--ss-font);
+  font-size: var(--ss-text-l);
+  line-height: 1.5;
+  accent-color: var(--ss-accent);
+}
+
+body:has(.ss-plugin) {
+  margin: 0;
+}
+
+/* set, not inherited: a <details> card's content sits in the browser's own slot, which
+   would hand its children `content-box` */
+.ss-plugin *,
+.ss-plugin *::before,
+.ss-plugin *::after {
+  box-sizing: border-box;
+}
+
+.ss-plugin h1,
+.ss-plugin h2,
+.ss-plugin p {
+  margin: 0;
+}
+
+.ss-plugin h1 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+  line-height: 1.3;
+}
+
+/* the panel's icon by its name (block-builder.svg, section-builder.svg): a tinted tile, the
+   shape the panel works on (the picked block or section) in the accent */
+.ss-plugin .ss-plugin-icon {
+  --builder-icon-pick: var(--ss-accent);
+
+  flex: none;
+  box-sizing: content-box;
+  padding: 6px;
+  border-radius: var(--ss-radius-field);
+  background-color: var(--ss-accent-soft);
+  color: var(--ss-gray-900);
+}
+
+.ss-plugin h2 {
+  font-size: var(--ss-text-l);
+  line-height: 1.3;
+}
+
+.ss-plugin [hidden] {
+  display: none;
+}
+
+.ss-plugin :focus-visible {
+  outline: 2px solid var(--ss-accent);
+  outline-offset: 2px;
+}
+
+/* for a name that a section's title already says (one-field sections): read, not shown */
+.ss-plugin .ss-plugin-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ---- header ------------------------------------------------------------- */
+
+/* inside Page Studio its header names the panel: the panel's own name is read, not shown */
+.sb-embedded .ss-plugin .ss-plugin-intro h1 {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.ss-plugin .ss-plugin-intro {
+  margin-bottom: 12px;
+}
+
+.ss-plugin .ss-plugin-lead {
+  margin-top: 2px;
+  color: var(--ss-gray-700);
+  font-size: var(--ss-text-m);
+}
+
+/* the title and what the panel is doing (both panels) */
+.ss-plugin .ss-plugin-title-row,
+.ss-plugin .bs-title-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px 8px;
+}
+
+/* a pill with a dot: blue while adding, amber while trying what the panel just put in the
+   page (Keep / Remove), green while editing what is there */
+.ss-plugin .ss-plugin-mode {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: var(--ss-radius-pill);
+  padding: 2px 10px;
+  background-color: var(--ss-accent-soft);
+  color: var(--ss-accent-hover);
+  font-size: var(--ss-text-s);
+  font-weight: 700;
+}
+
+.ss-plugin .ss-plugin-mode::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: currentcolor;
+}
+
+.ss-plugin .ss-plugin-mode[data-mode="trial"] {
+  background-color: var(--ss-warning-bg);
+  color: var(--ss-warning);
+}
+
+.ss-plugin .ss-plugin-mode[data-mode="edit"] {
+  background-color: var(--ss-success-bg);
+  color: var(--ss-success);
+}
+
+.ss-plugin .ss-plugin-mode[hidden] {
+  display: none;
+}
+
+/* Keep / Remove (a trial in the page), Remove these settings (both panels) */
+.ss-plugin .ss-plugin-trial {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.ss-plugin .ss-plugin-trial[hidden] {
+  display: none;
+}
+
+.ss-plugin .ss-plugin-keep,
+.ss-plugin .ss-plugin-remove {
+  min-height: 32px;
+  border-radius: var(--ss-radius-pill);
+  padding: 0 16px;
+  font: inherit;
+  font-size: var(--ss-text-m);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.ss-plugin .ss-plugin-keep {
+  border: 0;
+  background-color: var(--ss-accent);
+  color: #fff;
+}
+
+.ss-plugin .ss-plugin-keep:hover {
+  background-color: var(--ss-accent-hover);
+}
+
+.ss-plugin .ss-plugin-remove {
+  border: 1px solid var(--ss-gray-300);
+  background-color: var(--ss-gray-25);
+  color: var(--ss-gray-900);
+}
+
+.ss-plugin .ss-plugin-remove:hover {
+  border-color: var(--ss-gray-700);
+}
+
+.ss-plugin .ss-plugin-remove-settings {
+  margin-top: 10px;
+}
+
+.ss-plugin .ss-plugin-remove[hidden] {
+  display: none;
+}
+
+/* the three steps, in one line */
+.ss-plugin .ss-plugin-steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  margin: 10px 0 0;
+  padding: 0;
+  color: var(--ss-gray-700);
+  font-size: var(--ss-text-m);
+  list-style: none;
+  counter-reset: ss-step;
+}
+
+.ss-plugin .ss-plugin-steps li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  counter-increment: ss-step;
+}
+
+.ss-plugin .ss-plugin-steps li::before {
+  content: counter(ss-step);
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: var(--ss-gray-900);
+  color: var(--ss-gray-25);
+  font-size: var(--ss-text-s);
+  font-weight: 700;
+}
+
+.ss-plugin .ss-plugin-status {
+  margin-top: 12px;
+  border-radius: var(--ss-radius-card);
+  padding: 12px 16px;
+  background-color: var(--ss-gray-25);
+  box-shadow: var(--ss-shadow-card);
+  color: var(--ss-gray-700);
+}
+
+.ss-plugin .ss-plugin-status:empty {
+  display: none;
+}
+
+/* one column that never grows past the panel */
+.ss-plugin .ss-plugin-form,
+.ss-plugin .ss-plugin-fields {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--ss-gap);
+}
+
+/* `display: grid` would otherwise beat `[hidden]` (the form waits for the sheet) */
+.ss-plugin .ss-plugin-form[hidden] {
+  display: none;
+}
+
+/* ---- section cards: a title, what is picked, and the fields (collapsible) ---- */
+
+.ss-plugin .ss-plugin-section,
+.ss-plugin details.ss-plugin-more {
+  margin: 0;
+  border-radius: var(--ss-radius-card);
+  padding: 0;
+  background-color: var(--ss-gray-25);
+  box-shadow: var(--ss-shadow-card);
+  min-width: 0;
+}
+
+.ss-plugin .ss-plugin-section[hidden],
+.ss-plugin details.ss-plugin-more[hidden] {
+  display: none;
+}
+
+.ss-plugin .ss-plugin-section > summary,
+.ss-plugin details.ss-plugin-more > summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 48px;
+  border-radius: var(--ss-radius-card);
+  padding: 0 16px;
+  font-weight: 700;
+  list-style: none;
+  cursor: pointer;
+}
+
+.ss-plugin .ss-plugin-section > summary::-webkit-details-marker,
+.ss-plugin details.ss-plugin-more > summary::-webkit-details-marker {
+  display: none;
+}
+
+.ss-plugin .ss-plugin-section > summary:hover,
+.ss-plugin details.ss-plugin-more > summary:hover {
+  background-color: var(--ss-gray-50);
+}
+
+/* a chevron: right when closed, down when open */
+.ss-plugin .ss-plugin-section > summary::after,
+.ss-plugin details.ss-plugin-more > summary::after {
+  content: "";
+  flex: none;
+  width: 7px;
+  height: 7px;
+  margin: 0 2px 0 auto;
+  border-right: 2px solid var(--ss-gray-700);
+  border-bottom: 2px solid var(--ss-gray-700);
+  transform: rotate(-45deg);
+}
+
+.ss-plugin .ss-plugin-section[open] > summary::after,
+.ss-plugin details.ss-plugin-more[open] > summary::after {
+  transform: translateY(-2px) rotate(45deg);
+}
+
+.ss-plugin .ss-plugin-section-title {
+  flex: none;
+}
+
+/* what the section's fields are set to, so a closed section still says it */
+.ss-plugin .ss-plugin-section-sum {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--ss-gray-700);
+  font-size: var(--ss-text-m);
+  font-weight: 400;
+  text-align: right;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ss-plugin .ss-plugin-section-body,
+.ss-plugin .ss-plugin-more-fields {
+  display: grid;
+  gap: 16px;
+  padding: 4px 16px 16px;
+}
+
+/* ---- fields ------------------------------------------------------------- */
+
+/* a field on its own (outside a section) is a card; inside a section it is plain */
+.ss-plugin .ss-plugin-field {
+  margin: 0;
+  border: 0;
+  border-radius: var(--ss-radius-card);
+  padding: 16px;
+  background-color: var(--ss-gray-25);
+  box-shadow: var(--ss-shadow-card);
+  min-width: 0;
+}
+
+.ss-plugin :is(.ss-plugin-section, .ss-plugin-more) .ss-plugin-field {
+  border-radius: 0;
+  padding: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.ss-plugin .ss-plugin-field[hidden] {
+  display: none;
+}
+
+.ss-plugin .ss-plugin-label {
+  display: block;
+  margin-bottom: 6px;
+  padding: 0;
+  font-size: var(--ss-text-m);
+  font-weight: 700;
+}
+
+.ss-plugin .ss-plugin-field select,
+.ss-plugin .ss-plugin-field input[type="text"] {
+  width: 100%;
+  min-height: 40px;
+  border: 1px solid var(--ss-gray-300);
+  border-radius: var(--ss-radius-field);
+  padding: 0 12px;
+  background-color: var(--ss-gray-25);
+  color: inherit;
+  font: inherit;
+}
+
+.ss-plugin .ss-plugin-field select:hover,
+.ss-plugin .ss-plugin-field input[type="text"]:hover {
+  border-color: var(--ss-gray-700);
+}
+
+/* a legend sits on the fieldset border; floated, it lays out inside the card */
+.ss-plugin legend.ss-plugin-label {
+  float: left;
+  width: 100%;
+}
+
+/* the floated, full-width legend rule above outranks .ss-plugin-visually-hidden */
+.ss-plugin legend.ss-plugin-label.ss-plugin-visually-hidden {
+  float: none;
+  width: 1px;
+  margin: 0;
+}
+
+.ss-plugin .ss-plugin-choices {
+  clear: both;
+  display: grid;
+  gap: 2px;
+}
+
+.ss-plugin .ss-plugin-help {
+  clear: both;
+  margin-bottom: 8px;
+  color: var(--ss-gray-700);
+  font-size: var(--ss-text-s);
+  line-height: 1.45;
+}
+
+/* one choice row: the label (input + text) and, with a description, an info mark and its tooltip */
+.ss-plugin .ss-plugin-option {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border-radius: var(--ss-radius-field);
+}
+
+.ss-plugin .ss-plugin-option[hidden] {
+  display: none;
+}
+
+.ss-plugin .ss-plugin-option:hover {
+  background-color: var(--ss-gray-75);
+}
+
+.ss-plugin .ss-plugin-choice {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 8px;
+  cursor: pointer;
+}
+
+.ss-plugin .ss-plugin-info {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  margin-right: 8px;
+  border: 1.5px solid var(--ss-gray-700);
+  border-radius: 50%;
+  color: var(--ss-gray-700);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 15px;
+  text-align: center;
+}
+
+.ss-plugin .ss-plugin-info::before {
+  content: "i";
+}
+
+/* shown below the row while it is hovered or (pointer elsewhere) its input has keyboard focus;
+   Escape hides it */
+.ss-plugin .ss-plugin-tip {
+  display: none;
+  position: absolute;
+  top: calc(100% - 4px);
+  right: 0;
+  left: 34px;
+  z-index: 2;
+  border-radius: var(--ss-radius-field);
+  padding: 6px 10px;
+  background-color: var(--ss-gray-900);
+  color: var(--ss-gray-25);
+  font-size: var(--ss-text-m);
+  line-height: 1.4;
+  pointer-events: none;
+}
+
+.ss-plugin-form:not(.ss-plugin-tips-off) .ss-plugin-option:hover > .ss-plugin-tip,
+.ss-plugin-form:not(.ss-plugin-tips-off) .ss-plugin-choices:not(:hover) > .ss-plugin-option:has(:focus-visible) > .ss-plugin-tip {
+  display: block;
+}
+
+/* multi-select dropdown: a select-like button, the checkbox list opens in the flow below it */
+.ss-plugin .ss-plugin-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 40px;
+  border: 1px solid var(--ss-gray-300);
+  border-radius: var(--ss-radius-field);
+  padding: 0 12px;
+  background-color: var(--ss-gray-25);
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.ss-plugin .ss-plugin-toggle::after {
+  content: "";
+  flex: none;
+  width: 8px;
+  height: 8px;
+  margin-left: auto;
+  border-right: 2px solid var(--ss-gray-700);
+  border-bottom: 2px solid var(--ss-gray-700);
+  transform: translateY(-2px) rotate(45deg);
+}
+
+.ss-plugin .ss-plugin-toggle[aria-expanded="true"]::after {
+  transform: translateY(2px) rotate(-135deg);
+}
+
+.ss-plugin .ss-plugin-toggle:hover {
+  border-color: var(--ss-gray-700);
+}
+
+.ss-plugin .ss-plugin-toggle-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ss-plugin .ss-plugin-dropdown .ss-plugin-choices {
+  margin-top: 4px;
+  border: 1px solid var(--ss-gray-300);
+  border-radius: var(--ss-radius-field);
+  padding: 4px;
+  background-color: var(--ss-gray-25);
+}
+
+.ss-plugin .ss-plugin-group + .ss-plugin-group {
+  margin-top: 4px;
+  border-top: 1px solid var(--ss-gray-200);
+  padding-top: 4px;
+}
+
+.ss-plugin .ss-plugin-group-label {
+  padding: 6px 8px 2px;
+  color: var(--ss-gray-700);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* a group whose every choice waits for another (`when`) has nothing to show */
+.ss-plugin .ss-plugin-group:not(:has(.ss-plugin-option:not([hidden]))) {
+  display: none;
+}
+
+/* the list's `display: grid` would otherwise beat `[hidden]` */
+.ss-plugin .ss-plugin-dropdown .ss-plugin-choices[hidden] {
+  display: none;
+}
+
+.ss-plugin .ss-plugin-choice input {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+}
+
+/* ---- notices at the top of the form --------------------------------------- */
+
+/* "This section already has settings. [Edit them]": appears by itself */
+.ss-plugin .ss-plugin-found,
+.ss-plugin .ss-plugin-editing {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  margin: 0;
+  border-radius: var(--ss-radius-card);
+  padding: 12px 16px;
+  background-color: var(--ss-info-bg);
+}
+
+.ss-plugin .ss-plugin-found[hidden],
+.ss-plugin .ss-plugin-editing[hidden] {
+  display: none;
+}
+
+.ss-plugin .ss-plugin-found-text {
+  flex: 1 1 180px;
+  font-weight: 700;
+}
+
+.ss-plugin .ss-plugin-found-edit {
+  min-height: 40px;
+  border: 0;
+  border-radius: var(--ss-radius-pill);
+  padding: 0 18px;
+  background-color: var(--ss-gray-900);
+  color: var(--ss-gray-25);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* editing a section's table: an accent frame, and the table being replaced shown "selected" */
+.ss-plugin .ss-plugin-editing {
+  display: block;
+  border: 2px solid var(--ss-accent);
+  border-left-width: 6px;
+}
+
+.ss-plugin .ss-plugin-editing-title {
+  margin-bottom: 4px;
+  color: var(--ss-accent-hover);
+  font-weight: 700;
+}
+
+/* the page cursor is in a block: a warning, and the fields dimmed and inert (showBlocked()) */
+.ss-plugin .ss-plugin-blocked {
+  margin: 0;
+  border-left: 4px solid var(--ss-warning);
+  border-radius: var(--ss-radius-card);
+  padding: 12px 16px;
+  background-color: var(--ss-warning-bg);
+  color: var(--ss-gray-900);
+}
+
+.ss-plugin .ss-plugin-blocked[hidden] {
+  display: none;
+}
+
+/* the cursor's section: what it has, in words */
+.ss-plugin .ss-plugin-blocked-settings {
+  margin-bottom: 4px;
+  font-weight: 700;
+}
+
+.ss-plugin .ss-plugin-blocked-title {
+  margin-bottom: 4px;
+  color: var(--ss-warning);
+  font-weight: 700;
+}
+
+.ss-plugin .ss-plugin-is-blocked :is(.ss-plugin-fields, .ss-plugin-more) {
+  opacity: 0.45;
+}
+
+.ss-plugin .ss-plugin-editing-kept {
+  margin-top: 4px;
+  color: var(--ss-gray-700);
+}
+
+/* ---- colour --------------------------------------------------------------- */
+
+/* any colour: None, the sheet's named swatches, Custom, the colour code (the form value) */
+.ss-plugin .ss-plugin-colour {
+  clear: both;
+  display: grid;
+  gap: 12px;
+}
+
+.ss-plugin .ss-plugin-swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(52px, 1fr));
+  gap: 8px 4px;
+}
+
+.ss-plugin .ss-plugin-swatch {
+  --chip: var(--ss-gray-25);
+
+  display: grid;
+  justify-items: center;
+  align-content: start;
+  gap: 6px;
+  min-width: 0;
+  border: 0;
+  border-radius: var(--ss-radius-field);
+  padding: 6px 2px;
+  background: none;
+  color: var(--ss-gray-900);
+  font: inherit;
+  font-size: var(--ss-text-s);
+  line-height: 1.2;
+  text-align: center;
+  cursor: pointer;
+}
+
+.ss-plugin .ss-plugin-swatch:hover {
+  background-color: var(--ss-gray-75);
+}
+
+.ss-plugin .ss-plugin-swatch-chip {
+  position: relative;
+  display: block;
+  width: 32px;
+  height: 32px;
+  border: 1px solid rgb(0 0 0 / 20%);
+  border-radius: 50%;
+  background-color: var(--chip);
+  box-shadow: 0 0 0 3px var(--ss-gray-25), 0 0 0 4px transparent;
+}
+
+/* None: a white chip struck through */
+.ss-plugin .ss-plugin-swatch-none .ss-plugin-swatch-chip {
+  background: linear-gradient(135deg, transparent 46%, var(--ss-error) 46% 54%, transparent 54%), var(--ss-gray-25);
+}
+
+/* Custom: a colour wheel until a custom colour is picked, then that colour */
+.ss-plugin .ss-plugin-swatch-custom .ss-plugin-swatch-chip {
+  background: conic-gradient(#f44, #fd0, #4c4, #0cf, #44f, #f4f, #f44);
+}
+
+/* the picked swatch: an accent ring round the chip, a tick on it, a bold name */
+.ss-plugin .ss-plugin-swatch[aria-pressed="true"] .ss-plugin-swatch-chip,
+.ss-plugin .ss-plugin-swatch-custom.is-picked .ss-plugin-swatch-chip {
+  box-shadow: 0 0 0 3px var(--ss-gray-25), 0 0 0 5px var(--ss-accent);
+}
+
+.ss-plugin .ss-plugin-swatch[aria-pressed="true"] .ss-plugin-swatch-chip::after,
+.ss-plugin .ss-plugin-swatch-custom.is-picked .ss-plugin-swatch-chip::after {
+  content: "";
+  position: absolute;
+  top: 7px;
+  left: 11px;
+  width: 7px;
+  height: 13px;
+  border-right: 2.5px solid var(--ss-gray-900);
+  border-bottom: 2.5px solid var(--ss-gray-900);
+  transform: rotate(45deg);
+  filter: drop-shadow(0 0 1px var(--ss-gray-25));
+}
+
+.ss-plugin .ss-plugin-swatch[aria-pressed="true"] .ss-plugin-swatch-name,
+.ss-plugin .ss-plugin-swatch-custom.is-picked .ss-plugin-swatch-name {
+  font-weight: 700;
+}
+
+.ss-plugin .ss-plugin-swatch-none[aria-pressed="true"] .ss-plugin-swatch-chip::after {
+  display: none;
+}
+
+.ss-plugin .ss-plugin-swatch-custom.is-picked .ss-plugin-swatch-chip {
+  background: var(--chip);
+}
+
+/* the browser's colour input fills the chip, invisible, so it gets the click and focus */
+.ss-plugin .ss-plugin-colour-picker {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: 50%;
+  padding: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.ss-plugin .ss-plugin-swatch-custom:focus-within .ss-plugin-swatch-chip {
+  outline: 2px solid var(--ss-accent);
+  outline-offset: 6px;
+}
+
+.ss-plugin .ss-plugin-colour-code {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ss-plugin .ss-plugin-colour-code label {
+  flex: none;
+  color: var(--ss-gray-700);
+  font-size: var(--ss-text-m);
+}
+
+.ss-plugin .ss-plugin-colour-hex {
+  flex: 1;
+  min-width: 0;
+  min-height: 40px;
+  border: 1px solid var(--ss-gray-300);
+  border-radius: var(--ss-radius-field);
+  padding: 0 12px;
+  background-color: var(--ss-gray-25);
+  color: inherit;
+  font: inherit;
+  font-family: ui-monospace, monospace;
+}
+
+.ss-plugin .ss-plugin-colour-hex[aria-invalid="true"] {
+  border-color: #d31510;
+}
+
+/* how the section's text will look: the colour with the site's text colour on it */
+.ss-plugin .ss-plugin-colour-sample {
+  margin: 0;
+  border: 1px solid rgb(0 0 0 / 10%);
+  border-radius: var(--ss-radius-field);
+  padding: 10px 12px;
+  font-weight: 700;
+}
+
+.ss-plugin .ss-plugin-colour-note {
+  margin-top: 8px;
+  color: var(--ss-gray-700);
+  font-size: var(--ss-text-m);
+}
+
+.ss-plugin .ss-plugin-colour-note[data-tone="success"] {
+  color: var(--ss-success);
+}
+
+.ss-plugin .ss-plugin-colour-note[data-tone="warning"] {
+  color: var(--ss-warning);
+}
+
+.ss-plugin .ss-plugin-colour-note[data-tone="error"] {
+  color: var(--ss-error);
+}
+
+/* ---- action bar: the status line, the main button, Start over ---------------- */
+
+.ss-plugin .ss-plugin-foot {
+  position: sticky;
+  bottom: 0;
+  z-index: 3;
+  display: grid;
+  gap: 8px;
+  margin: 4px -16px 0;
+  border-top: 1px solid var(--ss-gray-200);
+  padding: 12px 16px;
+  background-color: var(--ss-gray-25);
+  box-shadow: 0 -4px 12px rgb(0 0 0 / 4%);
+}
+
+/* nothing to say or do (a page block styled live has no buttons): no empty bar */
+.ss-plugin .ss-plugin-foot:not(:has(> .ss-plugin-message:not(:empty), > button:not([hidden]))) {
+  display: none;
+}
+
+.ss-plugin .ss-plugin-submit {
+  width: 100%;
+  min-height: 40px;
+  border: 0;
+  border-radius: var(--ss-radius-pill);
+  padding: 0 20px;
+  background-color: var(--ss-accent);
+  color: #fff;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.ss-plugin .ss-plugin-submit:hover {
+  background-color: var(--ss-accent-hover);
+}
+
+/* Update: a different colour from Apply, so the change of action is seen at once */
+.ss-plugin .ss-plugin-submit.ss-plugin-submit-update {
+  background-color: var(--ss-success);
+}
+
+.ss-plugin .ss-plugin-submit.ss-plugin-submit-update:hover {
+  background-color: #08533a;
+}
+
+.ss-plugin .ss-plugin-submit:disabled {
+  background-color: var(--ss-gray-300);
+  color: var(--ss-gray-700);
+  cursor: not-allowed;
+}
+
+.ss-plugin .ss-plugin-submit[hidden] {
+  display: none;
+}
+
+/* the status line: a dot in the message's tone, then the text */
+.ss-plugin .ss-plugin-message {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  border-radius: var(--ss-radius-field);
+  padding: 8px 12px;
+  background-color: var(--ss-warning-bg);
+  color: var(--ss-warning);
+  font-size: var(--ss-text-m);
+}
+
+.ss-plugin .ss-plugin-message::before {
+  content: "";
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: currentcolor;
+  transform: translateY(-1px);
+}
+
+.ss-plugin .ss-plugin-message:empty {
+  display: none;
+}
+
+.ss-plugin .ss-plugin-message[data-tone="success"] {
+  background-color: var(--ss-success-bg);
+  color: var(--ss-success);
+}
+
+.ss-plugin .ss-plugin-message[data-tone="error"] {
+  background-color: var(--ss-error-bg);
+  color: var(--ss-error);
+}
+
+/* "Applying…": a neutral note, neither success nor warning */
+.ss-plugin .ss-plugin-message[data-tone="info"] {
+  background-color: var(--ss-gray-75);
+  color: var(--ss-gray-700);
+}
+
+.ss-plugin .ss-plugin-reset {
+  justify-self: center;
+  min-height: 32px;
+  border: 0;
+  padding: 0 12px;
+  background: none;
+  color: var(--ss-gray-700);
+  font: inherit;
+  font-size: var(--ss-text-m);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.ss-plugin .ss-plugin-reset:hover {
+  color: var(--ss-gray-900);
+}
+
+.ss-plugin .ss-plugin-reset[hidden] {
+  display: none;
+}
+
+/* busy (Adding… / Updating…): the button keeps its colour, shows a spinner and waits */
+.ss-plugin .ss-plugin-submit.ss-plugin-is-busy:disabled {
+  background-color: var(--ss-accent);
+  color: #fff;
+  cursor: progress;
+  opacity: 0.85;
+}
+
+.ss-plugin .ss-plugin-submit.ss-plugin-submit-update.ss-plugin-is-busy:disabled {
+  background-color: var(--ss-success);
+}
+
+.ss-plugin .ss-plugin-submit.ss-plugin-is-busy::before {
+  content: "";
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  margin-right: 8px;
+  border: 2px solid currentcolor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  vertical-align: -2px;
+}
+
+/* motion only for those who haven't asked for less: notices ease in, the button's colour
+   change (Apply ↔ Update) fades, the spinner turns, a section's chevron turns */
+@media (prefers-reduced-motion: no-preference) {
+  .ss-plugin .ss-plugin-found,
+  .ss-plugin .ss-plugin-editing,
+  .ss-plugin .ss-plugin-blocked,
+  .ss-plugin .ss-plugin-message:not(:empty) {
+    animation: ss-plugin-in 180ms ease-out;
+  }
+
+  .ss-plugin .ss-plugin-submit,
+  .ss-plugin .ss-plugin-swatch-chip,
+  .ss-plugin :is(.ss-plugin-fields, .ss-plugin-more) {
+    transition: background-color 200ms ease, box-shadow 150ms ease, opacity 200ms ease;
+  }
+
+  .ss-plugin :is(.ss-plugin-section, .ss-plugin-more) > summary::after {
+    transition: transform 150ms ease;
+  }
+
+  .ss-plugin .ss-plugin-submit.ss-plugin-is-busy::before {
+    animation: ss-plugin-spin 700ms linear infinite;
+  }
+}
+
+@keyframes ss-plugin-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes ss-plugin-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

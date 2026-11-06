@@ -1,0 +1,169 @@
+/*
+ * Page Studio: the header, the path and the Add here home, in the views' look
+ * (shared/ui.css: tokens and type); the three views fill the rest in frames.
+ */
+.ss-plugin.sb-shell {
+  --builder-icon-pick: var(--ss-accent);
+
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  min-height: 0;
+  padding: 0;
+}
+
+.sb-shell .sb-head {
+  flex: none;
+  padding: 16px 16px 10px;
+  border-bottom: 1px solid var(--ss-gray-200);
+  background-color: var(--ss-gray-25);
+}
+
+.sb-shell .sb-back {
+  margin-left: auto;
+  border: 1px solid var(--ss-gray-300);
+  border-radius: var(--ss-radius-pill);
+  padding: 4px 12px;
+  background-color: var(--ss-gray-25);
+  color: var(--ss-gray-900);
+  font: inherit;
+  font-size: var(--ss-text-m);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.sb-shell .sb-back:hover {
+  background-color: var(--ss-gray-75);
+}
+
+.sb-shell .sb-back[hidden] {
+  display: none;
+}
+
+/* Page › Section 2 › Cards › Button: Join now */
+.sb-shell .sb-path ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 6px;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+  color: var(--ss-gray-700);
+  font-size: var(--ss-text-m);
+}
+
+.sb-shell .sb-path li + li::before {
+  content: "›";
+  margin-right: 6px;
+  color: var(--ss-gray-700);
+}
+
+.sb-shell .sb-path [aria-current] {
+  color: var(--ss-gray-900);
+  font-weight: 700;
+}
+
+.sb-shell .sb-path-link {
+  border: 0;
+  padding: 0;
+  background: none;
+  color: var(--ss-accent-hover);
+  font: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.sb-shell .sb-path-link:hover {
+  color: var(--ss-gray-900);
+}
+
+/* the cursor's section settings, under the path */
+.sb-shell .sb-context {
+  margin-top: 4px;
+  color: var(--ss-gray-700);
+  font-size: var(--ss-text-s);
+}
+
+.sb-shell .sb-context[hidden] {
+  display: none;
+}
+
+/* the Add here home */
+.sb-shell .sb-home {
+  flex: 1;
+  overflow: auto;
+  padding: 16px;
+}
+
+.sb-shell .sb-home[hidden] {
+  display: none;
+}
+
+.sb-shell .sb-home-message {
+  margin-bottom: 12px;
+}
+
+.sb-shell .sb-choices {
+  display: grid;
+  gap: 8px;
+  margin: 12px 0 20px;
+}
+
+.sb-shell .sb-choice {
+  display: grid;
+  gap: 2px;
+  border: 0;
+  border-radius: var(--ss-radius-card);
+  padding: 12px 14px;
+  background-color: var(--ss-gray-25);
+  box-shadow: var(--ss-shadow-card);
+  color: var(--ss-gray-900);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.sb-shell .sb-choice:hover {
+  box-shadow: 0 0 0 1px var(--ss-accent), 0 1px 2px rgb(0 0 0 / 5%);
+}
+
+.sb-shell .sb-choice-title {
+  font-weight: 700;
+}
+
+.sb-shell .sb-choice-text {
+  color: var(--ss-gray-700);
+  font-size: var(--ss-text-m);
+}
+
+.sb-shell .sb-hints {
+  margin: 6px 0 12px;
+  padding-left: 18px;
+  color: var(--ss-gray-700);
+  font-size: var(--ss-text-m);
+}
+
+.sb-shell .sb-hints li + li {
+  margin-top: 4px;
+}
+
+/* the panel frames: the shown one fills the rest of the height and scrolls on its own */
+.sb-shell .sb-views {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+.sb-shell .sb-views[hidden] {
+  display: none;
+}
+
+.sb-shell .sb-view {
+  flex: 1;
+  width: 100%;
+  border: 0;
+}
+
+.sb-shell .sb-view[hidden] {
+  display: none;
+}

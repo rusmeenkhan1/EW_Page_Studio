@@ -1,0 +1,35 @@
+{
+  "data": {
+    "total": 4,
+    "limit": 4,
+    "offset": 0,
+    "data": [
+      { "name": "Cards", "path": "https://content.da.live/demo-org/demo-site/.da/library/blocks/cards" },
+      { "name": "Columns", "path": "https://content.da.live/demo-org/demo-site/.da/library/blocks/columns" },
+      { "name": "Hero", "path": "https://content.da.live/demo-org/demo-site/.da/library/blocks/hero" },
+      { "name": "Section Metadata", "path": "https://content.da.live/demo-org/demo-site/.da/library/blocks/section-metadata" }
+    ]
+  },
+  "options": {
+    "total": 12,
+    "limit": 12,
+    "offset": 0,
+    "data": [
+      { "key": "background", "blocks": "section-metadata", "values": "light-bg=#f2f4f7 | brand-bg=#e2f7ff | warm-bg=#fff4e0", "type": "", "label": "", "when": "", "description": "" },
+      { "key": "style", "blocks": "section-metadata", "values": "Center text=center | Narrow=narrow | Wide=wide | Highlight=highlight | Hide on mobile=hide-mobile", "type": "multi", "label": "Section style", "when": "narrow=center", "description": "center=Centres the section's text." },
+      { "key": "spacing-top", "blocks": "section-metadata", "values": "No space=none | Small=small | Large=large", "type": "", "label": "Space above", "when": "", "description": "" },
+      { "key": "spacing-bottom", "blocks": "section-metadata", "values": "No space=none | Small=small | Large=large", "type": "", "label": "Space below", "when": "", "description": "" },
+      { "key": "variant", "blocks": "cards", "values": "Grid=grid | News=news | Profile=profile", "type": "variant", "label": "Card style", "when": "", "description": "" },
+      { "key": "options", "blocks": "cards", "values": "With bio=bio", "type": "variants", "label": "Card options", "when": "profile", "description": "" },
+      { "key": "variant", "blocks": "hero", "values": "Banner=banner | Split=split", "type": "variant", "label": "Hero style", "when": "", "description": "" },
+      { "key": "variant", "blocks": "columns", "values": "Feature=feature | Stats=stats", "type": "variant", "label": "Columns style", "when": "", "description": "" },
+      { "key": "visibility", "blocks": "cards, columns, hero", "values": "Hide on mobile=hide-mobile | Hide on desktop=hide-desktop", "type": "variants", "label": "Visibility", "when": "", "description": "" },
+      { "key": "spacing-top", "blocks": "cards, columns", "values": "No space=spacing-top-none | Small=spacing-top-small | Large=spacing-top-large", "type": "variant", "label": "Space above", "when": "", "description": "" },
+      { "key": "content", "blocks": "cards", "values": "item=Card | profile/heading=Name", "type": "content", "label": "Content names", "when": "", "description": "" },
+      { "key": "content", "blocks": "hero", "values": "row-image=Background image | row-heading=Text and buttons", "type": "content", "label": "Content names", "when": "", "description": "" }
+    ]
+  },
+  ":names": ["data", "options"],
+  ":version": 3,
+  ":type": "multi-sheet"
+}

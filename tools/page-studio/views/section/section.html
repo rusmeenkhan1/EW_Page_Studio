@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Page Studio · Sections</title>
+  <link rel="stylesheet" href="/tools/page-studio/shared/ui.css">
+  <script type="module" src="/tools/page-studio/views/section/section.js"></script>
+</head>
+<body>
+  <main class="ss-plugin">
+    <header class="ss-plugin-intro">
+      <div class="ss-plugin-title-row">
+        <!-- the panel's icon, also the DA menu's -->
+        <h1 id="ss-plugin-title"><svg class="ss-plugin-icon" width="20" height="20" aria-hidden="true" focusable="false"><use href="/tools/page-studio/views/section/section.svg#icon"></use></svg>Sections</h1>
+        <!-- what the panel is doing: adding settings, trying a table it just put there, or editing one -->
+        <p class="ss-plugin-mode" data-insert="Add settings" data-trial="New settings · not added yet"
+          data-edit="Editing a section" hidden></p>
+      </div>
+      <p class="ss-plugin-lead">Set the background, layout and spacing of the section your cursor is in. The page
+        shows each change as you pick.</p>
+      <ol class="ss-plugin-steps">
+        <!-- the steps change while a section's settings table is being edited (data-update) -->
+        <li data-insert="Click an empty line in a section" data-update="Change the settings">Click an empty line in a
+          section</li>
+        <li data-insert="Pick a style: the page shows it" data-update="The page follows each pick">Pick a style: the page
+          shows it</li>
+        <li data-insert="Choose Add settings" data-update="Choose Done">Choose Add settings</li>
+      </ol>
+    </header>
+
+    <!-- only before the form is ready (loading, outside DA, no options) -->
+    <p class="ss-plugin-status" role="status"
+      data-loading="Loading…"
+      data-standalone="Open this panel from the page editor in DA to style a section."
+      data-missing="No section styles are set up for this site yet (DA sheet /.da/library/blocks, options tab).">Loading…</p>
+
+    <!-- Default description per inserted value (a field's own help under "*"). A `description` cell in the
+         options sheet row (`value=text | …`, a part without `=` is the field's help) overrides these. -->
+    <script type="application/json" class="ss-plugin-descriptions">
+      {
+        "background": {
+          "*": "The section's background: a colour, or a value the site knows."
+        },
+        "background-color": {
+          "*": "The section's background colour."
+        },
+        "background-image": {
+          "*": "An image behind the section."
+        },
+        "style": {
+          "*": "Pick one or more. The site's styles for this section."
+        },
+        "spacing-top": {
+          "*": "The gap between this section and the one above it. Not set: the site's usual gap."
+        },
+        "spacing-bottom": {
+          "*": "The gap between this section and the one below it. Not set: the site's usual gap."
+        }
+      }
+    </script>
+
+    <!-- How the fields are shown. sections: the cards the fields sit in, in order (fields in none go in
+         "Other settings"); labels: shown instead of the sheet's; groups: headings inside a dropdown (values
+         not listed go under "Other"); hidden: values not offered (still kept when editing a table that has
+         them); more: fields under "More options". -->
+    <script type="application/json" class="ss-plugin-layout">
+      {
+        "sections": [
+          { "label": "Background", "keys": ["background", "background-color", "background-image"] },
+          { "label": "Layout", "keys": ["style"] },
+          { "label": "Spacing", "keys": ["spacing-top", "spacing-bottom"] }
+        ],
+        "labels": {
+          "background": "Background",
+          "background-color": "Background colour",
+          "background-image": "Background image",
+          "style": "Style"
+        },
+        "groups": {},
+        "hidden": {},
+        "more": []
+      }
+    </script>
+
+    <form class="ss-plugin-form" id="ss-plugin-form" novalidate
+      aria-labelledby="ss-plugin-title" data-choose="Choose…" data-other="Other"
+      data-other-settings="Other settings" data-not-set="Not set"
+      data-colour-custom="Custom" data-colour-code="Colour code" data-colour-empty="e.g. #e2f7ff" data-colour-clear="None"
+      data-colour-sample="Text on this colour"
+      data-colour-none="No background colour."
+      data-colour-invalid="Type a colour code like #e2f7ff."
+      data-colour-dark="✓ Dark text reads well on this colour."
+      data-colour-light="✓ White text reads well on this colour."
+      data-colour-low="⚠ Neither dark nor white text reads well on this colour. Try a lighter or darker one."
+      hidden>
+
+      <!-- while the page cursor is inside a block: settings can't go there, so the fields are off; the block
+           names its section, so that section's settings are shown -->
+      <div class="ss-plugin-blocked" role="status" hidden>
+        <p class="ss-plugin-blocked-title" data-text="Your cursor is in the {block} block."
+          data-unnamed="Your cursor is in a block."></p>
+        <p class="ss-plugin-blocked-settings" data-has="This section's settings: {settings}."
+          data-none="This section has no settings yet."></p>
+        <p>To add settings, click on an empty line in the section, outside the block. To change them, highlight a value
+          in the section's settings table (Content view).</p>
+      </div>
+
+      <!-- a highlight that matches several sections' settings: the panel can't tell which table it is -->
+      <div class="ss-plugin-found" role="status" hidden>
+        <p class="ss-plugin-found-text">More than one section has this in its settings. Highlight a value of the table
+          you want instead, such as its colour code.</p>
+      </div>
+
+      <!-- while a section's settings table is being written: new settings (Add / Cancel), or existing ones -->
+      <div class="ss-plugin-editing" hidden>
+        <p class="ss-plugin-editing-title" data-trial="Not added yet" data-edit="Editing this section's settings">
+        </p>
+        <p class="ss-plugin-editing-text">Each change applies to the page as you pick. Undo: Ctrl+Z or ⌘Z.</p>
+        <div class="ss-plugin-trial" hidden>
+          <button type="button" class="ss-plugin-keep">Add settings</button>
+          <button type="button" class="ss-plugin-remove">Cancel</button>
+        </div>
+        <button type="button" class="ss-plugin-remove ss-plugin-remove-settings" hidden>Remove these settings</button>
+        <p class="ss-plugin-editing-kept" data-label="Also kept as it is:" hidden></p>
+      </div>
+
+      <div class="ss-plugin-fields"></div>
+
+      <details class="ss-plugin-more" hidden>
+        <summary><span class="ss-plugin-section-title">More options</span><span class="ss-plugin-section-sum"></span></summary>
+        <div class="ss-plugin-more-fields"></div>
+      </details>
+
+      <footer class="ss-plugin-foot">
+        <p class="ss-plugin-message" role="status" aria-live="polite"
+          data-empty="Pick a background colour or a layout first."
+          data-bad-colour="That colour code isn't valid. Use one like #e2f7ff, or choose None."
+          data-done="✓ Settings added to this section."
+          data-failed="Couldn't add it. Click on an empty line in the section and try again."
+          data-updated="✓ Section updated."
+          data-moved="The cursor left the settings table, so that change was put back. Highlight a value in the table to go on."
+          data-gone="Highlight a value (such as the colour code) in the section's settings table again, then choose Edit them."
+          data-no-replace="This version of DA can't update settings from a panel. Change the table in the page instead."
+          data-read-only="This page is read-only."
+          data-update-failed="Couldn't update the section. Highlight a value in its settings table and try again."
+          data-timeout="DA didn't answer in time, so the panel stopped waiting. Check the page: if the change shows twice, press Undo (Ctrl+Z or ⌘Z)."
+          data-in-metadata="This section already has settings. Choose Edit them at the top to change them."
+          data-section-has="This section already has settings, so nothing was added. Highlight a value (such as the colour code) in its Section Metadata table to change them."
+          data-in-block="Your cursor is inside a block. Click on an empty line below the section's text instead."
+          data-text-selected="Some text is highlighted in the page and would be replaced. Click on an empty line instead."
+          data-duplicate="⚠ This section now has two settings tables. Undo (Ctrl+Z or ⌘Z), then edit the existing one."
+          data-merged="✓ This section already had settings, so they were updated instead of adding a table inside them."
+          data-nested="⚠ The settings went inside the section's existing settings table. Undo (Ctrl+Z or ⌘Z), then highlight that table to edit it."
+          data-lost="⚠ The settings didn't reach a section: the cursor may have been in the page metadata table. Undo (Ctrl+Z or ⌘Z), then click on an empty line in the section."
+          data-applying="Applying…"
+          data-applied="✓ Applied to the page."
+          data-placed="They're in the page so you can see them. Pick more, then choose Add settings (or Cancel)."
+          data-kept="✓ Settings added. Click an empty line in another section to add more; to change these, highlight a value in their table."
+          data-added="✓ Settings added. To change them, highlight a value in the section's settings table."
+          data-removed="Cancelled: the settings are gone and the empty line is back."
+          data-taken-out="✓ Settings removed from this section. The empty line is back."
+          data-cleared="✓ All settings taken off, so the table is gone. Pick again to add new settings on that line."
+          data-left="The settings stay on the page. Highlight a value in the table to change them again, or Undo (Ctrl+Z or ⌘Z)."
+          data-restored="⚠ That line wasn't empty, so it was put back. Click on an empty line in the section, then pick again."
+          data-replaced="⚠ The settings replaced part of the page. Undo (Ctrl+Z or ⌘Z), then click on an empty line in the section."
+          data-metadata-lost="⚠ The settings replaced the page's Metadata table. Undo (Ctrl+Z or ⌘Z), then click on an empty line in the section."></p>
+        <button type="submit" class="ss-plugin-submit" data-insert="Apply to section"
+          data-update="Update this section's settings" data-adding="Adding…" data-updating="Updating…">Apply to
+          section</button>
+        <button type="button" class="ss-plugin-reset" data-clear="Start over" data-done="Done">Start over</button>
+      </footer>
+    </form>
+  </main>
+</body>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Page Studio · Buttons</title>
+  <!-- Page Studio's look: tokens, header, cards, fields, swatches, footer. The customer's own CSS
+       (configuration `preview-css`) is added at run time, in a low cascade layer, for the previews -->
+  <link rel="stylesheet" href="/tools/page-studio/shared/ui.css">
+  <link rel="stylesheet" href="/tools/page-studio/views/button/button.css">
+  <script type="module" src="/tools/page-studio/views/button/button.js"></script>
+</head>
+<body class="appear">
+  <!-- the built-in designs, without a buttons sheet: the boilerplate's decorateButtons()
+       (bold → primary, italic → secondary, bold + italic → accent, no marks → a link) -->
+  <script type="application/json" class="btn-plugin-defaults">
+    {
+      "styles": [
+        { "style": "primary", "label": "Primary", "marks": "strong", "classes": "button primary" },
+        { "style": "secondary", "label": "Secondary", "marks": "em", "classes": "button secondary" },
+        { "style": "accent", "label": "Accent", "marks": "strong+em", "classes": "button accent" },
+        { "style": "link", "label": "Text link", "marks": "", "classes": "", "icons": "no" }
+      ],
+      "presets": [
+        { "name": "Primary button", "style": "primary", "label": "Learn more", "description": "The main call to action (bold link)." },
+        { "name": "Secondary button", "style": "secondary", "label": "See all", "description": "A quieter action (italic link)." },
+        { "name": "Accent button", "style": "accent", "label": "Get started", "description": "A high-impact call to action (bold and italic link)." },
+        { "name": "Text link", "style": "link", "label": "Read more", "description": "A plain text link, no button." }
+      ]
+    }
+  </script>
+  <main class="ss-plugin btn-plugin">
+    <section class="btn-plugin-gallery" aria-labelledby="btn-plugin-title">
+      <header class="ss-plugin-intro btn-plugin-intro">
+        <div class="ss-plugin-title-row">
+          <!-- the view's icon, also usable in the DA menu -->
+          <h1 id="btn-plugin-title"><svg class="ss-plugin-icon" width="20" height="20" aria-hidden="true" focusable="false"><use href="/tools/page-studio/views/button/button.svg#icon"></use></svg>Buttons</h1>
+          <p class="ss-plugin-mode btn-plugin-mode" hidden data-edit="Editing a button" data-insert="New button"></p>
+        </div>
+        <p class="ss-plugin-lead">Pick a design, then add its text and link. To change a button on the page, highlight any part of it.</p>
+      </header>
+      <p class="ss-plugin-message btn-plugin-status" role="status" data-tone="info"
+        data-loading="Loading button designs…"
+        data-defaults="Showing the built-in designs (no /.da/library/buttons sheet found)."
+        data-standalone="Open this panel from the Experience Workspace editor to insert buttons."
+        data-edit="Editing the selected button."
+        data-edit-live="Editing this button in the page: each change shows there as you make it. Choose Done when you're finished."
+        data-applying="Updating the button…"
+        data-applied="✓ Updated in the page."
+        data-done-editing="Done. Highlight another button to change it, or pick a design to add a new one."
+        data-left="The cursor moved away from the button, so the panel stopped editing it. Highlight it again to go on."
+        data-moved="The cursor left that block, so nothing was changed. Highlight the button again to go on."
+        data-restored="The cursor wasn't on the button, so the line it was on was put back. Highlight the button again to go on."
+        data-replaced="Something other than the button changed. Press Undo (Ctrl+Z or ⌘Z) to put it back."
+        data-stale="The page changed while the button was being updated. Make the change again."
+        data-read-only="This page is read-only, so the button can't be changed."
+        data-no-replace="This editor can't change a button in place. Use Update button instead."
+        data-update-failed="The button could not be updated. Try again."
+        data-ambiguous="More than one button matches what is highlighted. Highlight more of the button text."
+        data-done="✓ Button inserted. Pick a design to add another, or highlight a button in the page to change it."
+        data-updated="✓ Button updated. Pick a design to add a new one, or select another button to change it."
+        data-timeout="DA didn't answer in time, so the panel stopped waiting. Check the page: if the change shows twice, press Undo (Ctrl+Z or ⌘Z)."
+        data-failed="The button could not be inserted. Place the cursor on an empty line and try again.">Loading button designs…</p>
+      <ul class="btn-plugin-presets" aria-label="Button designs" data-current="Current"></ul>
+    </section>
+
+    <section class="btn-plugin-editor" aria-labelledby="btn-plugin-editor-heading" inert>
+      <header class="btn-plugin-editor-head">
+        <button type="button" class="btn-plugin-back">
+          <span class="btn-plugin-back-icon" aria-hidden="true"></span>All designs
+        </button>
+        <p class="ss-plugin-mode btn-plugin-mode" hidden data-edit="Editing a button" data-insert="New button"></p>
+      </header>
+
+      <div class="btn-plugin-editor-body">
+        <!-- each card's title line says what is set (updateSummaries() in button.js), as in the other views -->
+        <details class="ss-plugin-section btn-plugin-card-design" open data-card="design">
+          <summary><span class="ss-plugin-section-title">Design</span><span class="ss-plugin-section-sum"></span></summary>
+          <div class="ss-plugin-section-body">
+            <div class="btn-plugin-design">
+              <h2 id="btn-plugin-editor-heading"></h2>
+              <p class="ss-plugin-help btn-plugin-description"></p>
+            </div>
+            <div class="btn-plugin-stage">
+              <div class="btn-plugin-preview" data-canvas="white" inert></div>
+              <fieldset class="btn-plugin-canvas">
+                <legend>Preview on</legend>
+                <div class="btn-plugin-canvas-options">
+                  <label><input type="radio" name="canvas" value="white" checked><span>White</span></label>
+                  <label><input type="radio" name="canvas" value="light"><span>Grey</span></label>
+                  <label><input type="radio" name="canvas" value="dark"><span>Dark</span></label>
+                </div>
+              </fieldset>
+            </div>
+          </div>
+        </details>
+
+        <form class="btn-plugin-form" id="btn-plugin-form" novalidate
+          data-default-colours="Design colours" data-no-icon="No icon"
+          data-new-tab="Opens in a new tab" data-same-tab="Opens in the same tab"
+          data-text-colour="{colour} text">
+          <details class="ss-plugin-section" open data-card="text">
+            <summary><span class="ss-plugin-section-title">Text and link</span><span class="ss-plugin-section-sum"></span></summary>
+            <div class="ss-plugin-section-body">
+              <div class="ss-plugin-field">
+                <label class="ss-plugin-label" for="btn-plugin-label">Button text</label>
+                <input id="btn-plugin-label" name="label" type="text" required autocomplete="off"
+                  aria-describedby="btn-plugin-label-error">
+                <p class="btn-plugin-error" id="btn-plugin-label-error" data-message="Enter the button text."></p>
+              </div>
+              <div class="ss-plugin-field">
+                <label class="ss-plugin-label" for="btn-plugin-url">Link</label>
+                <p class="ss-plugin-help" id="btn-plugin-url-hint">A page path such as /about, or a full https:// link.</p>
+                <input id="btn-plugin-url" name="url" type="text" required autocomplete="off" spellcheck="false"
+                  aria-describedby="btn-plugin-url-hint btn-plugin-url-error">
+                <p class="btn-plugin-error" id="btn-plugin-url-error"
+                  data-message="Enter a page path starting with /, or a full link starting with https://, mailto: or tel:."></p>
+              </div>
+            </div>
+          </details>
+
+          <details class="ss-plugin-section btn-plugin-card-colours" open data-card="colours">
+            <summary><span class="ss-plugin-section-title">Colours</span><span class="ss-plugin-section-sum"></span></summary>
+            <div class="ss-plugin-section-body">
+              <fieldset class="ss-plugin-field btn-plugin-colors" data-name="color" data-default="Design default">
+                <legend class="ss-plugin-label">Button colour</legend>
+                <div class="ss-plugin-swatches btn-plugin-swatches"></div>
+              </fieldset>
+              <fieldset class="ss-plugin-field btn-plugin-colors" data-name="text-color" data-default="Design default">
+                <legend class="ss-plugin-label">Text colour</legend>
+                <div class="ss-plugin-swatches btn-plugin-swatches"></div>
+              </fieldset>
+            </div>
+          </details>
+
+          <details class="ss-plugin-section btn-plugin-icon-group" open data-card="icon">
+            <summary><span class="ss-plugin-section-title">Icon</span><span class="ss-plugin-section-sum"></span></summary>
+            <div class="ss-plugin-section-body">
+              <div class="ss-plugin-field">
+                <label class="ss-plugin-label" for="btn-plugin-icon">Icon</label>
+                <p class="ss-plugin-help" id="btn-plugin-icon-hint">One of the site's icons. Type a letter to jump in the list.</p>
+                <div class="btn-plugin-select">
+                  <span class="btn-plugin-select-icon" aria-hidden="true"></span>
+                  <select id="btn-plugin-icon" name="icon" data-default="No icon"
+                    aria-describedby="btn-plugin-icon-hint"></select>
+                </div>
+              </div>
+              <label class="btn-plugin-switch" for="btn-plugin-icon-before">
+                <span class="btn-plugin-switch-text">
+                  <span class="btn-plugin-switch-label">Icon before the text</span>
+                  <span class="ss-plugin-help">Written as icon="…" in the options. Authors can also type :name: in the button text.</span>
+                </span>
+                <input id="btn-plugin-icon-before" name="icon-before" type="checkbox" role="switch">
+              </label>
+            </div>
+          </details>
+
+          <details class="ss-plugin-section" open data-card="options">
+            <summary><span class="ss-plugin-section-title">Options</span><span class="ss-plugin-section-sum"></span></summary>
+            <div class="ss-plugin-section-body">
+              <label class="btn-plugin-switch" for="btn-plugin-new-tab">
+                <span class="btn-plugin-switch-text">
+                  <span class="btn-plugin-switch-label">Open in a new tab</span>
+                  <span class="ss-plugin-help">For links to other websites or documents.</span>
+                </span>
+                <input id="btn-plugin-new-tab" name="new-tab" type="checkbox" role="switch">
+              </label>
+            </div>
+          </details>
+        </form>
+      </div>
+
+      <footer class="ss-plugin-foot btn-plugin-editor-foot">
+        <p class="ss-plugin-message btn-plugin-editor-status" role="status"></p>
+        <button type="submit" form="btn-plugin-form" class="ss-plugin-submit btn-plugin-submit"
+          data-insert="Insert button" data-update="Update button" data-done-editing="Done">Insert button</button>
+      </footer>
+    </section>
+  </main>
+</body>
+</html>

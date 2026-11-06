@@ -1,0 +1,13 @@
+{
+  "settings": {
+    "total": 4,
+    "data": [
+      { "key": "button-options", "value": "yes" },
+      { "key": "button-new-tab", "value": "yes" },
+      { "key": "button-icons", "value": "text" },
+      { "key": "preview-css", "value": "/styles/styles.css" }
+    ]
+  },
+  ":names": ["settings"],
+  ":type": "multi-sheet"
+}

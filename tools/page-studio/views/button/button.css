@@ -1,0 +1,570 @@
+/*
+ * The Button view, in Page Studio's look: shared/ui.css, linked before this file, gives the
+ * tokens (`--ss-*`), the header and mode badge, the collapsible cards (`.ss-plugin-section`),
+ * fields, round swatches, the status line and the footer. This file holds what only the Button
+ * view has:
+ *   gallery — one card per design, the real button centred on a canvas
+ *   editor  — a drawer that slides in over the gallery: back, the cards, the footer
+ *   preview — the site's real button (its CSS, loaded at run time into a low cascade layer, see
+ *             below), the swatches as radios, the icon picker, switches
+ */
+
+/* ---- the site CSS, which is only for the previews ---------------------------- */
+
+/* The customer's CSS (configuration `preview-css`) is loaded at run time into the cascade layer
+   `site` (button.js loadPreviewCss()). The `reset` layer comes after it and rolls the site's
+   rules back to the browser's own for every element of the panel outside the two previews
+   (`all: revert`); the panel's rules, outside any layer, still win over both. So previews are the
+   site's real buttons and the panel looks the same on every site. Custom properties (the site's
+   design tokens on :root) are not touched by `all`, so previews keep them. */
+@layer site, reset;
+
+@layer reset {
+  :where(body),
+  :where(.btn-plugin),
+  .btn-plugin :where(:not(.btn-plugin-sample, .btn-plugin-sample *, .btn-plugin-preview, .btn-plugin-preview *)) {
+    all: revert;
+  }
+}
+
+.btn-plugin :is(h1, h2) {
+  font-family: inherit;
+  font-weight: 700;
+  letter-spacing: normal;
+}
+
+/* sites often give every <header> a height (the nav); not here */
+.btn-plugin header {
+  min-height: 0;
+}
+
+.btn-plugin fieldset {
+  min-width: 0;
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
+
+.btn-plugin legend {
+  padding: 0;
+}
+
+/* inside Page Studio its header names the panel: the panel's own name is read, not shown */
+.sb-embedded .btn-plugin .btn-plugin-intro h1 {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* previews keep the site's own type, so a text-link design reads as on the page */
+.btn-plugin .btn-plugin-sample,
+.btn-plugin .btn-plugin-preview {
+  font-family: var(--body-font-family, inherit);
+  font-size: var(--body-font-size-m, 16px);
+}
+
+.btn-plugin .btn-plugin-sample p,
+.btn-plugin .btn-plugin-preview p {
+  max-width: 100%;
+  margin: 0;
+  text-align: center;
+}
+
+/* ---- gallery ------------------------------------------------------------ */
+
+.btn-plugin .btn-plugin-gallery {
+  padding-bottom: 16px;
+  transition: transform 320ms cubic-bezier(0.2, 0.8, 0.2, 1), opacity 320ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.btn-plugin.is-editing .btn-plugin-gallery {
+  opacity: 0.35;
+  transform: translateX(-32px);
+}
+
+.btn-plugin .btn-plugin-status {
+  margin-bottom: var(--ss-gap);
+}
+
+.btn-plugin .btn-plugin-presets {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+  gap: var(--ss-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* a design: a card like the other views' (white, hairline shadow), the real button on top */
+.btn-plugin .btn-plugin-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--ss-radius-card);
+  background-color: var(--ss-gray-25);
+  box-shadow: var(--ss-shadow-card);
+  overflow: hidden;
+}
+
+.btn-plugin .btn-plugin-card:hover {
+  box-shadow: 0 0 0 1px var(--ss-accent), 0 1px 2px rgb(0 0 0 / 5%);
+}
+
+.btn-plugin .btn-plugin-card.is-current {
+  box-shadow: 0 0 0 2px var(--ss-accent);
+}
+
+.btn-plugin .btn-plugin-sample {
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex: 1;
+  min-height: 112px;
+  border-bottom: 1px solid var(--ss-gray-200);
+
+  /* equal top/bottom room so the "Current" badge (top-left) never touches the button */
+  padding: 32px 16px;
+  background-color: var(--ss-gray-50);
+}
+
+.btn-plugin .btn-plugin-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  border-radius: var(--ss-radius-pill);
+  padding: 1px 10px;
+  background-color: var(--ss-accent-soft);
+  color: var(--ss-accent-hover);
+  font-family: var(--ss-font);
+  font-size: var(--ss-text-s);
+  font-weight: 700;
+}
+
+.btn-plugin .btn-plugin-pick {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2px 12px;
+  align-items: center;
+  width: 100%;
+  min-height: 56px;
+  border: 0;
+  padding: 10px 12px 10px 16px;
+  background: none;
+  color: var(--ss-gray-900);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+/* stretch the pick button's hit area over the whole card */
+.btn-plugin .btn-plugin-pick::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--ss-radius-card);
+}
+
+.btn-plugin .btn-plugin-pick:focus-visible {
+  outline: 0;
+}
+
+.btn-plugin .btn-plugin-pick:focus-visible::after {
+  outline: 2px solid var(--ss-accent);
+  outline-offset: -2px;
+}
+
+.btn-plugin .btn-plugin-name {
+  font-weight: 700;
+}
+
+.btn-plugin .btn-plugin-card-description {
+  grid-column: 1;
+  color: var(--ss-gray-700);
+  font-size: var(--ss-text-s);
+}
+
+.btn-plugin .btn-plugin-go {
+  display: grid;
+  grid-area: 1 / 2 / span 2;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+}
+
+/* the cards' chevron: right to open a design, left to go back */
+.btn-plugin .btn-plugin-go::before,
+.btn-plugin .btn-plugin-back-icon::before {
+  content: "";
+  display: block;
+  width: 7px;
+  height: 7px;
+  border-right: 2px solid var(--ss-gray-700);
+  border-bottom: 2px solid var(--ss-gray-700);
+  transform: rotate(-45deg);
+}
+
+.btn-plugin .btn-plugin-back-icon::before {
+  transform: translateX(1px) rotate(135deg);
+}
+
+/* ---- editor drawer -------------------------------------------------------- */
+
+.btn-plugin .btn-plugin-editor {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--ss-gray-75);
+  visibility: hidden;
+  transform: translateX(100%);
+  transition: transform 320ms cubic-bezier(0.2, 0.8, 0.2, 1), visibility 0s linear 320ms;
+}
+
+.btn-plugin .btn-plugin-editor.is-open {
+  visibility: visible;
+  transform: none;
+  transition: transform 320ms cubic-bezier(0.2, 0.8, 0.2, 1), visibility 0s;
+}
+
+.btn-plugin .btn-plugin-editor-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px 0;
+}
+
+.btn-plugin .btn-plugin-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 32px;
+  border: 0;
+  border-radius: var(--ss-radius-pill);
+  padding: 0 12px 0 10px;
+  background: none;
+  color: var(--ss-gray-900);
+  font: inherit;
+  font-size: var(--ss-text-m);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-plugin .btn-plugin-back:hover {
+  background-color: var(--ss-gray-100);
+}
+
+.btn-plugin .btn-plugin-back-icon {
+  display: grid;
+  place-items: center;
+  width: 12px;
+  height: 12px;
+}
+
+.btn-plugin .btn-plugin-editor-body {
+  flex: 1;
+  display: grid;
+  align-content: start;
+  gap: var(--ss-gap);
+  padding: 12px 16px 16px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.btn-plugin .btn-plugin-form {
+  display: grid;
+  gap: var(--ss-gap);
+}
+
+.btn-plugin .btn-plugin-design h2 {
+  margin-bottom: 2px;
+  font-size: var(--ss-text-l);
+}
+
+.btn-plugin .btn-plugin-description:empty {
+  display: none;
+}
+
+/* the views' footer bar, at the drawer's bottom (not sticky: the body scrolls) */
+.btn-plugin .btn-plugin-editor-foot {
+  position: static;
+  margin: 0;
+}
+
+/* colours, icon and new tab only where the design and the site take them (configuration) */
+.btn-plugin .btn-plugin-editor:not(.has-colours) .btn-plugin-card-colours,
+.btn-plugin .btn-plugin-editor:not(.has-icons) .btn-plugin-icon-group,
+.btn-plugin .btn-plugin-editor:not(.has-new-tab) [data-card="options"] {
+  display: none;
+}
+
+/* ---- preview ------------------------------------------------------------------ */
+
+.btn-plugin .btn-plugin-stage {
+  display: grid;
+  gap: 8px;
+}
+
+.btn-plugin .btn-plugin-preview {
+  display: grid;
+  place-items: center;
+  min-height: 104px;
+  border: 1px solid var(--ss-gray-200);
+  border-radius: var(--ss-radius-field);
+  padding: 20px 16px;
+  background-color: var(--ss-gray-25);
+}
+
+.btn-plugin .btn-plugin-preview[data-canvas="light"] {
+  background-color: var(--light-color);
+}
+
+.btn-plugin .btn-plugin-preview[data-canvas="dark"] {
+  border-color: #1d1d1f;
+  background-color: #1d1d1f;
+}
+
+/* "Preview on": the Block view's style chips (`bs-chip`) */
+.btn-plugin .btn-plugin-canvas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  align-items: center;
+}
+
+.btn-plugin .btn-plugin-canvas legend {
+  float: left;
+  color: var(--ss-gray-700);
+  font-size: var(--ss-text-s);
+}
+
+.btn-plugin .btn-plugin-canvas-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.btn-plugin .btn-plugin-canvas label {
+  position: relative;
+  cursor: pointer;
+}
+
+.btn-plugin .btn-plugin-canvas input,
+.btn-plugin .btn-plugin-swatch input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.btn-plugin .btn-plugin-canvas span {
+  display: flex;
+  align-items: center;
+  min-height: 32px;
+  border: 1px solid var(--ss-gray-300);
+  border-radius: var(--ss-radius-pill);
+  padding: 0 14px;
+  background-color: var(--ss-gray-25);
+  font-size: var(--ss-text-m);
+  pointer-events: none;
+}
+
+.btn-plugin .btn-plugin-canvas label:hover span {
+  border-color: var(--ss-gray-700);
+}
+
+.btn-plugin .btn-plugin-canvas input:checked + span {
+  border-color: var(--ss-accent);
+  background-color: var(--ss-accent);
+  color: #fff;
+  font-weight: 700;
+}
+
+.btn-plugin .btn-plugin-canvas input:focus-visible + span {
+  outline: 2px solid var(--ss-accent);
+  outline-offset: 2px;
+}
+
+/* ---- fields ---------------------------------------------------------------- */
+
+.btn-plugin .ss-plugin-field input[aria-invalid="true"] {
+  border-color: var(--ss-error);
+}
+
+.btn-plugin .btn-plugin-error {
+  margin-top: 6px;
+  color: var(--ss-error);
+  font-size: var(--ss-text-s);
+  line-height: 1.4;
+}
+
+.btn-plugin .btn-plugin-error:empty {
+  display: none;
+}
+
+/* colour swatches: the Section view's round chips with a name, as radios (the radio covers the
+   swatch); the picked one gets the accent ring, a tick and a bold name */
+
+/* under the floated legend (the Section view's `.ss-plugin-colour` clears it the same way) */
+.btn-plugin .btn-plugin-swatches {
+  clear: both;
+}
+
+.btn-plugin .btn-plugin-swatch {
+  position: relative;
+}
+
+.btn-plugin .btn-plugin-swatch:has(input:checked) .ss-plugin-swatch-chip {
+  box-shadow: 0 0 0 3px var(--ss-gray-25), 0 0 0 5px var(--ss-accent);
+}
+
+.btn-plugin .btn-plugin-swatch:not(.ss-plugin-swatch-none):has(input:checked) .ss-plugin-swatch-chip::after {
+  content: "";
+  position: absolute;
+  top: 7px;
+  left: 11px;
+  width: 7px;
+  height: 13px;
+  border-right: 2.5px solid var(--ss-gray-900);
+  border-bottom: 2.5px solid var(--ss-gray-900);
+  transform: rotate(45deg);
+  filter: drop-shadow(0 0 1px var(--ss-gray-25));
+}
+
+.btn-plugin .btn-plugin-swatch:has(input:checked) .ss-plugin-swatch-name {
+  font-weight: 700;
+}
+
+.btn-plugin .btn-plugin-swatch:has(input:focus-visible) .ss-plugin-swatch-chip {
+  outline: 2px solid var(--ss-accent);
+  outline-offset: 6px;
+}
+
+/* the icon picker: a native select (type-ahead, keyboard, screen readers) with the chosen
+   icon on its left */
+.btn-plugin .btn-plugin-select {
+  position: relative;
+}
+
+.btn-plugin .btn-plugin-select select {
+  width: 100%;
+  min-height: 40px;
+  border: 1px solid var(--ss-gray-300);
+  border-radius: var(--ss-radius-field);
+  padding: 0 12px 0 46px;
+  background-color: var(--ss-gray-25);
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.btn-plugin .btn-plugin-select select:hover {
+  border-color: var(--ss-gray-700);
+}
+
+/* grey tile: some icons are white */
+.btn-plugin .btn-plugin-select-icon {
+  position: absolute;
+  top: 50%;
+  left: 8px;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: var(--ss-gray-200) var(--icon, none) center / 18px no-repeat;
+  pointer-events: none;
+  transform: translateY(-50%);
+}
+
+/* switches (Open in a new tab, Icon before the text): accent when on */
+.btn-plugin .btn-plugin-switch {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 44px;
+  cursor: pointer;
+}
+
+.btn-plugin .btn-plugin-switch-text {
+  display: grid;
+}
+
+.btn-plugin .btn-plugin-switch-label {
+  font-size: var(--ss-text-m);
+  font-weight: 700;
+}
+
+.btn-plugin .btn-plugin-switch-text .ss-plugin-help {
+  margin-bottom: 0;
+}
+
+.btn-plugin .btn-plugin-switch input {
+  position: relative;
+  flex: none;
+  width: 36px;
+  height: 20px;
+  margin: 0;
+  border: 2px solid var(--ss-gray-700);
+  border-radius: 10px;
+  background-color: var(--ss-gray-25);
+  cursor: pointer;
+  appearance: none;
+}
+
+.btn-plugin .btn-plugin-switch input:disabled {
+  cursor: default;
+}
+
+.btn-plugin .btn-plugin-switch input::before {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--ss-gray-700);
+}
+
+.btn-plugin .btn-plugin-switch input:checked {
+  border-color: var(--ss-accent);
+  background-color: var(--ss-accent);
+}
+
+.btn-plugin .btn-plugin-switch input:checked::before {
+  background-color: var(--ss-gray-25);
+  transform: translateX(16px);
+}
+
+.btn-plugin .btn-plugin-switch:hover input:not(:checked) {
+  border-color: var(--ss-gray-900);
+}
+
+/* "Icon before the text" while no icon is chosen */
+.btn-plugin .btn-plugin-switch:has(input:disabled) {
+  cursor: default;
+  opacity: 0.5;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .btn-plugin .btn-plugin-switch input,
+  .btn-plugin .btn-plugin-switch input::before {
+    transition: transform 130ms ease, background-color 130ms ease, border-color 130ms ease;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-plugin .btn-plugin-gallery,
+  .btn-plugin .btn-plugin-editor,
+  .btn-plugin .btn-plugin-editor.is-open {
+    transition: none;
+  }
+}
