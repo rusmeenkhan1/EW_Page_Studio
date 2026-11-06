@@ -1,0 +1,79 @@
+{
+ "settings": {
+  "total": 12,
+  "limit": 12,
+  "offset": 0,
+  "data": [
+   {
+    "key": "library-sheet",
+    "value": "/.da/library/blocks.json",
+    "description": "The block library sheet (blocks, styles, section options)."
+   },
+   {
+    "key": "buttons-sheet",
+    "value": "/.da/library/buttons.json",
+    "description": "The button designs sheet."
+   },
+   {
+    "key": "code-ref",
+    "value": "main",
+    "description": "The code branch previews and block checks read."
+   },
+   {
+    "key": "code-origin",
+    "value": "",
+    "description": "Empty: https://{code-ref}--ew-page-studio--rusmeenkhan1.aem.page."
+   },
+   {
+    "key": "preview-css",
+    "value": "/styles/styles.css",
+    "description": "The site CSS for button previews (comma-separated)."
+   },
+   {
+    "key": "check-blocks",
+    "value": "auto",
+    "description": "auto, yes or no: offer only blocks whose code exists."
+   },
+   {
+    "key": "button-options",
+    "value": "yes",
+    "description": "yes: colours and extras as [key=\"value\"] after a button. This site's code does not read them yet."
+   },
+   {
+    "key": "button-new-tab",
+    "value": "yes",
+    "description": "yes: \"Open in a new tab\" as #_blank at the end of the link."
+   },
+   {
+    "key": "button-icons",
+    "value": "text",
+    "description": "no, text (:name: in the text) or option (icon=\"name\")."
+   },
+   {
+    "key": "icon-path",
+    "value": "/icons/",
+    "description": "Where the site's icons are."
+   },
+   {
+    "key": "send-timeout-ms",
+    "value": "10000",
+    "description": "How long a write may wait for DA."
+   },
+   {
+    "key": "look-timeout-ms",
+    "value": "2000",
+    "description": "How long a look at the highlight may take."
+   }
+  ],
+  ":colWidths": [
+   160,
+   260,
+   560
+  ]
+ },
+ ":names": [
+  "settings"
+ ],
+ ":version": 3,
+ ":type": "multi-sheet"
+}

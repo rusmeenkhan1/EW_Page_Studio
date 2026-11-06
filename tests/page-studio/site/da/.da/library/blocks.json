@@ -1,0 +1,455 @@
+{
+ "data": {
+  "total": 15,
+  "limit": 15,
+  "offset": 0,
+  "data": [
+   {
+    "name": "Accordion",
+    "path": "https://content.da.live/rusmeenkhan1/ew-page-studio/.da/library/blocks/accordion"
+   },
+   {
+    "name": "Cards",
+    "path": "https://content.da.live/rusmeenkhan1/ew-page-studio/.da/library/blocks/cards"
+   },
+   {
+    "name": "Card Carousel",
+    "path": "https://content.da.live/rusmeenkhan1/ew-page-studio/.da/library/blocks/card-carousel"
+   },
+   {
+    "name": "Carousel",
+    "path": "https://content.da.live/rusmeenkhan1/ew-page-studio/.da/library/blocks/carousel"
+   },
+   {
+    "name": "Columns",
+    "path": "https://content.da.live/rusmeenkhan1/ew-page-studio/.da/library/blocks/columns"
+   },
+   {
+    "name": "Embed",
+    "path": "https://content.da.live/rusmeenkhan1/ew-page-studio/.da/library/blocks/embed"
+   },
+   {
+    "name": "Fragment",
+    "path": "https://content.da.live/rusmeenkhan1/ew-page-studio/.da/library/blocks/fragment"
+   },
+   {
+    "name": "Hero",
+    "path": "https://content.da.live/rusmeenkhan1/ew-page-studio/.da/library/blocks/hero"
+   },
+   {
+    "name": "Quote",
+    "path": "https://content.da.live/rusmeenkhan1/ew-page-studio/.da/library/blocks/quote"
+   },
+   {
+    "name": "Search",
+    "path": "https://content.da.live/rusmeenkhan1/ew-page-studio/.da/library/blocks/search"
+   },
+   {
+    "name": "Section Title",
+    "path": "https://content.da.live/rusmeenkhan1/ew-page-studio/.da/library/blocks/section-title"
+   },
+   {
+    "name": "Table",
+    "path": "https://content.da.live/rusmeenkhan1/ew-page-studio/.da/library/blocks/table"
+   },
+   {
+    "name": "Tabs",
+    "path": "https://content.da.live/rusmeenkhan1/ew-page-studio/.da/library/blocks/tabs"
+   },
+   {
+    "name": "Video",
+    "path": "https://content.da.live/rusmeenkhan1/ew-page-studio/.da/library/blocks/video"
+   },
+   {
+    "name": "Section Metadata",
+    "path": "https://content.da.live/rusmeenkhan1/ew-page-studio/.da/library/blocks/section-metadata"
+   }
+  ],
+  ":colWidths": [
+   180,
+   640
+  ]
+ },
+ "options": {
+  "total": 40,
+  "limit": 40,
+  "offset": 0,
+  "data": [
+   {
+    "key": "style",
+    "blocks": "section-metadata",
+    "values": "Light background=light | Highlight=highlight | Centre text=center | Centre on mobile only=center-mobile | Centre on desktop only=center-desktop | Hide on mobile=hide-mobile | Hide on desktop=hide-desktop | Brand text colour=brand-primary",
+    "type": "multi",
+    "label": "Section style",
+    "when": "",
+    "description": "light=Grey background, extra space above and below. | highlight=Styled like Light background. | center=Centres the text of the whole section. | Classes on the section, styled by styles/styles.css."
+   },
+   {
+    "key": "background-color",
+    "blocks": "section-metadata",
+    "values": "Light grey=#f8f8f8 | Grey=#d3d3d3 | Dark grey=#505050 | Link blue=#3b63fb | Deep blue=#1d3ecf",
+    "type": "colour",
+    "label": "Background colour",
+    "when": "",
+    "description": "Painted behind the section (the site reads background-color)."
+   },
+   {
+    "key": "background-image",
+    "blocks": "section-metadata",
+    "values": "An image address (https://…)",
+    "type": "",
+    "label": "Background image",
+    "when": "",
+    "description": "A picture behind the section content."
+   },
+   {
+    "key": "id",
+    "blocks": "section-metadata",
+    "values": "e.g. help",
+    "type": "",
+    "label": "Section id",
+    "when": "",
+    "description": "Lets a link jump here (#help); [#help] in another section repeats it there."
+   },
+   {
+    "key": "alignment",
+    "blocks": "accordion, cards, card-carousel, carousel, columns, hero, quote, tabs, table",
+    "values": "Left=left | Centre=center | Right=right",
+    "type": "variant",
+    "label": "Text alignment",
+    "when": "",
+    "description": "center=Centres the block text (lists stay left-aligned). | The text alignment on every screen size."
+   },
+   {
+    "key": "responsive-alignment",
+    "blocks": "accordion, cards, card-carousel, carousel, columns, hero, quote, tabs, table",
+    "values": "Centre on mobile only=center-mobile | Centre on desktop only=center-desktop | Left on desktop only=left-desktop | Right on desktop only=right-desktop",
+    "type": "variants",
+    "label": "Alignment by screen size",
+    "when": "",
+    "description": ""
+   },
+   {
+    "key": "text-colour",
+    "blocks": "accordion, cards, card-carousel, carousel, columns, hero, quote, tabs, table",
+    "values": "Brand primary=brand-primary | Brand secondary=brand-secondary",
+    "type": "variant",
+    "label": "Text colour",
+    "when": "",
+    "description": ""
+   },
+   {
+    "key": "visibility",
+    "blocks": "accordion, cards, card-carousel, carousel, columns, embed, fragment, hero, quote, search, section-title, table, tabs, video",
+    "values": "Hide on mobile=hide-mobile | Hide on desktop=hide-desktop",
+    "type": "variants",
+    "label": "Visibility",
+    "when": "",
+    "description": "hide-mobile=Shown from 900px wide. | hide-desktop=Shown below 900px."
+   },
+   {
+    "key": "rows",
+    "blocks": "table",
+    "values": "Striped=striped | Bordered=bordered",
+    "type": "variants",
+    "label": "Table style",
+    "when": "",
+    "description": "striped=Shades every other row. | bordered=Draws a line round every cell."
+   },
+   {
+    "key": "header",
+    "blocks": "table",
+    "values": "No header=no-header",
+    "type": "variants",
+    "label": "Header row",
+    "when": "",
+    "description": "no-header=The first row is a normal row, not a header."
+   },
+   {
+    "key": "variant",
+    "blocks": "search",
+    "values": "Minimal=minimal",
+    "type": "variant",
+    "label": "Search style",
+    "when": "",
+    "description": "minimal=Only the search field, no result images."
+   },
+   {
+    "key": "playback",
+    "blocks": "video",
+    "values": "Autoplay=autoplay",
+    "type": "variants",
+    "label": "Playback",
+    "when": "",
+    "description": "autoplay=Plays at once, muted and looping (when the visitor allows motion)."
+   },
+   {
+    "key": "layout",
+    "blocks": "cards",
+    "values": "Two per row=two-up | Three per row=three-up | Four per row=four-up",
+    "type": "variant",
+    "label": "Cards per row",
+    "when": "",
+    "description": "From 900px wide (two per row from 600px). | Default: as many as fit."
+   },
+   {
+    "key": "card-style",
+    "blocks": "cards",
+    "values": "Borderless=borderless | Text on image=overlay | Image beside text=horizontal",
+    "type": "variant",
+    "label": "Card style",
+    "when": "",
+    "description": "borderless=No border or background. | overlay=The text sits on the image, on a dark fade. | horizontal=One card per row, its image on the left."
+   },
+   {
+    "key": "card-options",
+    "blocks": "cards",
+    "values": "Shadow=shadow | Rounded corners=rounded",
+    "type": "variants",
+    "label": "Card options",
+    "when": "",
+    "description": ""
+   },
+   {
+    "key": "column-style",
+    "blocks": "columns",
+    "values": "Boxed=boxed | Divided=divided",
+    "type": "variant",
+    "label": "Column style",
+    "when": "",
+    "description": "boxed=Each text column on a light panel. | divided=A line between the columns."
+   },
+   {
+    "key": "widths",
+    "blocks": "columns",
+    "values": "Wide image=image-wide | Wide text=text-wide",
+    "type": "variant",
+    "label": "Column widths",
+    "when": "",
+    "description": "image-wide=The image column takes two thirds. | text-wide=The text takes two thirds. | From 900px wide."
+   },
+   {
+    "key": "vertical-alignment",
+    "blocks": "columns",
+    "values": "Top=align-top | Bottom=align-bottom",
+    "type": "variant",
+    "label": "Vertical alignment",
+    "when": "",
+    "description": "Default: columns are centred on each other."
+   },
+   {
+    "key": "hero-style",
+    "blocks": "hero",
+    "values": "Centred=centered | Image beside text=split",
+    "type": "variant",
+    "label": "Hero style",
+    "when": "",
+    "description": "centered=Text in the middle of the image. | split=The image beside the text, not behind it."
+   },
+   {
+    "key": "image-side",
+    "blocks": "hero",
+    "values": "Image on the left=image-left",
+    "type": "variants",
+    "label": "Image side",
+    "when": "split",
+    "description": "Only for Image beside text: the image goes on the left."
+   },
+   {
+    "key": "height",
+    "blocks": "hero",
+    "values": "Short=short | Tall=tall",
+    "type": "variant",
+    "label": "Height",
+    "when": "",
+    "description": ""
+   },
+   {
+    "key": "overlay",
+    "blocks": "hero",
+    "values": "Dark overlay=dark-overlay",
+    "type": "variants",
+    "label": "Image overlay",
+    "when": "",
+    "description": "dark-overlay=Darkens the image so white text reads on any picture."
+   },
+   {
+    "key": "quote-style",
+    "blocks": "quote",
+    "values": "Large=large | Boxed=boxed | Bordered=bordered",
+    "type": "variant",
+    "label": "Quote style",
+    "when": "",
+    "description": "large=A big pull quote. | boxed=On a light panel. | bordered=A coloured line on its left."
+   },
+   {
+    "key": "accordion-style",
+    "blocks": "accordion",
+    "values": "Flush=flush",
+    "type": "variant",
+    "label": "Accordion style",
+    "when": "",
+    "description": "flush=Lines between the items, no boxes."
+   },
+   {
+    "key": "accordion-options",
+    "blocks": "accordion",
+    "values": "Compact=compact | Plus sign=plus",
+    "type": "variants",
+    "label": "Accordion options",
+    "when": "",
+    "description": "compact=No space between the items. | plus=A plus / minus sign instead of the arrow."
+   },
+   {
+    "key": "tab-style",
+    "blocks": "tabs",
+    "values": "Pills=pills | Underline=underline | Vertical=vertical",
+    "type": "variant",
+    "label": "Tab style",
+    "when": "",
+    "description": "pills=Rounded tabs. | underline=A line under the open tab. | vertical=Tabs in a column on the left (from 900px)."
+   },
+   {
+    "key": "text-box",
+    "blocks": "carousel",
+    "values": "Light box=light | Below the image=content-below",
+    "type": "variant",
+    "label": "Slide text",
+    "when": "",
+    "description": "light=A light box on the image. | content-below=The text under the image, not on it."
+   },
+   {
+    "key": "slide-height",
+    "blocks": "carousel",
+    "values": "Compact=compact",
+    "type": "variants",
+    "label": "Slide height",
+    "when": "",
+    "description": "compact=Shorter slides."
+   },
+   {
+    "key": "title-type",
+    "blocks": "section-title",
+    "values": "H1=h1 | H2=h2 | H3=h3 | H4=h4 | H5=h5 | H6=h6 | Paragraph=p",
+    "type": "",
+    "label": "Heading level",
+    "when": "",
+    "description": "The title's heading level (one H1 per page)."
+   },
+   {
+    "key": "title-size",
+    "blocks": "section-title",
+    "values": "XXL=xxl | XL=xl | L=l | M=m | S=s | XS=xs",
+    "type": "",
+    "label": "Title size",
+    "when": "",
+    "description": ""
+   },
+   {
+    "key": "alignment",
+    "blocks": "section-title",
+    "values": "Left=left | Centre=center | Right=right",
+    "type": "",
+    "label": "Alignment",
+    "when": "",
+    "description": ""
+   },
+   {
+    "key": "text-color",
+    "blocks": "section-title",
+    "values": "Text=text | Dark=dark | Light=light | Link=link | Link hover=link-hover | Background=background",
+    "type": "",
+    "label": "Text colour",
+    "when": "",
+    "description": "One of the site's colour tokens."
+   },
+   {
+    "key": "subtitle",
+    "blocks": "section-title",
+    "values": "Type the subtitle (e.g. Everything we offer)",
+    "type": "",
+    "label": "Subtitle",
+    "when": "",
+    "description": ""
+   },
+   {
+    "key": "subtitle-size",
+    "blocks": "section-title",
+    "values": "XXL=xxl | XL=xl | L=l | M=m | S=s | XS=xs",
+    "type": "",
+    "label": "Subtitle size",
+    "when": "",
+    "description": ""
+   },
+   {
+    "key": "content",
+    "blocks": "cards",
+    "values": "image=Card image | heading=Card title | text=Card text | button=Card link",
+    "type": "content",
+    "label": "Content names",
+    "when": "",
+    "description": ""
+   },
+   {
+    "key": "content",
+    "blocks": "hero",
+    "values": "image=Background image | heading=Headline | text=Intro | button=Call to action",
+    "type": "content",
+    "label": "Content names",
+    "when": "",
+    "description": ""
+   },
+   {
+    "key": "content",
+    "blocks": "accordion",
+    "values": "column1=Question | column2=Answer",
+    "type": "content",
+    "label": "Content names",
+    "when": "",
+    "description": ""
+   },
+   {
+    "key": "content",
+    "blocks": "tabs",
+    "values": "column1=Tab label | column2=Tab content",
+    "type": "content",
+    "label": "Content names",
+    "when": "",
+    "description": ""
+   },
+   {
+    "key": "content",
+    "blocks": "carousel, card-carousel",
+    "values": "image=Slide image | heading=Slide title | text=Slide text",
+    "type": "content",
+    "label": "Content names",
+    "when": "",
+    "description": ""
+   },
+   {
+    "key": "content",
+    "blocks": "columns",
+    "values": "column1=Left column | column2=Right column",
+    "type": "content",
+    "label": "Content names",
+    "when": "",
+    "description": ""
+   }
+  ],
+  ":colWidths": [
+   160,
+   300,
+   700,
+   90,
+   200,
+   120,
+   500
+  ]
+ },
+ ":names": [
+  "data",
+  "options"
+ ],
+ ":version": 3,
+ ":type": "multi-sheet"
+}

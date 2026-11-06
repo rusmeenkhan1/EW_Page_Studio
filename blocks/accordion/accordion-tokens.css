@@ -10,4 +10,7 @@
   --accordion-icon-size: 6px; /* @boilerplate */
   --accordion-icon-thickness: 2px; /* @boilerplate */
   --accordion-transition-duration: var(--transition-duration); /* @boilerplate */
+
+  /* variants (Page Studio test site) */
+  --accordion-flush-divider: var(--border-width-s) solid var(--dark-color);
 }

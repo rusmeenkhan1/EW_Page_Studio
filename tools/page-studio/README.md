@@ -120,13 +120,16 @@ A property row (`key | value` in the block) is only right for blocks whose code 
 an extra row as content. Section options: any `section-metadata` row; values that are all `name=#hex` (or type
 `colour`) become colour swatches with Custom and a colour code field, writing the hex.
 
-Example rows for this boilerplate:
+Example rows for this boilerplate (the full sheet of the test site: `tests/page-studio/site/da/.da/library/blocks.json`):
 
-| key | blocks | values | type | label |
-|---|---|---|---|---|
-| background-color | section-metadata | Light=#f2f4f7 \| Brand=#e2f7ff | colour | Background colour |
-| style | section-metadata | Side by side=flex \| Hide on mobile=hide-mobile \| Hide on desktop=hide-desktop | multi | Section style |
-| variant | cards | Grid=grid \| List=list | variant | Card style |
+| key | blocks | values | type | label | when |
+|---|---|---|---|---|---|
+| background-color | section-metadata | Light grey=#f8f8f8 \| Link blue=#3b63fb | colour | Background colour | |
+| style | section-metadata | Light background=light \| Centre text=center \| Hide on mobile=hide-mobile | multi | Section style | |
+| layout | cards | Two per row=two-up \| Three per row=three-up \| Four per row=four-up | variant | Cards per row | |
+| card-options | cards | Shadow=shadow \| Rounded corners=rounded | variants | Card options | |
+| image-side | hero | Image on the left=image-left | variants | Image side | split |
+| title-size | section-title | XL=xl \| L=l \| M=m | | Title size | |
 
 ### Button designs — `buttons-sheet` (e.g. `/.da/library/buttons`)
 
@@ -218,6 +221,11 @@ document, or not at all. Options: `BASE_URL`, `ONLY=<part of a name>`, `CHROMIUM
 
 Not covered by the harness — check in a signed-in Experience Workspace session before a release: a real DA's
 answers and timing, image upload, the Layout view.
+
+For that, the DA site **rusmeenkhan1/ew-page-studio** is a test site with this repository's blocks and their variants,
+a block library with every kind of option row, button designs, every setting and pages to try each view on. Its
+content is kept in [`tests/page-studio/site/`](../../tests/page-studio/site/README.md) (`upload.mjs --check` compares it
+with DA).
 
 ---
 

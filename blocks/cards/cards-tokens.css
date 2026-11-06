@@ -8,4 +8,11 @@
   --cards-card-body-margin: var(--spacing-s); /* @boilerplate */
   --cards-image-aspect-ratio: 4 / 3; /* @boilerplate */
   --cards-image-object-fit: cover; /* @boilerplate */
+
+  /* variants (Page Studio test site) */
+  --cards-radius: 8px;
+  --cards-shadow: 0 2px 12px rgb(19 19 19 / 15%);
+  --cards-overlay-background: linear-gradient(to top, rgb(19 19 19 / 85%), rgb(19 19 19 / 0%) 70%);
+  --cards-overlay-color: var(--background-color);
+  --cards-horizontal-image-width: 40%;
 }

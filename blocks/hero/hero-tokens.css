@@ -4,4 +4,10 @@
   --hero-padding-desktop: var(--spacing-xl) var(--spacing-l); /* @boilerplate */
   --hero-min-height: 300px; /* @boilerplate */
   --hero-heading-max-width: var(--max-width-site); /* @boilerplate */
+
+  /* variants (Page Studio test site) */
+  --hero-min-height-short: 200px;
+  --hero-min-height-tall: 560px;
+  --hero-overlay-background: rgb(19 19 19 / 50%);
+  --hero-split-gap: var(--spacing-xl);
 }

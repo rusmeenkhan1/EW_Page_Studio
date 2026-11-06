@@ -4,4 +4,10 @@
   --quote-padding: 0 var(--spacing-m); /* @boilerplate */
   --quote-padding-desktop: 0 var(--spacing-l); /* @boilerplate */
   --quote-quotation-font-size: 120%; /* @boilerplate */
+
+  /* variants (Page Studio test site) */
+  --quote-large-font-size: var(--heading-font-size-s);
+  --quote-box-padding: var(--spacing-xl);
+  --quote-box-background: var(--light-color);
+  --quote-accent-border: 4px solid var(--link-color);
 }

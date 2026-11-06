@@ -4,4 +4,10 @@
   --tabs-border-width: var(--border-width-s); /* @boilerplate */
   --tabs-border-color: var(--border-color); /* @boilerplate */
   --tabs-transition-duration: var(--transition-duration); /* @boilerplate */
+
+  /* variants (Page Studio test site) */
+  --tabs-pill-radius: 999px;
+  --tabs-accent-color: var(--link-color);
+  --tabs-underline-width: 3px;
+  --tabs-vertical-list-width: 30%;
 }

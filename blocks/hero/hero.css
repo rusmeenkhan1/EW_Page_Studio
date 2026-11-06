@@ -11,7 +11,8 @@
   min-height: var(--hero-min-height); /* @boilerplate */
 }
 
-.hero h1 { /* @boilerplate */
+/* the title: the page's H1, or an H2 when the hero isn't the page's first heading */
+.hero :is(h1, h2) { /* @boilerplate */
   max-width: var(--hero-heading-max-width); /* @boilerplate */
   margin-left: auto; /* @boilerplate */
   margin-right: auto; /* @boilerplate */
@@ -36,4 +37,88 @@
   .hero { /* @boilerplate */
     padding: var(--hero-padding-desktop); /* @boilerplate */
   }
+}
+
+/* ==== variants ==== */
+
+/* height */
+.hero.short {
+  min-height: var(--hero-min-height-short);
+}
+
+.hero.tall {
+  min-height: var(--hero-min-height-tall);
+}
+
+/* style: centred (text in the middle), split (image beside the text, not behind it) */
+.hero.centered {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.hero.split {
+  min-height: 0;
+}
+
+.hero.split :is(h1, h2) {
+  margin-left: 0;
+  color: var(--text-color);
+}
+
+.hero.split picture {
+  position: static;
+  z-index: auto;
+  display: block;
+}
+
+.hero.split img {
+  height: auto;
+  aspect-ratio: 4 / 3;
+}
+
+@media (width >= 900px) {
+  .hero.split > div > div {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--hero-split-gap);
+    align-items: center;
+  }
+
+  .hero.split > div > div > :has(picture),
+  .hero.split > div > div > picture {
+    grid-area: 1 / 2 / span 10;
+  }
+
+  .hero.split > div > div > :not(:has(picture), picture) {
+    grid-column: 1;
+  }
+
+  /* with image-left: the image in the first column, the text in the second */
+  .hero.split.image-left > div > div > :has(picture),
+  .hero.split.image-left > div > div > picture {
+    grid-column: 1;
+  }
+
+  .hero.split.image-left > div > div > :not(:has(picture), picture) {
+    grid-column: 2;
+  }
+}
+
+/* option: a dark layer on the image, for white text on any picture */
+.hero.dark-overlay {
+  color: var(--background-color);
+}
+
+.hero.dark-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-color: var(--hero-overlay-background);
+}
+
+.hero.dark-overlay a:any-link:not(.button) {
+  color: inherit;
 }

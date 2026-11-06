@@ -1,4 +1,9 @@
 /* columns design tokens */
 :root { /* @boilerplate */
   --columns-gap: var(--spacing-m); /* @boilerplate */
+
+  /* variants (Page Studio test site) */
+  --columns-box-padding: var(--spacing-l);
+  --columns-box-background: var(--light-color);
+  --columns-divider: var(--border-width-s) solid var(--dark-color);
 }

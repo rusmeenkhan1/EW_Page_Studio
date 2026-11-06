@@ -19,4 +19,9 @@
   --carousel-nav-arrow-thickness: 2px; /* @boilerplate */
   --carousel-nav-arrow-offset: 2px; /* @boilerplate */
   --carousel-transition-duration: var(--transition-duration); /* @boilerplate */
+
+  /* variants (Page Studio test site) */
+  --carousel-light-content-background: rgb(255 255 255 / 90%);
+  --carousel-light-content-color: var(--text-color);
+  --carousel-compact-min-height: 320px;
 }

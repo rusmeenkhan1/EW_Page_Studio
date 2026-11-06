@@ -153,3 +153,39 @@
     --slide-content-width: auto; /* @boilerplate */
   }
 }
+
+/* ==== variants ==== */
+
+/* text: light (a light box on the image), below (under the image, not on it) */
+.carousel.light .carousel-slide .carousel-slide-content {
+  background-color: var(--carousel-light-content-background);
+  color: var(--carousel-light-content-color);
+}
+
+.carousel.content-below .carousel-slide {
+  justify-content: flex-start;
+  min-height: 0;
+}
+
+.carousel.content-below .carousel-slide .carousel-slide-image {
+  width: 100%;
+}
+
+.carousel.content-below .carousel-slide .carousel-slide-image picture {
+  position: static;
+  display: block;
+  aspect-ratio: 16 / 9;
+}
+
+.carousel.content-below .carousel-slide .carousel-slide-content {
+  margin: 0;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: transparent;
+  color: var(--text-color);
+}
+
+/* height: compact (a shorter slide) */
+.carousel.compact .carousel-slide {
+  min-height: var(--carousel-compact-min-height);
+}

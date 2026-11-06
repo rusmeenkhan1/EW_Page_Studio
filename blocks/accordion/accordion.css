@@ -63,3 +63,45 @@
   border-top: var(--accordion-item-border-width) solid var(--accordion-item-border-color); /* @boilerplate */
   background-color: var(--background-color); /* @boilerplate */
 }
+
+/* ==== variants ==== */
+
+/* style: flush (lines between the items, no boxes) */
+.accordion.flush > ul > li {
+  border: 0;
+  border-bottom: var(--accordion-flush-divider);
+}
+
+.accordion.flush > ul > li + li {
+  margin-top: 0;
+}
+
+.accordion.flush > ul > li:first-child {
+  border-top: var(--accordion-flush-divider);
+}
+
+.accordion.flush li.active .accordion-item-body {
+  border-top: 0;
+}
+
+/* options: compact (no space between items), plus (a plus / minus sign instead of the arrow) */
+.accordion.compact > ul > li + li {
+  margin-top: 0;
+  border-top: 0;
+}
+
+.accordion.plus .accordion-item-label::after,
+.accordion.plus li.active .accordion-item-label::after {
+  content: '+';
+  width: auto;
+  height: auto;
+  border: 0;
+  font-size: var(--body-font-size-m);
+  font-weight: bold;
+  line-height: 1;
+  transform: translateY(-50%);
+}
+
+.accordion.plus li.active .accordion-item-label::after {
+  content: '−';
+}

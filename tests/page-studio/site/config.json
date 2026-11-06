@@ -1,0 +1,53 @@
+{
+ "data": {
+  "total": 1,
+  "limit": 1,
+  "offset": 0,
+  "data": [
+   {}
+  ]
+ },
+ "library": {
+  "total": 5,
+  "limit": 5,
+  "offset": 0,
+  "data": [
+   {
+    "title": "Page Studio",
+    "path": "/tools/page-studio/page-studio.html",
+    "experience": "",
+    "icon": "/tools/page-studio/page-studio.svg"
+   },
+   {
+    "title": "Blocks",
+    "path": "https://content.da.live/rusmeenkhan1/ew-page-studio/.da/library/blocks.json",
+    "experience": "",
+    "icon": ""
+   },
+   {
+    "title": "Page Studio: Block view",
+    "path": "/tools/page-studio/views/block/block.html",
+    "experience": "",
+    "icon": "/tools/page-studio/views/block/block.svg"
+   },
+   {
+    "title": "Page Studio: Button view",
+    "path": "/tools/page-studio/views/button/button.html",
+    "experience": "",
+    "icon": "/tools/page-studio/views/button/button.svg"
+   },
+   {
+    "title": "Page Studio: Section view",
+    "path": "/tools/page-studio/views/section/section.html",
+    "experience": "",
+    "icon": "/tools/page-studio/views/section/section.svg"
+   }
+  ]
+ },
+ ":names": [
+  "data",
+  "library"
+ ],
+ ":version": 3,
+ ":type": "multi-sheet"
+}

@@ -29,3 +29,44 @@
     order: unset; /* @boilerplate */
   }
 }
+
+/* ==== variants ==== */
+
+/* column style: boxed (each column on a panel), divided (lines between columns) */
+.columns.boxed > div {
+  gap: var(--columns-gap);
+}
+
+.columns.boxed > div > div:not(.columns-img-col) {
+  padding: var(--columns-box-padding);
+  background-color: var(--columns-box-background);
+}
+
+.columns.divided > div > div + div {
+  border-top: var(--columns-divider);
+  padding-top: var(--columns-gap);
+}
+
+@media (width >= 900px) {
+  .columns.divided > div > div + div {
+    border-top: 0;
+    border-left: var(--columns-divider);
+    padding-top: 0;
+    padding-left: var(--columns-gap);
+  }
+
+  /* widths: the image column, or the text, takes two thirds */
+  .columns.image-wide > div > .columns-img-col,
+  .columns.text-wide > div > div:not(.columns-img-col) {
+    flex: 2;
+  }
+
+  /* vertical alignment of the columns in a row */
+  .columns.align-top > div {
+    align-items: flex-start;
+  }
+
+  .columns.align-bottom > div {
+    align-items: flex-end;
+  }
+}

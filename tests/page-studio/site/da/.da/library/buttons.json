@@ -1,0 +1,128 @@
+{
+ "styles": {
+  "total": 4,
+  "limit": 4,
+  "offset": 0,
+  "data": [
+   {
+    "style": "primary",
+    "label": "Primary",
+    "marks": "strong",
+    "classes": "button primary",
+    "option": "",
+    "icons": ""
+   },
+   {
+    "style": "secondary",
+    "label": "Secondary",
+    "marks": "em",
+    "classes": "button secondary",
+    "option": "",
+    "icons": ""
+   },
+   {
+    "style": "accent",
+    "label": "Accent",
+    "marks": "strong+em",
+    "classes": "button accent",
+    "option": "",
+    "icons": ""
+   },
+   {
+    "style": "link",
+    "label": "Text link",
+    "marks": "",
+    "classes": "",
+    "option": "",
+    "icons": "no"
+   }
+  ]
+ },
+ "presets": {
+  "total": 6,
+  "limit": 6,
+  "offset": 0,
+  "data": [
+   {
+    "name": "Primary button",
+    "style": "primary",
+    "label": "Learn more",
+    "description": "The main call to action.",
+    "color": "",
+    "text-color": "",
+    "options": ""
+   },
+   {
+    "name": "Secondary button",
+    "style": "secondary",
+    "label": "See all",
+    "description": "A quieter action, outlined.",
+    "color": "",
+    "text-color": "",
+    "options": ""
+   },
+   {
+    "name": "Accent button",
+    "style": "accent",
+    "label": "Get started",
+    "description": "A high-impact call to action.",
+    "color": "",
+    "text-color": "",
+    "options": ""
+   },
+   {
+    "name": "Text link",
+    "style": "link",
+    "label": "Read more",
+    "description": "A plain link, no button.",
+    "color": "",
+    "text-color": "",
+    "options": ""
+   },
+   {
+    "name": "Search button",
+    "style": "primary",
+    "label": "Search",
+    "description": "With the search icon.",
+    "color": "",
+    "text-color": "",
+    "options": "icon=\"search\""
+   },
+   {
+    "name": "Blue button",
+    "style": "primary",
+    "label": "Donate",
+    "description": "A primary button in deep blue, white text.",
+    "color": "#1d3ecf",
+    "text-color": "#ffffff",
+    "options": ""
+   }
+  ]
+ },
+ "options": {
+  "total": 3,
+  "limit": 3,
+  "offset": 0,
+  "data": [
+   {
+    "key": "color",
+    "values": "Link blue=#3b63fb | Deep blue=#1d3ecf | Dark grey=#505050 | Brand grey=#666666"
+   },
+   {
+    "key": "text-color",
+    "values": "White=#ffffff | Near black=#131313"
+   },
+   {
+    "key": "icon",
+    "values": "Search=search"
+   }
+  ]
+ },
+ ":names": [
+  "styles",
+  "presets",
+  "options"
+ ],
+ ":version": 3,
+ ":type": "multi-sheet"
+}
