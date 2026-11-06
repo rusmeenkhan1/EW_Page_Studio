@@ -50,7 +50,8 @@ inside a `<p>`), then:
 
 ```sh
 node tests/page-studio/site/upload.mjs --check              # what differs from DA (reads only)
-node tests/page-studio/site/upload.mjs --upload             # write da/ to DA (source only, nothing is published)
+node tests/page-studio/site/upload.mjs --upload --changed   # write only what differs (source only, nothing is published)
+node tests/page-studio/site/upload.mjs --upload             # write all of da/ to DA
 node tests/page-studio/site/upload.mjs --upload --config    # ... and config.json as the site's DA config
 ```
 

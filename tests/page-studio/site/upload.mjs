@@ -4,6 +4,7 @@
  *
  *   node tests/page-studio/site/upload.mjs --check            compare DA with ./da (reads only)
  *   node tests/page-studio/site/upload.mjs --upload           write every file of ./da to DA
+ *   node tests/page-studio/site/upload.mjs --upload --changed write only the files DA holds differently
  *   node tests/page-studio/site/upload.mjs --upload --config  ... and the site's DA config (config.json)
  *
  * Writes DA source only: nothing is previewed or published. Images go first, so no document points
@@ -68,9 +69,12 @@ let problems = 0;
 for (const [path, local] of files()) {
   // one at a time: DA is not hurried, and the report stays in order
   // eslint-disable-next-line no-await-in-loop
-  const problem = args.has('--upload') ? await upload(path, local) : await same(path, local);
+  const difference = args.has('--upload') && !args.has('--changed') ? 'all' : await same(path, local);
+  // eslint-disable-next-line no-await-in-loop
+  const problem = args.has('--upload') && difference ? await upload(path, local) : difference;
   if (problem) problems += 1;
-  console.log(`${problem ? '✗' : '✓'} ${path}${problem ? `  ${problem}` : ''}`);
+  const done = args.has('--upload') && difference && !problem ? '  uploaded' : '';
+  console.log(`${problem ? '✗' : '✓'} ${path}${problem ? `  ${problem}` : done}`);
 }
 if (args.has('--config')) {
   const form = new FormData();
