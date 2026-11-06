@@ -1,0 +1,97 @@
+/* Section title: scoped to main; sizes use global heading tokens; text colors use :root palette tokens */
+
+main .section-title { /* @boilerplate */
+  margin: 0; /* @boilerplate */
+  padding: 0; /* @boilerplate */
+}
+
+main .section-title.size-xxl .title,
+main .section-title.subtitle-size-xxl .subtitle { /* @boilerplate */
+  font-size: var(--heading-font-size-xxl); /* @boilerplate */
+}
+
+main .section-title.size-xl .title,
+main .section-title.subtitle-size-xl .subtitle { /* @boilerplate */
+  font-size: var(--heading-font-size-xl); /* @boilerplate */
+}
+
+main .section-title.size-l .title,
+main .section-title.subtitle-size-l .subtitle { /* @boilerplate */
+  font-size: var(--heading-font-size-l); /* @boilerplate */
+}
+
+main .section-title.size-m .title,
+main .section-title.subtitle-size-m .subtitle { /* @boilerplate */
+  font-size: var(--heading-font-size-m); /* @boilerplate */
+}
+
+main .section-title.size-s .title,
+main .section-title.subtitle-size-s .subtitle { /* @boilerplate */
+  font-size: var(--heading-font-size-s); /* @boilerplate */
+}
+
+main .section-title.size-xs .title,
+main .section-title.subtitle-size-xs .subtitle { /* @boilerplate */
+  font-size: var(--heading-font-size-xs); /* @boilerplate */
+}
+
+/*
+ * Text color = :root tokens from styles/styles.css (overridable per section band).
+ * Class pattern: section-title-color-{token}. To add a custom token: define --{token}-color on :root,
+ * append the key to TEXT_COLOR_VAR_KEYS in section-title.js, and add a rule below.
+ */
+main .section-title.section-title-color-background .title,
+main .section-title.section-title-color-background .subtitle { /* @boilerplate */
+  color: var(--background-color); /* @boilerplate */
+}
+
+main .section-title.section-title-color-light .title,
+main .section-title.section-title-color-light .subtitle { /* @boilerplate */
+  color: var(--light-color); /* @boilerplate */
+}
+
+main .section-title.section-title-color-dark .title,
+main .section-title.section-title-color-dark .subtitle { /* @boilerplate */
+  color: var(--dark-color); /* @boilerplate */
+}
+
+main .section-title.section-title-color-text .title,
+main .section-title.section-title-color-text .subtitle { /* @boilerplate */
+  color: var(--text-color); /* @boilerplate */
+}
+
+main .section-title.section-title-color-link .title,
+main .section-title.section-title-color-link .subtitle { /* @boilerplate */
+  color: var(--link-color); /* @boilerplate */
+}
+
+main .section-title.section-title-color-link-hover .title,
+main .section-title.section-title-color-link-hover .subtitle { /* @boilerplate */
+  color: var(--link-hover-color); /* @boilerplate */
+}
+
+main .section-title .title:has(.icon),
+main .section-title .subtitle:has(.icon) { /* @boilerplate */
+  display: inline-flex; /* @boilerplate */
+  align-items: center; /* @boilerplate */
+  flex-wrap: wrap; /* @boilerplate */
+  gap: 0.25em; /* @boilerplate */
+}
+
+main .section-title .icon { /* @boilerplate */
+  flex-shrink: 0; /* @boilerplate */
+  height: 1em; /* @boilerplate */
+  width: 1em; /* @boilerplate */
+  vertical-align: middle; /* @boilerplate */
+}
+
+main .section-title .icon img { /* @boilerplate */
+  height: 100%; /* @boilerplate */
+  width: 100%; /* @boilerplate */
+  object-fit: contain; /* @boilerplate */
+  display: block; /* @boilerplate */
+}
+
+main .section-title.center { text-align: center; } /* @boilerplate */
+main .section-title.right { text-align: right; } /* @boilerplate */
+main .section-title.left { text-align: left; } /* @boilerplate */

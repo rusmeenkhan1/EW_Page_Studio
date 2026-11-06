@@ -1,0 +1,88 @@
+## Summary
+
+Introduces **widgets** — a lightweight pattern for embedding self-contained UI components on a page without CMS-authored block content.
+
+Think of widgets as **blocks without content**. Blocks are ideal when authors structure content in the document (headings, images, links, rows/columns). Widgets are better when the page only needs a placeholder and configuration — search boxes, login forms, calculators, maps, chat embeds, or any component whose markup lives in code rather than in authored tables.
+
+Authors reference a widget with a single link:
+
+```markdown
+[Site Search](/widgets/search/site-search.html?q=docs)
+```
+
+Auto-blocking turns that link into a `widget` block, which fetches and mounts the widget's own HTML, CSS, and JS from `/widgets/` in the repository.
+
+## Widgets vs blocks
+
+| | **Block** | **Widget** |
+|---|-----------|------------|
+| **Content** | Authored in the document (tables, rows, cells) | None — only a link reference |
+| **Markup** | Built by decorating authored HTML | Fetched from `/widgets/{path}/{name}.html` |
+| **Styles / behavior** | `blocks/{name}/{name}.css/js` | `widgets/{path}/{name}.css/js` |
+| **Configuration** | Block structure + metadata | URL query parameters → `data-*` attributes |
+| **Good for** | Content-driven layouts (cards, columns, hero) | Code-driven components (forms, widgets, embeds) |
+
+If you find yourself building a block with lots of empty placeholders and no real authored content — just configuration — it is likely a widget.
+
+## Authoring
+
+Any link containing `/widgets/` is auto-converted during page decoration:
+
+```
+/widgets/name.html
+/widgets/path1/name.html
+/widgets/path1/path2/name.html?theme=dark&foo=bar
+```
+
+Intermediate path segments locate assets on disk. The **filename** (without extension) drives CSS class names in the DOM.
+
+Query parameters are copied onto the widget root as `data-*` attributes, so authors can pass simple configuration without CMS block structure.
+
+## Widget project structure
+
+Each widget is a small, self-contained bundle under `/widgets/`:
+
+```
+widgets/
+  search/
+    site-search.html    # boilerplate HTML inserted into the DOM
+    site-search.css     # widget-scoped styles
+    site-search.js      # export default async function decorate(el) { … }
+    site-search.json    # optional: string literals for translation
+```
+
+The `.html` file is the widget's initial DOM. The `.js` file follows the same decorate pattern as blocks. A `.json` alongside is a common place for i18n strings that need translation.
+
+## Resulting DOM
+
+For `/widgets/path1/path2/name.html`, after decoration:
+
+```html
+<div class="section name-container">
+  <div class="name-wrapper">
+    <div class="widget name"
+         data-block-name="widget"
+         data-block-status="loaded"
+         data-source="/widgets/path1/path2/name.html">
+      <!-- fetched widget HTML -->
+    </div>
+  </div>
+</div>
+```
+
+Generic block scaffold classes (`block`, `widget-wrapper`, `widget-container`) are removed after load. The widget filename becomes the CSS scope (`name`, `name-wrapper`, `name-container`). Widget-specific styles belong in `/widgets/…/name.css`, not in `blocks/widget/widget.css` (which only covers the loader).
+
+## Implementation
+
+- `scripts/scripts.js` — `buildWidgetAutoBlocks()` converts `/widgets/` links into widget blocks (same phase as fragment auto-loading and hero auto-blocking)
+- `blocks/widget/widget.js` — parses the href, fetches HTML/CSS/JS, applies classes and data attributes, runs the widget's decorate function
+- `blocks/widget/widget.css` — minimal block-loader styles to satisfy the block CSS pipeline
+
+## Test plan
+
+- [ ] Add a widget bundle under `/widgets/` in the code repo (e.g. `widgets/demo/demo.html`, `.css`, `.js`)
+- [ ] Author a page with a link to `/widgets/demo/demo.html`
+- [ ] Verify auto-blocking creates a widget block and fetches assets without console 404s
+- [ ] Verify resulting DOM uses `{name}` classes, not path-prefixed names
+- [ ] Verify query params appear as `data-*` on the widget root
+See https://github.com/adobe/aem-boilerplate/pull/630/changes/89dfbe75ac3ad188fcb3b0df66656e0d08e968b1 for example lead gen widget

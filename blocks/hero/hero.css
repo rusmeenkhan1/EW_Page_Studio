@@ -1,0 +1,39 @@
+@import url('./hero-tokens.css');
+
+.hero-container .hero-wrapper { /* @boilerplate */
+  max-width: unset; /* @boilerplate */
+  padding: 0; /* @boilerplate */
+}
+
+.hero { /* @boilerplate */
+  position: relative; /* @boilerplate */
+  padding: var(--hero-padding); /* @boilerplate */
+  min-height: var(--hero-min-height); /* @boilerplate */
+}
+
+.hero h1 { /* @boilerplate */
+  max-width: var(--hero-heading-max-width); /* @boilerplate */
+  margin-left: auto; /* @boilerplate */
+  margin-right: auto; /* @boilerplate */
+  color: var(--background-color); /* @boilerplate */
+}
+
+.hero picture { /* @boilerplate */
+  position: absolute; /* @boilerplate */
+  z-index: -1; /* @boilerplate */
+  inset: 0; /* @boilerplate */
+  object-fit: cover; /* @boilerplate */
+  box-sizing: border-box; /* @boilerplate */
+}
+
+.hero img { /* @boilerplate */
+  object-fit: cover; /* @boilerplate */
+  width: 100%; /* @boilerplate */
+  height: 100%; /* @boilerplate */
+}
+
+@media (width >= 900px) { /* @boilerplate */
+  .hero { /* @boilerplate */
+    padding: var(--hero-padding-desktop); /* @boilerplate */
+  }
+}

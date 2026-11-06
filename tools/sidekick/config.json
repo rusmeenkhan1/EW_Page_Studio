@@ -1,0 +1,22 @@
+{
+  "plugins": [
+    {
+      "id": "aemedit",
+      "title": "DA Edit",
+      "environments": [ "dev", "preview", "live" ],
+      "event": "aemedit"
+    },
+    {
+      "id": "experience-workspace",
+      "title": "Canvas",
+      "environments": [ "dev", "preview", "live" ],
+      "event": "experience-workspace"
+    },
+    {
+      "id": "quick-edit",
+      "title": "Quick Edit",
+      "environments": [ "dev", "preview" ],
+      "event": "quick-edit"
+    }
+  ]
+}

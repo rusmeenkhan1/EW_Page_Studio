@@ -1,0 +1,139 @@
+@import url('./search-tokens.css');
+
+/* search box */
+.search .search-box { /* @boilerplate */
+  display: grid; /* @boilerplate */
+  grid-template-columns: auto 1fr; /* @boilerplate */
+  gap: 1ch; /* @boilerplate */
+  align-items: center; /* @boilerplate */
+}
+
+.search .search-box input { /* @boilerplate */
+  box-sizing: border-box; /* @boilerplate */
+  display: block; /* @boilerplate */
+  width: 100%; /* @boilerplate */
+  margin: 0; /* @boilerplate */
+  padding: 0.5em; /* @boilerplate */
+  border-radius: var(--search-input-border-radius); /* @boilerplate */
+  border: var(--border-width-s) solid var(--dark-color); /* @boilerplate */
+  background-color: var(--background-color); /* @boilerplate */
+  color: var(--text-color); /* @boilerplate */
+  font-size: var(--body-font-size-s); /* @boilerplate */
+  transition: border-color var(--search-transition-duration); /* @boilerplate */
+}
+
+.search .search-box input:hover { /* @boilerplate */
+  border: var(--border-width-s) solid var(--text-color); /* @boilerplate */
+}
+
+/* search results */
+.search ul.search-results { /* @boilerplate */
+  display: grid; /* @boilerplate */
+  grid-template-columns: repeat(auto-fill, minmax(var(--search-results-min-width), 1fr)); /* @boilerplate */
+  gap: var(--search-results-gap); /* @boilerplate */
+  padding-left: 0; /* @boilerplate */
+  list-style: none; /* @boilerplate */
+}
+
+.search ul.search-results > li { /* @boilerplate */
+  border: var(--border-width-s) solid var(--search-result-border-color); /* @boilerplate */
+}
+
+.search ul.search-results > li > a { /* @boilerplate */
+  display: block; /* @boilerplate */
+  height: 100%; /* @boilerplate */
+  background-color: transparent; /* @boilerplate */
+  color: currentcolor; /* @boilerplate */
+  cursor: pointer; /* @boilerplate */
+}
+
+.search ul.search-results > li > a:hover,
+.search ul.search-results > li > a:focus { /* @boilerplate */
+  text-decoration: none; /* @boilerplate */
+}
+
+.search ul.search-results > li .search-result-title,
+.search ul.search-results > li p { /* @boilerplate */
+  padding: 0 var(--search-result-content-padding); /* @boilerplate */
+}
+
+.search ul.search-results > li .search-result-title { /* @boilerplate */
+  font-size: var(--body-font-size-m); /* @boilerplate */
+  font-weight: normal; /* @boilerplate */
+}
+
+.search ul.search-results > li .search-result-title a { /* @boilerplate */
+  color: currentcolor; /* @boilerplate */
+  text-decoration: none; /* @boilerplate */
+}
+
+.search ul.search-results > li p { /* @boilerplate */
+  font-size: var(--body-font-size-s); /* @boilerplate */
+}
+
+.search ul.search-results > li .search-result-image { /* @boilerplate */
+  aspect-ratio: 4 / 3; /* @boilerplate */
+}
+
+.search ul.search-results > li picture img { /* @boilerplate */
+  display: block; /* @boilerplate */
+  width: 100%; /* @boilerplate */
+  object-fit: cover; /* @boilerplate */
+}
+
+/* no results */
+.search ul.search-results.no-results { /* @boilerplate */
+  display: block; /* @boilerplate */
+  margin-left: var(--search-no-results-indent); /* @boilerplate */
+}
+
+.search ul.search-results.no-results > li { /* @boilerplate */
+  border: none; /* @boilerplate */
+}
+
+/* minimal variant */
+.search.minimal ul.search-results { /* @boilerplate */
+  display: block; /* @boilerplate */
+  padding-left: var(--search-minimal-indent); /* @boilerplate */
+}
+
+.search.minimal ul.search-results > li { /* @boilerplate */
+  position: relative; /* @boilerplate */
+  border: none; /* @boilerplate */
+}
+
+.search.minimal ul.search-results > li .search-result-title,
+.search.minimal ul.search-results > li p { /* @boilerplate */
+  padding: unset; /* @boilerplate */
+}
+
+.search.minimal ul.search-results > li .search-result-title a { /* @boilerplate */
+  color: var(--link-color); /* @boilerplate */
+}
+
+/* stylelint-disable no-descending-specificity */
+.search.minimal ul.search-results > li > a { /* @boilerplate */
+  background-color: unset; /* @boilerplate */
+}
+
+.search.minimal ul.search-results > li > a:hover a,
+.search.minimal ul.search-results > li > a:focus a { /* @boilerplate */
+  text-decoration: underline; /* @boilerplate */
+  color: var(--link-hover-color); /* @boilerplate */
+}
+
+.search.minimal ul.search-results > li .search-result-image { /* @boilerplate */
+  position: absolute; /* @boilerplate */
+  top: 2px; /* @boilerplate */
+  left: calc(-1 * var(--search-minimal-indent)); /* @boilerplate */
+}
+
+.search.minimal ul.search-results .search-result-title + p { /* @boilerplate */
+  margin-top: 0.25em; /* @boilerplate */
+}
+
+.search.minimal ul.search-results > li picture img { /* @boilerplate */
+  height: var(--search-minimal-thumbnail-size); /* @boilerplate */
+  width: var(--search-minimal-thumbnail-size); /* @boilerplate */
+  border-radius: 50%; /* @boilerplate */
+}

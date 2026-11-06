@@ -1,0 +1,60 @@
+@import url('./tabs-tokens.css');
+
+.tabs .tabs-list { /* @boilerplate */
+  display: flex; /* @boilerplate */
+  gap: 0.5ch; /* @boilerplate */
+  max-width: 100%; /* @boilerplate */
+  font-size: var(--body-font-size-xs); /* @boilerplate */
+  overflow-x: auto; /* @boilerplate */
+}
+
+@media (width >= 600px) { /* @boilerplate */
+  .tabs .tabs-list { /* @boilerplate */
+    font-size: var(--body-font-size-s); /* @boilerplate */
+  }
+}
+
+@media (width >= 900px) { /* @boilerplate */
+  .tabs .tabs-list { /* @boilerplate */
+    font-size: var(--body-font-size-m); /* @boilerplate */
+  }
+}
+
+.tabs .tabs-list button { /* @boilerplate */
+  flex: 0 0 max-content; /* @boilerplate */
+  margin: 0; /* @boilerplate */
+  border: var(--tabs-border-width) solid var(--tabs-border-color); /* @boilerplate */
+  border-radius: 0; /* @boilerplate */
+  padding: 0.5em; /* @boilerplate */
+  background-color: var(--light-color); /* @boilerplate */
+  color: initial; /* @boilerplate */
+  font-weight: bold; /* @boilerplate */
+  line-height: unset; /* @boilerplate */
+  text-align: initial; /* @boilerplate */
+  text-overflow: unset; /* @boilerplate */
+  overflow: unset; /* @boilerplate */
+  white-space: unset; /* @boilerplate */
+  transition: background-color var(--tabs-transition-duration); /* @boilerplate */
+}
+
+.tabs .tabs-list button p { /* @boilerplate */
+  margin: 0; /* @boilerplate */
+}
+
+
+.tabs .tabs-list button[aria-selected='true'] { /* @boilerplate */
+  border-bottom: var(--tabs-border-width) solid var(--background-color); /* @boilerplate */
+  background-color: var(--background-color); /* @boilerplate */
+  cursor: initial; /* @boilerplate */
+}
+
+.tabs .tabs-panel { /* @boilerplate */
+  margin-top: -1px; /* @boilerplate */
+  padding: var(--tabs-panel-padding); /* @boilerplate */
+  border: var(--tabs-border-width) solid var(--tabs-border-color); /* @boilerplate */
+  overflow: auto; /* @boilerplate */
+}
+
+.tabs .tabs-panel[aria-hidden='true'] { /* @boilerplate */
+  display: none; /* @boilerplate */
+}

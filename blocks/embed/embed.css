@@ -1,0 +1,64 @@
+@import url('./embed-tokens.css');
+
+.embed { /* @boilerplate */
+  width: unset; /* @boilerplate */
+  text-align: center; /* @boilerplate */
+  max-width: var(--embed-max-width); /* @boilerplate */
+  margin: var(--embed-margin); /* @boilerplate */
+}
+
+.embed > div { /* @boilerplate */
+  display: flex; /* @boilerplate */
+  justify-content: center; /* @boilerplate */
+}
+
+.embed.embed-twitter .twitter-tweet-rendered { /* @boilerplate */
+  margin-left: auto; /* @boilerplate */
+  margin-right: auto; /* @boilerplate */
+}
+
+.embed .embed-placeholder { /* @boilerplate */
+  width: 100%; /* @boilerplate */
+  aspect-ratio: var(--embed-placeholder-aspect-ratio); /* @boilerplate */
+  position: relative; /* @boilerplate */
+}
+
+.embed .embed-placeholder > * { /* @boilerplate */
+  display: flex; /* @boilerplate */
+  align-items: center; /* @boilerplate */
+  justify-content: center; /* @boilerplate */
+  position: absolute; /* @boilerplate */
+  inset: 0; /* @boilerplate */
+}
+
+.embed .embed-placeholder picture img { /* @boilerplate */
+  width: 100%; /* @boilerplate */
+  height: 100%; /* @boilerplate */
+  object-fit: cover; /* @boilerplate */
+}
+
+.embed .embed-placeholder-play button { /* @boilerplate */
+  box-sizing: border-box; /* @boilerplate */
+  position: relative; /* @boilerplate */
+  display: block; /* @boilerplate */
+  transform: scale(3); /* @boilerplate */
+  width: var(--embed-placeholder-play-size); /* @boilerplate */
+  height: var(--embed-placeholder-play-size); /* @boilerplate */
+  border: var(--embed-placeholder-play-border-width) solid; /* @boilerplate */
+  border-radius: var(--embed-placeholder-play-border-radius); /* @boilerplate */
+  padding: 0; /* @boilerplate */
+}
+
+.embed .embed-placeholder-play button::before { /* @boilerplate */
+  content: ""; /* @boilerplate */
+  display: block; /* @boilerplate */
+  box-sizing: border-box; /* @boilerplate */
+  position: absolute; /* @boilerplate */
+  width: 0; /* @boilerplate */
+  height: var(--embed-placeholder-play-triangle-height); /* @boilerplate */
+  border-top: 5px solid transparent; /* @boilerplate */
+  border-bottom: 5px solid transparent; /* @boilerplate */
+  border-left: var(--embed-placeholder-play-triangle-width) solid; /* @boilerplate */
+  top: 4px; /* @boilerplate */
+  left: 7px; /* @boilerplate */
+}

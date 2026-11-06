@@ -1,0 +1,172 @@
+@import url('./form-tokens.css');
+
+.form .field-wrapper { /* @boilerplate */
+  display: grid; /* @boilerplate */
+  grid-auto-flow: row; /* @boilerplate */
+  align-items: center; /* @boilerplate */
+}
+
+.form fieldset { /* @boilerplate */
+  display: grid; /* @boilerplate */
+  grid-auto-flow: row; /* @boilerplate */
+  margin: 0; /* @boilerplate */
+  border: none; /* @boilerplate */
+  padding: 0; /* @boilerplate */
+}
+
+.form form > .field-wrapper + .field-wrapper,
+.form form fieldset .field-wrapper + .field-wrapper { /* @boilerplate */
+  margin-top: var(--form-field-gap); /* @boilerplate */
+}
+
+.form form > .selection-wrapper + .selection-wrapper,
+.form form fieldset .selection-wrapper + .selection-wrapper { /* @boilerplate */
+  margin-top: var(--form-gap-tight); /* @boilerplate */
+}
+
+@media (width >= 600px) { /* @boilerplate */
+  .form fieldset { /* @boilerplate */
+    grid-template-columns: repeat(2, auto); /* @boilerplate  layout strategy: 2-up fields at tablet */
+    gap: var(--form-gap-tight) var(--form-field-gap); /* @boilerplate */
+  }
+
+  .form form > .selection-wrapper + .selection-wrapper,
+  .form form fieldset .field-wrapper + .field-wrapper,
+  .form form fieldset .selection-wrapper + .selection-wrapper { /* @boilerplate */
+    margin-top: 0; /* @boilerplate */
+  }
+}
+
+@media (width >= 900px) { /* @boilerplate */
+  .form fieldset { /* @boilerplate */
+    grid-template-columns: repeat(3, auto); /* @boilerplate  layout strategy: 3-up fields at desktop */
+  }
+}
+
+.form label,
+.form fieldset > legend { /* @boilerplate */
+  margin-bottom: var(--form-gap-tight); /* @boilerplate */
+  font-size: var(--body-font-size-s); /* @boilerplate */
+  font-weight: 700; /* @boilerplate */
+}
+
+.form .selection-wrapper label { /* @boilerplate */
+  margin: 0; /* @boilerplate */
+  font-weight: normal; /* @boilerplate */
+}
+
+.form input,
+.form select,
+.form textarea { /* @boilerplate */
+  box-sizing: border-box; /* @boilerplate */
+  display: block; /* @boilerplate */
+  width: 100%; /* @boilerplate */
+  margin: 0; /* @boilerplate */
+  padding: var(--form-input-padding); /* @boilerplate */
+  border-radius: var(--form-input-border-radius); /* @boilerplate */
+  border: var(--form-input-border-width) solid var(--form-input-border-color); /* @boilerplate */
+  background-color: var(--form-input-background); /* @boilerplate */
+  color: var(--form-input-text-color); /* @boilerplate */
+  font-size: var(--body-font-size-s); /* @boilerplate */
+  transition: border-color var(--form-transition-duration); /* @boilerplate */
+}
+
+.form textarea { /* @boilerplate */
+  resize: vertical; /* @boilerplate */
+}
+
+.form input:hover,
+.form select:hover,
+.form textarea:hover { /* @boilerplate */
+  border: var(--form-input-border-width) solid var(--form-input-hover-border-color); /* @boilerplate */
+}
+
+.form input:focus,
+.form select:focus,
+.form textarea:focus { /* @boilerplate */
+  outline: var(--focus-ring-width) solid var(--focus-ring-color); /* @boilerplate */
+  outline-offset: var(--form-input-outline-offset); /* @boilerplate */
+}
+
+.form .selection-wrapper input { /* @boilerplate */
+  width: max-content; /* @boilerplate */
+}
+
+@media (width >= 600px) { /* @boilerplate */
+  .form input,
+  .form select,
+  .form textarea { /* @boilerplate */
+    max-width: 50vw; /* @boilerplate  layout strategy: input width cap at tablet */
+  }
+
+  .form .button { /* @boilerplate */
+    max-width: max-content; /* @boilerplate */
+  }
+}
+
+@media (width >= 900px) { /* @boilerplate */
+  .form input,
+  .form select,
+  .form textarea { /* @boilerplate */
+    max-width: 33vw; /* @boilerplate  layout strategy: input width cap at desktop */
+  }
+}
+
+.form .field-wrapper.selection-wrapper { /* @boilerplate */
+  grid-auto-flow: column; /* @boilerplate */
+  justify-content: start; /* @boilerplate */
+  gap: 1ch; /* @boilerplate */
+}
+
+.form label[data-required]::after { /* @boilerplate */
+  content: '*'; /* @boilerplate */
+  color: var(--form-required-indicator-color); /* @boilerplate */
+  margin-inline-start: 1ch; /* @boilerplate */
+}
+
+.form .toggle-wrapper .switch { /* @boilerplate */
+  position: relative; /* @boilerplate */
+  display: inline-block; /* @boilerplate */
+  width: var(--form-toggle-width); /* @boilerplate */
+  height: var(--form-toggle-height); /* @boilerplate */
+}
+
+.form .toggle-wrapper input { /* @boilerplate */
+  opacity: 0; /* @boilerplate */
+  width: var(--form-toggle-width); /* @boilerplate */
+  height: var(--form-toggle-height); /* @boilerplate */
+}
+
+.form .toggle-wrapper .slider { /* @boilerplate */
+  position: absolute; /* @boilerplate */
+  cursor: pointer; /* @boilerplate */
+  inset: 0; /* @boilerplate */
+  border-radius: var(--form-toggle-height); /* @boilerplate */
+  background-color: var(--form-toggle-off-background); /* @boilerplate */
+  transition: background-color var(--form-transition-duration); /* @boilerplate */
+}
+
+.form .toggle-wrapper .slider::before { /* @boilerplate */
+  content: ''; /* @boilerplate */
+  position: absolute; /* @boilerplate */
+  width: var(--form-toggle-slider-size); /* @boilerplate */
+  height: var(--form-toggle-slider-size); /* @boilerplate */
+  top: var(--form-toggle-slider-offset); /* @boilerplate */
+  left: var(--form-toggle-slider-offset); /* @boilerplate */
+  border-radius: 50%; /* @boilerplate */
+  background-color: var(--form-toggle-slider-color); /* @boilerplate */
+  transition: transform var(--form-transition-duration); /* @boilerplate */
+}
+
+.form .toggle-wrapper input:checked + .slider { /* @boilerplate */
+  background-color: var(--form-toggle-on-background); /* @boilerplate */
+}
+
+.form .toggle-wrapper input:focus + .slider { /* @boilerplate */
+  outline: var(--focus-ring-width) solid var(--focus-ring-color); /* @boilerplate */
+  outline-offset: var(--form-input-outline-offset); /* @boilerplate */
+}
+
+.form .toggle-wrapper input:checked + .slider::before { /* @boilerplate */
+  transform: translateX(var(--form-toggle-slider-translate)); /* @boilerplate */
+}

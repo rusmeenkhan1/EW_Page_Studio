@@ -1,0 +1,22 @@
+diff --git a/node_modules/eslint-plugin-json/src/index.js b/node_modules/eslint-plugin-json/src/index.js
+index 77b86cc..a4cc1f2 100755
+--- a/node_modules/eslint-plugin-json/src/index.js
++++ b/node_modules/eslint-plugin-json/src/index.js
+@@ -42,7 +42,7 @@ function getDiagnostics(jsonDocument) {
+     )(jsonDocument.syntaxErrors);
+ }
+ const reportError = (filter) => (errorName, context) => {
+-    _.filter(filter, fileLintResults[context.getFilename()]).forEach((error) => {
++    _.filter(filter, fileLintResults[context.filename ?? context.getFilename()]).forEach((error) => {
+         context.report({
+             ruleId: `json/${errorName}`,
+             message: error.message,
+@@ -67,7 +67,7 @@ const reportComment = (errorName, context) => {
+                 end: {line: comment.end.line + 1, column: comment.end.character},
+             },
+         });
+-    }, fileComments[context.getFilename()]);
++    }, fileComments[context.filename ?? context.getFilename()]);
+ };
+ 
+ const makeRule = (errorName, reporters) => ({

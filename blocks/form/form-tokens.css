@@ -1,0 +1,23 @@
+/* form design tokens — Tier 2: reference global semantics; @boilerplate marks unresolved literals */
+:root { /* @boilerplate */
+  --form-field-gap: var(--spacing-m); /* @boilerplate */
+  --form-gap-tight: 0.25em; /* @boilerplate */
+  --form-input-padding: 0.5em; /* @boilerplate */
+  --form-input-border-width: var(--border-width-s); /* @boilerplate */
+  --form-input-border-color: var(--dark-color); /* @boilerplate */
+  --form-input-hover-border-color: var(--text-color); /* @boilerplate */
+  --form-input-border-radius: var(--border-radius-s); /* @boilerplate */
+  --form-input-background: var(--color-surface); /* @boilerplate */
+  --form-input-text-color: var(--color-on-surface); /* @boilerplate */
+  --form-input-outline-offset: var(--focus-ring-offset); /* @boilerplate */
+  --form-required-indicator-color: var(--error-color); /* @boilerplate */
+  --form-toggle-width: 52px; /* @boilerplate */
+  --form-toggle-height: 28px; /* @boilerplate */
+  --form-toggle-slider-size: 24px; /* @boilerplate */
+  --form-toggle-slider-offset: 2px; /* @boilerplate */
+  --form-toggle-slider-translate: 24px; /* @boilerplate */
+  --form-toggle-slider-color: var(--color-surface); /* @boilerplate */
+  --form-toggle-off-background: var(--dark-color); /* @boilerplate */
+  --form-toggle-on-background: var(--color-action); /* @boilerplate */
+  --form-transition-duration: var(--transition-duration); /* @boilerplate */
+}

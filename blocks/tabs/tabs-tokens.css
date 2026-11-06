@@ -1,0 +1,7 @@
+/* tabs design tokens */
+:root { /* @boilerplate */
+  --tabs-panel-padding: var(--spacing-m); /* @boilerplate */
+  --tabs-border-width: var(--border-width-s); /* @boilerplate */
+  --tabs-border-color: var(--border-color); /* @boilerplate */
+  --tabs-transition-duration: var(--transition-duration); /* @boilerplate */
+}

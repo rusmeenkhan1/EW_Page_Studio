@@ -1,0 +1,31 @@
+@import url('./columns-tokens.css');
+
+.columns > div { /* @boilerplate */
+  display: flex; /* @boilerplate */
+  flex-direction: column; /* @boilerplate */
+}
+
+.columns > div > div { /* @boilerplate */
+  order: 1; /* @boilerplate */
+}
+
+.columns > div > .columns-img-col { /* @boilerplate */
+  order: 0; /* @boilerplate */
+}
+
+.columns > div > .columns-img-col img { /* @boilerplate */
+  display: block; /* @boilerplate */
+}
+
+@media (width >= 900px) { /* @boilerplate */
+  .columns > div { /* @boilerplate */
+    align-items: center; /* @boilerplate */
+    flex-direction: unset; /* @boilerplate */
+    gap: var(--columns-gap); /* @boilerplate */
+  }
+
+  .columns > div > div { /* @boilerplate */
+    flex: 1; /* @boilerplate */
+    order: unset; /* @boilerplate */
+  }
+}

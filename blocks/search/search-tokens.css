@@ -1,0 +1,12 @@
+/* search design tokens */
+:root { /* @boilerplate */
+  --search-input-border-radius: var(--border-radius-s); /* @boilerplate */
+  --search-results-min-width: 278px; /* @boilerplate */
+  --search-results-gap: var(--spacing-m); /* @boilerplate */
+  --search-result-border-color: var(--border-color); /* @boilerplate */
+  --search-result-content-padding: var(--spacing-s); /* @boilerplate */
+  --search-no-results-indent: 34px; /* @boilerplate */
+  --search-minimal-indent: 34px; /* @boilerplate */
+  --search-minimal-thumbnail-size: 24px; /* @boilerplate */
+  --search-transition-duration: var(--transition-duration); /* @boilerplate */
+}

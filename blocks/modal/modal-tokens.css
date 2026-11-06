@@ -1,0 +1,13 @@
+/* modal design tokens */
+:root { /* @boilerplate */
+  --modal-backdrop-background: rgb(19 19 19 / 75%); /* @boilerplate */
+  --modal-width-mobile: calc(100vw - 48px); /* @boilerplate */
+  --modal-width-desktop: calc(100vw - 64px); /* @boilerplate */
+  --modal-max-width: 900px; /* @boilerplate */
+  --modal-content-padding: var(--spacing-m); /* @boilerplate */
+  --modal-content-padding-desktop: var(--spacing-l); /* @boilerplate */
+  --modal-content-margin-top: 44px; /* @boilerplate */
+  --modal-close-button-size: 44px; /* @boilerplate */
+  --modal-close-icon-size: var(--icon-size); /* @boilerplate */
+  --modal-close-icon-thickness: 2px; /* @boilerplate */
+}

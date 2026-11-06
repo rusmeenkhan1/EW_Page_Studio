@@ -1,0 +1,20 @@
+.hlx/*
+coverage/*
+logs/*
+node_modules/*
+
+helix-importer-ui
+.DS_Store
+*.bak
+.idea
+localhost.pem
+localhost-key.pem
+.vscode
+.cursor
+Trace*.json
+.migration/*
+.claude/rules/*
+
+# Playwright / a11y test artifacts
+playwright-report/
+test-results/

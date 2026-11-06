@@ -1,0 +1,73 @@
+@import url('./video-tokens.css');
+
+.video { /* @boilerplate */
+  text-align: center; /* @boilerplate */
+  max-width: var(--video-max-width); /* @boilerplate */
+  margin: var(--video-margin); /* @boilerplate */
+}
+
+.video[data-embed-loaded='false']:not(.placeholder) { /* @boilerplate */
+  /* reserve an approximate space to avoid extensive layout shifts */
+  aspect-ratio: var(--video-aspect-ratio); /* @boilerplate */
+}
+
+.video > div { /* @boilerplate */
+  display: flex; /* @boilerplate */
+  justify-content: center; /* @boilerplate */
+}
+
+.video video { /* @boilerplate */
+  max-width: 100%; /* @boilerplate */
+}
+
+.video .video-placeholder { /* @boilerplate */
+  width: 100%; /* @boilerplate */
+  aspect-ratio: var(--video-aspect-ratio); /* @boilerplate */
+  position: relative; /* @boilerplate */
+}
+
+.video .video-placeholder > * { /* @boilerplate */
+  display: flex; /* @boilerplate */
+  align-items: center; /* @boilerplate */
+  justify-content: center; /* @boilerplate */
+  position: absolute; /* @boilerplate */
+  inset: 0; /* @boilerplate */
+}
+
+.video[data-embed-loaded='true'] .video-placeholder,
+.video[data-embed-loaded='false'] .video-placeholder + * { /* @boilerplate */
+  visibility: hidden; /* @boilerplate */
+  height: 0; /* @boilerplate */
+  width: 0; /* @boilerplate */
+}
+
+.video .video-placeholder picture img { /* @boilerplate */
+  width: 100%; /* @boilerplate */
+  height: 100%; /* @boilerplate */
+  object-fit: cover; /* @boilerplate */
+}
+
+.video .video-placeholder-play button { /* @boilerplate */
+  position: relative; /* @boilerplate */
+  display: block; /* @boilerplate */
+  width: var(--video-placeholder-play-size); /* @boilerplate */
+  height: var(--video-placeholder-play-size); /* @boilerplate */
+  border-radius: 50%; /* @boilerplate */
+  outline: var(--video-placeholder-play-outline-width) solid; /* @boilerplate */
+  padding: 0; /* @boilerplate */
+}
+
+.video .video-placeholder-play button::before { /* @boilerplate */
+  content: ''; /* @boilerplate */
+  display: block; /* @boilerplate */
+  box-sizing: border-box; /* @boilerplate */
+  position: absolute; /* @boilerplate */
+  width: 0; /* @boilerplate */
+  height: var(--video-placeholder-play-triangle-height); /* @boilerplate */
+  border-top: 12px solid transparent; /* @boilerplate */
+  border-bottom: 12px solid transparent; /* @boilerplate */
+  border-left: var(--video-placeholder-play-triangle-width) solid; /* @boilerplate */
+  top: 50%; /* @boilerplate */
+  left: calc(50% + var(--video-placeholder-play-left-offset)); /* @boilerplate */
+  transform: translate(-50%, -50%); /* @boilerplate */
+}

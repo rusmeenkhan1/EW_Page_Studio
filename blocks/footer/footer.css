@@ -1,0 +1,22 @@
+@import url('./footer-tokens.css');
+
+footer { /* @boilerplate */
+  background-color: var(--light-color); /* @boilerplate */
+  font-size: var(--body-font-size-xs); /* @boilerplate */
+}
+
+footer .footer > div { /* @boilerplate */
+  margin: auto; /* @boilerplate */
+  max-width: var(--footer-max-width); /* @boilerplate */
+  padding: var(--footer-padding); /* @boilerplate */
+}
+
+footer .footer p { /* @boilerplate */
+  margin: 0; /* @boilerplate */
+}
+
+@media (width >= 900px) { /* @boilerplate */
+  footer .footer > div { /* @boilerplate */
+    padding: var(--footer-padding-desktop); /* @boilerplate */
+  }
+}

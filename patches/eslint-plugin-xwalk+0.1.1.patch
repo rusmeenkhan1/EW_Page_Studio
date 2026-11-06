@@ -1,0 +1,13 @@
+diff --git a/node_modules/eslint-plugin-xwalk/lib/base-rule.js b/node_modules/eslint-plugin-xwalk/lib/base-rule.js
+index ee30847..0df2a43 100644
+--- a/node_modules/eslint-plugin-xwalk/lib/base-rule.js
++++ b/node_modules/eslint-plugin-xwalk/lib/base-rule.js
+@@ -27,7 +27,7 @@ function makeComponentDefinitionRule(exec) {
+ 
+ function makeRule(file, exec) {
+   return (ruleContext) => {
+-    const fileName = ruleContext.getFilename();
++    const fileName = ruleContext.filename ?? ruleContext.getFilename();
+     const dirname = path.dirname(fileName);
+     const baseName = path.basename(fileName);
+     if (baseName !== file) return {};

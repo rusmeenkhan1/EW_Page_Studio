@@ -1,0 +1,72 @@
+{
+  "definitions": [
+    {
+      "title": "Section",
+      "id": "section",
+      "plugins": {
+        "da": {
+          "unsafeHTML": "<div></div>"
+        }
+      },
+      "filter": "section",
+      "model": "section"
+    }
+  ],
+  "models": [
+    {
+      "id": "section",
+      "fields": [
+        {
+          "component": "multiselect",
+          "name": "style",
+          "label": "Style",
+          "options": [
+            {
+              "name": "Highlight",
+              "value": "highlight"
+            }
+          ]
+        },
+        {
+          "component": "text",
+          "name": "background-color",
+          "label": "Background Color",
+          "value": "",
+          "valueType": "string",
+          "description": "use hex (e.g. #000000), RGB (e.g. rgb(0, 0, 0)) html color names or css tokens"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "background-image",
+          "label": "Background Image",
+          "description": "Background image of the section, displayed on top of the background color if specified",
+          "multi": false
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "section",
+      "components": [
+        "accordion",
+        "cards",
+        "carousel",
+        "columns",
+        "embed",
+        "fragment",
+        "form",
+        "hero",
+        "image",
+        "quote",
+        "search",
+        "section-title",
+        "tabs",
+        "table",
+        "text",
+        "video"
+      ]
+    }
+  ]
+}

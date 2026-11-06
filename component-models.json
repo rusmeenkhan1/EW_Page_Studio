@@ -1,0 +1,540 @@
+[
+  {
+    "id": "page-metadata",
+    "fields": [
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Title"
+      },
+      {
+        "component": "text",
+        "name": "description",
+        "label": "Description"
+      },
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Image"
+      },
+      {
+        "component": "text",
+        "name": "robots",
+        "label": "Robots",
+        "description": "Index control via robots"
+      }
+    ]
+  },
+  {
+    "id": "image",
+    "fields": [
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "imageAlt",
+        "label": "Alt Text"
+      }
+    ]
+  },
+  {
+    "id": "section",
+    "fields": [
+      {
+        "component": "multiselect",
+        "name": "style",
+        "label": "Style",
+        "options": [
+          {
+            "name": "Highlight",
+            "value": "highlight"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "name": "background-color",
+        "label": "Background Color",
+        "value": "",
+        "valueType": "string",
+        "description": "use hex (e.g. #000000), RGB (e.g. rgb(0, 0, 0)) html color names or css tokens"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "background-image",
+        "label": "Background Image",
+        "description": "Background image of the section, displayed on top of the background color if specified",
+        "multi": false
+      }
+    ]
+  },
+  {
+    "title": "Accordion Item",
+    "id": "accordion-item",
+    "model": "accordion-item",
+    "fields": [
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "summary",
+        "value": "summary",
+        "label": "Summary",
+        "required": true
+      },
+      {
+        "component": "richtext",
+        "name": "text",
+        "value": "text",
+        "label": "Text",
+        "valueType": "string",
+        "required": true
+      }
+    ]
+  },
+  {
+    "id": "card",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "Image Alt",
+        "multi": false
+      },
+      {
+        "component": "richtext",
+        "name": "text",
+        "value": "",
+        "label": "Text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "carousel-item",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "backgroundImage",
+        "label": "Background Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "backgroundImageAlt",
+        "label": "Background Image Alt"
+      },
+      {
+        "component": "richtext",
+        "name": "content",
+        "label": "Text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "columns",
+    "fields": [
+      {
+        "component": "number",
+        "valueType": "number",
+        "name": "columns",
+        "label": "Number of Columns",
+        "value": 2,
+        "validation": {
+          "numberMin": 1,
+          "numberMax": 6
+        }
+      }
+    ]
+  },
+  {
+    "id": "fragment",
+    "fields": [
+      {
+        "component": "text",
+        "name": "urlText",
+        "label": "Fragment URL",
+        "required": true
+      },
+      {
+        "component": "text",
+        "name": "url",
+        "label": "Fragment URL Text"
+      }
+    ]
+  },
+  {
+    "id": "hero",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "Alt",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "name": "text",
+        "value": "",
+        "label": "Text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "quote",
+    "fields": [
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "quote",
+        "label": "Quote text",
+        "required": true
+      },
+      {
+        "component": "richtext",
+        "name": "author",
+        "label": "Author (optional)",
+        "valueType": "string",
+        "description": "Use italics for [cite] tag"
+      }
+    ]
+  },
+  {
+    "id": "search",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "searchUrl",
+        "label": "Search URL",
+        "required": true
+      },
+      {
+        "component": "text",
+        "name": "searchUrlText",
+        "label": "Search URL Text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "section-title",
+    "fields": [
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Title",
+        "valueType": "string"
+      },
+      {
+        "component": "select",
+        "name": "titleType",
+        "label": "Title type",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "h1",
+            "value": "h1"
+          },
+          {
+            "name": "h2",
+            "value": "h2"
+          },
+          {
+            "name": "h3",
+            "value": "h3"
+          },
+          {
+            "name": "h4",
+            "value": "h4"
+          },
+          {
+            "name": "h5",
+            "value": "h5"
+          },
+          {
+            "name": "h6",
+            "value": "h6"
+          },
+          {
+            "name": "p",
+            "value": "p"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "title-size",
+        "label": "Title size",
+        "value": "",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Default (from heading type)",
+            "value": ""
+          },
+          {
+            "name": "XXL",
+            "value": "size-xxl"
+          },
+          {
+            "name": "XL",
+            "value": "size-xl"
+          },
+          {
+            "name": "L",
+            "value": "size-l"
+          },
+          {
+            "name": "M",
+            "value": "size-m"
+          },
+          {
+            "name": "S",
+            "value": "size-s"
+          },
+          {
+            "name": "XS",
+            "value": "size-xs"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "alignment",
+        "label": "Alignment",
+        "value": "",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Default (left)",
+            "value": ""
+          },
+          {
+            "name": "Left",
+            "value": "left"
+          },
+          {
+            "name": "Center",
+            "value": "center"
+          },
+          {
+            "name": "Right",
+            "value": "right"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "classes",
+        "label": "Text color",
+        "value": "",
+        "valueType": "string",
+        "description": "Short token maps to CSS var on :root (see styles/styles.css). Authors may type token or full class section-title-color-{token}.",
+        "options": [
+          {
+            "name": "Default (inherit)",
+            "value": ""
+          },
+          {
+            "name": "Background (--background-color)",
+            "value": "background"
+          },
+          {
+            "name": "Light (--light-color)",
+            "value": "light"
+          },
+          {
+            "name": "Dark (--dark-color)",
+            "value": "dark"
+          },
+          {
+            "name": "Text (--text-color)",
+            "value": "text"
+          },
+          {
+            "name": "Link (--link-color)",
+            "value": "link"
+          },
+          {
+            "name": "Link hover (--link-hover-color)",
+            "value": "link-hover"
+          }
+        ]
+      },
+      {
+        "component": "container",
+        "name": "optional-subtitle",
+        "label": "Subtitle (optional)",
+        "collapsible": true,
+        "collapsed": true,
+        "fields": [
+          {
+            "component": "text",
+            "name": "subtitle",
+            "label": "Subtitle text",
+            "valueType": "string"
+          },
+          {
+            "component": "select",
+            "name": "subtitleType",
+            "label": "Subtitle type",
+            "valueType": "string",
+            "options": [
+              {
+                "name": "h1",
+                "value": "h1"
+              },
+              {
+                "name": "h2",
+                "value": "h2"
+              },
+              {
+                "name": "h3",
+                "value": "h3"
+              },
+              {
+                "name": "h4",
+                "value": "h4"
+              },
+              {
+                "name": "h5",
+                "value": "h5"
+              },
+              {
+                "name": "h6",
+                "value": "h6"
+              },
+              {
+                "name": "p",
+                "value": "p"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "subtitle-size",
+            "label": "Subtitle size",
+            "value": "",
+            "valueType": "string",
+            "options": [
+              {
+                "name": "Default (from type)",
+                "value": ""
+              },
+              {
+                "name": "XXL",
+                "value": "size-xxl"
+              },
+              {
+                "name": "XL",
+                "value": "size-xl"
+              },
+              {
+                "name": "L",
+                "value": "size-l"
+              },
+              {
+                "name": "M",
+                "value": "size-m"
+              },
+              {
+                "name": "S",
+                "value": "size-s"
+              },
+              {
+                "name": "XS",
+                "value": "size-xs"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "table",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "table",
+        "value": "",
+        "label": "Table Content"
+      }
+    ]
+  },
+  {
+    "id": "tabs-item",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "name",
+        "value": "name",
+        "valueType": "string",
+        "label": "Tab Name",
+        "required": true
+      },
+      {
+        "component": "richtext",
+        "name": "content",
+        "value": "content",
+        "label": "Content",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "video",
+    "fields": [
+      {
+        "component": "boolean",
+        "name": "classes_autoplay",
+        "label": "Autoplay Video",
+        "valueType": "boolean"
+      },
+      {
+        "component": "text",
+        "name": "videoUrl",
+        "label": "Video URL",
+        "valueType": "string",
+        "required": true
+      },
+      {
+        "component": "text",
+        "name": "videoUrlText",
+        "label": "Video URL Text",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "posterImage",
+        "label": "Poster Image",
+        "valueType": "string"
+      }
+    ]
+  }
+]

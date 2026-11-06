@@ -1,0 +1,288 @@
+{
+  "definitions": [
+    {
+      "title": "Section Title",
+      "id": "section-title",
+      "model": "section-title",
+      "plugins": {
+        "da": {
+          "unsafeHTML": "<div class=\"section-title\"><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div></div>",
+          "rows": 8,
+          "columns": 1,
+          "fields": [
+            {
+              "name": "title",
+              "selector": "div:nth-child(1)>div"
+            },
+            {
+              "name": "titleType",
+              "selector": "div:nth-child(2)>div"
+            },
+            {
+              "name": "title-size",
+              "selector": "div:nth-child(3)>div"
+            },
+            {
+              "name": "alignment",
+              "selector": "div:nth-child(4)>div"
+            },
+            {
+              "name": "classes",
+              "selector": "div:nth-child(5)>div"
+            },
+            {
+              "name": "subtitle",
+              "selector": "div:nth-child(6)>div"
+            },
+            {
+              "name": "subtitleType",
+              "selector": "div:nth-child(7)>div"
+            },
+            {
+              "name": "subtitle-size",
+              "selector": "div:nth-child(8)>div"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "section-title",
+      "fields": [
+        {
+          "component": "text",
+          "name": "title",
+          "label": "Title",
+          "valueType": "string"
+        },
+        {
+          "component": "select",
+          "name": "titleType",
+          "label": "Title type",
+          "valueType": "string",
+          "options": [
+            {
+              "name": "h1",
+              "value": "h1"
+            },
+            {
+              "name": "h2",
+              "value": "h2"
+            },
+            {
+              "name": "h3",
+              "value": "h3"
+            },
+            {
+              "name": "h4",
+              "value": "h4"
+            },
+            {
+              "name": "h5",
+              "value": "h5"
+            },
+            {
+              "name": "h6",
+              "value": "h6"
+            },
+            {
+              "name": "p",
+              "value": "p"
+            }
+          ]
+        },
+        {
+          "component": "select",
+          "name": "title-size",
+          "label": "Title size",
+          "value": "",
+          "valueType": "string",
+          "options": [
+            {
+              "name": "Default (from heading type)",
+              "value": ""
+            },
+            {
+              "name": "XXL",
+              "value": "size-xxl"
+            },
+            {
+              "name": "XL",
+              "value": "size-xl"
+            },
+            {
+              "name": "L",
+              "value": "size-l"
+            },
+            {
+              "name": "M",
+              "value": "size-m"
+            },
+            {
+              "name": "S",
+              "value": "size-s"
+            },
+            {
+              "name": "XS",
+              "value": "size-xs"
+            }
+          ]
+        },
+        {
+          "component": "select",
+          "name": "alignment",
+          "label": "Alignment",
+          "value": "",
+          "valueType": "string",
+          "options": [
+            {
+              "name": "Default (left)",
+              "value": ""
+            },
+            {
+              "name": "Left",
+              "value": "left"
+            },
+            {
+              "name": "Center",
+              "value": "center"
+            },
+            {
+              "name": "Right",
+              "value": "right"
+            }
+          ]
+        },
+        {
+          "component": "select",
+          "name": "classes",
+          "label": "Text color",
+          "value": "",
+          "valueType": "string",
+          "description": "Short token maps to CSS var on :root (see styles/styles.css). Authors may type token or full class section-title-color-{token}.",
+          "options": [
+            {
+              "name": "Default (inherit)",
+              "value": ""
+            },
+            {
+              "name": "Background (--background-color)",
+              "value": "background"
+            },
+            {
+              "name": "Light (--light-color)",
+              "value": "light"
+            },
+            {
+              "name": "Dark (--dark-color)",
+              "value": "dark"
+            },
+            {
+              "name": "Text (--text-color)",
+              "value": "text"
+            },
+            {
+              "name": "Link (--link-color)",
+              "value": "link"
+            },
+            {
+              "name": "Link hover (--link-hover-color)",
+              "value": "link-hover"
+            }
+          ]
+        },
+        {
+          "component": "container",
+          "name": "optional-subtitle",
+          "label": "Subtitle (optional)",
+          "collapsible": true,
+          "collapsed": true,
+          "fields": [
+            {
+              "component": "text",
+              "name": "subtitle",
+              "label": "Subtitle text",
+              "valueType": "string"
+            },
+            {
+              "component": "select",
+              "name": "subtitleType",
+              "label": "Subtitle type",
+              "valueType": "string",
+              "options": [
+                {
+                  "name": "h1",
+                  "value": "h1"
+                },
+                {
+                  "name": "h2",
+                  "value": "h2"
+                },
+                {
+                  "name": "h3",
+                  "value": "h3"
+                },
+                {
+                  "name": "h4",
+                  "value": "h4"
+                },
+                {
+                  "name": "h5",
+                  "value": "h5"
+                },
+                {
+                  "name": "h6",
+                  "value": "h6"
+                },
+                {
+                  "name": "p",
+                  "value": "p"
+                }
+              ]
+            },
+            {
+              "component": "select",
+              "name": "subtitle-size",
+              "label": "Subtitle size",
+              "value": "",
+              "valueType": "string",
+              "options": [
+                {
+                  "name": "Default (from type)",
+                  "value": ""
+                },
+                {
+                  "name": "XXL",
+                  "value": "size-xxl"
+                },
+                {
+                  "name": "XL",
+                  "value": "size-xl"
+                },
+                {
+                  "name": "L",
+                  "value": "size-l"
+                },
+                {
+                  "name": "M",
+                  "value": "size-m"
+                },
+                {
+                  "name": "S",
+                  "value": "size-s"
+                },
+                {
+                  "name": "XS",
+                  "value": "size-xs"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "filters": []
+}

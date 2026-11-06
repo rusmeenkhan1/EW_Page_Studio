@@ -1,0 +1,4 @@
+/* columns design tokens */
+:root { /* @boilerplate */
+  --columns-gap: var(--spacing-m); /* @boilerplate */
+}

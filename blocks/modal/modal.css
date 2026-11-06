@@ -1,0 +1,86 @@
+@import url('./modal-tokens.css');
+
+body.modal-open { /* @boilerplate */
+  overflow: hidden; /* @boilerplate */
+}
+
+.modal dialog::backdrop { /* @boilerplate */
+  background-color: var(--modal-backdrop-background); /* @boilerplate */
+}
+
+.modal dialog { /* @boilerplate */
+  overscroll-behavior: none; /* @boilerplate */
+  overflow-y: hidden; /* @boilerplate */
+  width: var(--modal-width-mobile); /* @boilerplate */
+  max-width: var(--modal-max-width); /* @boilerplate */
+  max-height: calc(100dvh - (2 * var(--header-height))); /* @boilerplate */
+  padding: 0; /* @boilerplate */
+  border: var(--border-width-s) solid var(--dark-color); /* @boilerplate */
+}
+
+.modal dialog .modal-content { /* @boilerplate */
+  box-sizing: border-box; /* @boilerplate */
+  overflow-y: auto; /* @boilerplate */
+  overscroll-behavior: none; /* @boilerplate */
+  width: 100%; /* @boilerplate */
+  max-height: calc(100dvh - (2 * var(--header-height)) - 48px); /* @boilerplate */
+  padding: var(--modal-content-padding); /* @boilerplate */
+  padding-top: 0; /* @boilerplate */
+  margin-top: var(--modal-content-margin-top); /* @boilerplate */
+}
+
+@media (width >= 900px) { /* @boilerplate */
+  .modal dialog { /* @boilerplate */
+    width: var(--modal-width-desktop); /* @boilerplate */
+  }
+
+  .modal dialog .modal-content { /* @boilerplate */
+    max-height: calc(100dvh - (2 * var(--header-height)) - 64px); /* @boilerplate */
+    padding: var(--modal-content-padding-desktop); /* @boilerplate */
+    padding-top: 0; /* @boilerplate */
+  }
+}
+
+.modal .close-button { /* @boilerplate */
+  position: absolute; /* @boilerplate */
+  top: 0; /* @boilerplate */
+  right: 0; /* @boilerplate */
+  width: var(--modal-close-button-size); /* @boilerplate */
+  height: var(--modal-close-button-size); /* @boilerplate */
+  margin: 0; /* @boilerplate */
+  border: none; /* @boilerplate */
+  border-radius: 0; /* @boilerplate */
+  padding: 0; /* @boilerplate */
+  background-color: transparent; /* @boilerplate */
+  color: var(--text-color); /* @boilerplate */
+  line-height: 0; /* @boilerplate */
+}
+
+.modal .close-button .icon.icon-close { /* @boilerplate */
+  content: ''; /* @boilerplate */
+  width: var(--modal-close-icon-size); /* @boilerplate */
+  height: var(--modal-close-icon-size); /* @boilerplate */
+}
+
+.modal .close-button .icon.icon-close::before,
+.modal .close-button .icon.icon-close::after { /* @boilerplate */
+  content: ''; /* @boilerplate */
+  box-sizing: border-box; /* @boilerplate */
+  display: block; /* @boilerplate */
+  position: absolute; /* @boilerplate */
+  top: 50%; /* @boilerplate */
+  left: 50%; /* @boilerplate */
+  transform: translate(-50%, -50%) rotate(45deg); /* @boilerplate */
+  width: var(--modal-close-icon-size); /* @boilerplate */
+  height: var(--modal-close-icon-thickness); /* @boilerplate */
+  border-radius: var(--modal-close-icon-thickness); /* @boilerplate */
+  background-color: currentcolor; /* @boilerplate */
+}
+
+.modal .close-button .icon.icon-close::after { /* @boilerplate */
+  transform: translate(-50%, -50%) rotate(-45deg)
+}
+
+.modal dialog .section { /* @boilerplate */
+  padding: 0; /* @boilerplate */
+}

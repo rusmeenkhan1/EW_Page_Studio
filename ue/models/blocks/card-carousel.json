@@ -1,0 +1,25 @@
+{
+  "definitions": [
+    {
+      "title": "Card Carousel",
+      "id": "card-carousel",
+      "plugins": {
+        "da": {
+          "rows": 0,
+          "columns": 0
+        }
+      },
+      "model": "card-carousel",
+      "filter": "card-carousel"
+    }
+  ],
+  "models": [],
+  "filters": [
+    {
+      "id": "card-carousel",
+      "components": [
+        "card"
+      ]
+    }
+  ]
+}

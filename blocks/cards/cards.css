@@ -1,0 +1,29 @@
+@import url('./cards-tokens.css');
+
+.cards > ul { /* @boilerplate */
+  list-style: none; /* @boilerplate */
+  margin: 0; /* @boilerplate */
+  padding: 0; /* @boilerplate */
+  display: grid; /* @boilerplate */
+  grid-template-columns: repeat(auto-fill, minmax(var(--cards-grid-min-width), 1fr)); /* @boilerplate  layout strategy: responsive auto-fill grid */
+  gap: var(--cards-grid-gap); /* @boilerplate */
+}
+
+.cards > ul > li { /* @boilerplate */
+  border: var(--cards-card-border-width) solid var(--cards-card-border-color); /* @boilerplate */
+  background-color: var(--cards-card-background); /* @boilerplate */
+}
+
+.cards .cards-card-body { /* @boilerplate */
+  margin: var(--cards-card-body-margin); /* @boilerplate */
+}
+
+.cards .cards-card-image { /* @boilerplate */
+  line-height: 0; /* @boilerplate */
+}
+
+.cards > ul > li img { /* @boilerplate */
+  width: 100%; /* @boilerplate */
+  aspect-ratio: var(--cards-image-aspect-ratio); /* @boilerplate */
+  object-fit: var(--cards-image-object-fit); /* @boilerplate */
+}

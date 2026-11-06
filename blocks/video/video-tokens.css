@@ -1,0 +1,11 @@
+/* video design tokens */
+:root { /* @boilerplate */
+  --video-max-width: 900px; /* @boilerplate */
+  --video-margin: var(--spacing-m) auto; /* @boilerplate */
+  --video-aspect-ratio: 16 / 9; /* @boilerplate */
+  --video-placeholder-play-size: 44px; /* @boilerplate */
+  --video-placeholder-play-outline-width: 2px; /* @boilerplate */
+  --video-placeholder-play-triangle-height: 24px; /* @boilerplate */
+  --video-placeholder-play-triangle-width: 18px; /* @boilerplate */
+  --video-placeholder-play-left-offset: 2px; /* @boilerplate */
+}

@@ -1,0 +1,7 @@
+// you only need the fstab.yaml file once for Xwalk, for initial setup. Paths are now handled by the configbus..
+
+mountpoints:
+  /:
+    url: "https://author-p130360-e1272151.adobeaemcloud.com/bin/franklin.delivery/adobe-rnd/aem-block-collection-xwalk/main"
+    type: "markup"
+    suffix: ".html"

@@ -1,0 +1,69 @@
+@import url('./table-tokens.css');
+
+.table.block { /* @boilerplate */
+  width: 100%; /* @boilerplate */
+  overflow-x: auto; /* @boilerplate */
+}
+
+.table.block table { /* @boilerplate */
+  width: 100%; /* @boilerplate */
+  max-width: 100%; /* @boilerplate */
+  border-collapse: collapse; /* @boilerplate */
+  font-size: var(--body-font-size-xs); /* @boilerplate */
+}
+
+@media (width >= 600px) { /* @boilerplate */
+  .table.block table { /* @boilerplate */
+    font-size: var(--body-font-size-s); /* @boilerplate */
+  }
+}
+
+@media (width >= 900px) { /* @boilerplate */
+  .table.block table { /* @boilerplate */
+    font-size: var(--body-font-size-m); /* @boilerplate */
+  }
+}
+
+.table.block table thead tr { /* @boilerplate */
+  border-top: var(--table-header-border-width) solid; /* @boilerplate */
+  border-bottom: var(--table-header-border-width) solid; /* @boilerplate */
+}
+
+.table.block table tbody tr { /* @boilerplate */
+  border-bottom: var(--table-row-border-width) solid; /* @boilerplate */
+}
+
+.table.block table th { /* @boilerplate */
+  font-weight: 700; /* @boilerplate */
+}
+
+.table.block table th,
+.table.block table td { /* @boilerplate */
+  padding: var(--table-cell-padding); /* @boilerplate */
+  text-align: left; /* @boilerplate */
+}
+
+.table table th p,
+.table table td p { /* @boilerplate */
+  margin: 0; /* @boilerplate */
+}
+
+.table table td p + p { /* @boilerplate */
+  margin-top: 0.25em; /* @boilerplate */
+}
+
+/* no header variant */
+.table.block.no-header table tbody tr { /* @boilerplate */
+  border-top: var(--table-row-border-width) solid; /* @boilerplate */
+}
+
+/* striped variant */
+.table.block.striped tbody tr:nth-child(odd) { /* @boilerplate */
+  background-color: var(--overlay-background-color); /* @boilerplate */
+}
+
+/* bordered variant */
+.table.block.bordered table th,
+.table.block.bordered table td { /* @boilerplate */
+  border: var(--table-row-border-width) solid; /* @boilerplate */
+}

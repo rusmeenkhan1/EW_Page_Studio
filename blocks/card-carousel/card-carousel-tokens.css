@@ -1,0 +1,24 @@
+/* card-carousel design tokens */
+:root { /* @boilerplate */
+  --card-carousel-slide-min-width: 257px; /* @boilerplate */
+  --card-carousel-gap: var(--spacing-m); /* @boilerplate */
+  --card-carousel-card-border-width: var(--border-width-s); /* @boilerplate */
+  --card-carousel-card-border-color: var(--border-color); /* @boilerplate */
+  --card-carousel-card-body-margin: var(--spacing-s); /* @boilerplate */
+  --card-carousel-image-aspect-ratio: 4 / 3; /* @boilerplate */
+  --card-carousel-image-object-fit: cover; /* @boilerplate */
+  --card-carousel-indicators-gap: 6px 12px; /* @boilerplate */
+  --card-carousel-indicators-padding: 12px; /* @boilerplate */
+  --card-carousel-indicator-size: 24px; /* @boilerplate */
+  --card-carousel-indicator-background: #dadada; /* @boilerplate */
+  --card-carousel-indicator-active-background: var(--text-color); /* @boilerplate */
+  --card-carousel-nav-inset: 12px; /* @boilerplate */
+  --card-carousel-nav-inset-desktop: var(--spacing-m); /* @boilerplate */
+  --card-carousel-nav-button-size: 44px; /* @boilerplate */
+  --card-carousel-nav-button-background: rgb(19 19 19 / 25%); /* @boilerplate */
+  --card-carousel-nav-button-hover-background: rgb(19 19 19 / 75%); /* @boilerplate */
+  --card-carousel-nav-arrow-size: 12px; /* @boilerplate */
+  --card-carousel-nav-arrow-thickness: 2px; /* @boilerplate */
+  --card-carousel-nav-arrow-offset: 2px; /* @boilerplate */
+  --card-carousel-transition-duration: var(--transition-duration); /* @boilerplate */
+}

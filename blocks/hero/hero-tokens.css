@@ -1,0 +1,7 @@
+/* hero design tokens */
+:root { /* @boilerplate */
+  --hero-padding: var(--spacing-xl) var(--spacing-m); /* @boilerplate */
+  --hero-padding-desktop: var(--spacing-xl) var(--spacing-l); /* @boilerplate */
+  --hero-min-height: 300px; /* @boilerplate */
+  --hero-heading-max-width: var(--max-width-site); /* @boilerplate */
+}

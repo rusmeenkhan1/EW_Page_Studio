@@ -1,0 +1,7 @@
+/* quote design tokens */
+:root { /* @boilerplate */
+  --quote-max-width: 900px; /* @boilerplate */
+  --quote-padding: 0 var(--spacing-m); /* @boilerplate */
+  --quote-padding-desktop: 0 var(--spacing-l); /* @boilerplate */
+  --quote-quotation-font-size: 120%; /* @boilerplate */
+}

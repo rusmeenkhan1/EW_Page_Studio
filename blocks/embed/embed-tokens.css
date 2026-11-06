@@ -1,0 +1,11 @@
+/* embed design tokens */
+:root { /* @boilerplate */
+  --embed-max-width: 800px; /* @boilerplate */
+  --embed-margin: var(--spacing-l) auto; /* @boilerplate */
+  --embed-placeholder-aspect-ratio: 16 / 9; /* @boilerplate */
+  --embed-placeholder-play-size: 22px; /* @boilerplate */
+  --embed-placeholder-play-border-width: 2px; /* @boilerplate */
+  --embed-placeholder-play-border-radius: 20px; /* @boilerplate */
+  --embed-placeholder-play-triangle-width: 6px; /* @boilerplate */
+  --embed-placeholder-play-triangle-height: 10px; /* @boilerplate */
+}

@@ -1,0 +1,19 @@
+@import url('./fragment-tokens.css');
+
+/* suppress nested section padding */
+.fragment-wrapper > .section { /* @boilerplate */
+  padding-left: 0; /* @boilerplate */
+  padding-right: 0; /* @boilerplate */
+}
+
+.fragment-wrapper > .section:first-of-type { /* @boilerplate */
+  padding-top: 0; /* @boilerplate */
+}
+
+.fragment-wrapper > .section:last-of-type { /* @boilerplate */
+  padding-bottom: 0; /* @boilerplate */
+}
+
+.fragment.block { /* @boilerplate */
+  display: none; /* @boilerplate */
+}

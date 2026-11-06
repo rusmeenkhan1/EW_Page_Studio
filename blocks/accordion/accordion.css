@@ -1,0 +1,65 @@
+@import url('./accordion-tokens.css');
+
+.accordion > ul { /* @boilerplate */
+  list-style: none; /* @boilerplate */
+  margin: 0; /* @boilerplate */
+  padding: 0; /* @boilerplate */
+}
+
+.accordion > ul > li { /* @boilerplate */
+  border: var(--accordion-item-border-width) solid var(--accordion-item-border-color); /* @boilerplate */
+}
+
+.accordion > ul > li + li { /* @boilerplate */
+  margin-top: var(--accordion-item-gap); /* @boilerplate */
+}
+
+.accordion p { /* @boilerplate */
+  margin-bottom: 0.8em; /* @boilerplate */
+}
+
+.accordion .accordion-item-label { /* @boilerplate */
+  position: relative; /* @boilerplate */
+  padding: 0 var(--accordion-label-padding-x); /* @boilerplate */
+  padding-right: var(--accordion-label-padding-right); /* @boilerplate */
+  cursor: pointer; /* @boilerplate */
+  overflow: auto; /* @boilerplate */
+  transition: background-color var(--accordion-transition-duration); /* @boilerplate */
+}
+
+.accordion li.active .accordion-item-label { /* @boilerplate */
+  background-color: var(--light-color); /* @boilerplate */
+}
+
+.accordion .accordion-item-label:focus,
+.accordion .accordion-item-label:hover { /* @boilerplate */
+  background-color: var(--light-color); /* @boilerplate */
+}
+
+.accordion .accordion-item-label::after { /* @boilerplate */
+  content: ''; /* @boilerplate */
+  position: absolute; /* @boilerplate */
+  top: 50%; /* @boilerplate */
+  right: var(--accordion-label-icon-right); /* @boilerplate */
+  transform: translateY(-50%) rotate(135deg); /* @boilerplate */
+  width: var(--accordion-icon-size); /* @boilerplate */
+  height: var(--accordion-icon-size); /* @boilerplate */
+  border: var(--accordion-icon-thickness) solid; /* @boilerplate */
+  border-width: var(--accordion-icon-thickness) var(--accordion-icon-thickness) 0 0; /* @boilerplate */
+  transition: transform var(--accordion-transition-duration); /* @boilerplate */
+}
+
+.accordion li.active .accordion-item-label::after { /* @boilerplate */
+  transform: translateY(-50%) rotate(-45deg); /* @boilerplate */
+}
+
+.accordion .accordion-item-body { /* @boilerplate */
+  display: none; /* @boilerplate */
+  padding: 0 var(--accordion-body-padding-x); /* @boilerplate */
+}
+
+.accordion li.active .accordion-item-body { /* @boilerplate */
+  display: block; /* @boilerplate */
+  border-top: var(--accordion-item-border-width) solid var(--accordion-item-border-color); /* @boilerplate */
+  background-color: var(--background-color); /* @boilerplate */
+}

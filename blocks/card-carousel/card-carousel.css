@@ -1,0 +1,130 @@
+@import url('./card-carousel-tokens.css');
+
+/* Slider layout: grid similar to .cards > ul, horizontal scroll */
+.card-carousel .card-carousel-slides-container { /* @boilerplate */
+  position: relative; /* @boilerplate */
+}
+
+.card-carousel .card-carousel-slides,
+.card-carousel .carousel-slide-indicators { /* @boilerplate */
+  list-style: none; /* @boilerplate */
+  margin: 0; /* @boilerplate */
+  padding: 0; /* @boilerplate */
+}
+
+.card-carousel .card-carousel-slides-container > ul.card-carousel-slides { /* @boilerplate */
+  display: grid; /* @boilerplate */
+  grid-auto-flow: column; /* @boilerplate */
+  grid-auto-columns: minmax(var(--card-carousel-slide-min-width), 1fr); /* @boilerplate */
+  gap: var(--card-carousel-gap); /* @boilerplate */
+  scroll-behavior: smooth; /* @boilerplate */
+  scroll-snap-type: x mandatory; /* @boilerplate */
+  overflow: scroll clip; /* @boilerplate */
+}
+
+.card-carousel .card-carousel-slides::-webkit-scrollbar { /* @boilerplate */
+  display: none; /* @boilerplate */
+}
+
+.card-carousel .card-carousel-slide { /* @boilerplate */
+  scroll-snap-align: start; /* @boilerplate */
+  box-sizing: border-box; /* @boilerplate */
+  border: var(--card-carousel-card-border-width) solid var(--card-carousel-card-border-color); /* @boilerplate */
+  background-color: var(--background-color); /* @boilerplate */
+}
+
+.card-carousel .cards-card-body { /* @boilerplate */
+  margin: var(--card-carousel-card-body-margin); /* @boilerplate */
+}
+
+.card-carousel .cards-card-image { /* @boilerplate */
+  line-height: 0; /* @boilerplate */
+}
+
+.card-carousel .card-carousel-slide img { /* @boilerplate */
+  width: 100%; /* @boilerplate */
+  aspect-ratio: var(--card-carousel-image-aspect-ratio); /* @boilerplate */
+  object-fit: var(--card-carousel-image-object-fit); /* @boilerplate */
+}
+
+/* Shared slide controls (indicators + prev/next) */
+.card-carousel .carousel-slide-indicators { /* @boilerplate */
+  display: flex; /* @boilerplate */
+  flex-wrap: wrap; /* @boilerplate */
+  justify-content: center; /* @boilerplate */
+  gap: var(--card-carousel-indicators-gap); /* @boilerplate */
+  padding: var(--card-carousel-indicators-padding); /* @boilerplate */
+  background-color: var(--light-color); /* @boilerplate */
+  line-height: 0; /* @boilerplate */
+}
+
+.card-carousel .carousel-slide-indicator button { /* @boilerplate */
+  width: var(--card-carousel-indicator-size); /* @boilerplate */
+  height: var(--card-carousel-indicator-size); /* @boilerplate */
+  margin: 0; /* @boilerplate */
+  padding: 0; /* @boilerplate */
+  border-radius: 50%; /* @boilerplate */
+  background-color: var(--card-carousel-indicator-background); /* @boilerplate */
+  transition: background-color var(--card-carousel-transition-duration); /* @boilerplate */
+}
+
+.card-carousel .carousel-slide-indicator button:disabled,
+.card-carousel .carousel-slide-indicator button:hover,
+.card-carousel .carousel-slide-indicator button:focus-visible { /* @boilerplate */
+  background-color: var(--card-carousel-indicator-active-background); /* @boilerplate */
+}
+
+.card-carousel .carousel-navigation-buttons { /* @boilerplate */
+  position: absolute; /* @boilerplate */
+  top: 50%; /* @boilerplate */
+  transform: translateY(-50%); /* @boilerplate */
+  left: var(--card-carousel-nav-inset); /* @boilerplate */
+  right: var(--card-carousel-nav-inset); /* @boilerplate */
+  display: flex; /* @boilerplate */
+  align-items: center; /* @boilerplate */
+  justify-content: space-between; /* @boilerplate */
+  z-index: 1; /* @boilerplate */
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.card-carousel .carousel-navigation-buttons button { /* @boilerplate */
+  position: relative; /* @boilerplate */
+  width: var(--card-carousel-nav-button-size); /* @boilerplate */
+  height: var(--card-carousel-nav-button-size); /* @boilerplate */
+  margin: 0; /* @boilerplate */
+  border-radius: 50%; /* @boilerplate */
+  padding: 0; /* @boilerplate */
+  background-color: var(--card-carousel-nav-button-background); /* @boilerplate */
+  transition: background-color var(--card-carousel-transition-duration); /* @boilerplate */
+}
+
+.card-carousel .carousel-navigation-buttons button:hover,
+.card-carousel .carousel-navigation-buttons button:focus-visible { /* @boilerplate */
+  background-color: var(--card-carousel-nav-button-hover-background); /* @boilerplate */
+}
+
+.card-carousel .carousel-navigation-buttons button::after { /* @boilerplate */
+  display: block; /* @boilerplate */
+  content: ''; /* @boilerplate */
+  border: var(--card-carousel-nav-arrow-thickness) solid; /* @boilerplate */
+  border-bottom: 0; /* @boilerplate */
+  border-left: 0; /* @boilerplate */
+  height: var(--card-carousel-nav-arrow-size); /* @boilerplate */
+  width: var(--card-carousel-nav-arrow-size); /* @boilerplate */
+  position: absolute; /* @boilerplate */
+  top: 50%; /* @boilerplate */
+  left: calc(50% + var(--card-carousel-nav-arrow-offset)); /* @boilerplate */
+  transform: translate(-50%, -50%) rotate(-135deg); /* @boilerplate */
+}
+
+.card-carousel .carousel-navigation-buttons button.slide-next::after { /* @boilerplate */
+  transform: translate(-50%, -50%) rotate(45deg); /* @boilerplate */
+  left: calc(50% - var(--card-carousel-nav-arrow-offset)); /* @boilerplate */
+}
+
+@media (width >= 600px) { /* @boilerplate */
+  .card-carousel .carousel-navigation-buttons { /* @boilerplate */
+    left: var(--card-carousel-nav-inset-desktop); /* @boilerplate */
+    right: var(--card-carousel-nav-inset-desktop); /* @boilerplate */
+  }
+}

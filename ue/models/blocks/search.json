@@ -1,0 +1,40 @@
+{
+  "definitions": [
+    {
+      "title": "Search",
+      "id": "search",
+      "model": "search",
+      "plugins": {
+        "da": {
+          "rows": 1,
+          "columns": 1,
+          "fields": [
+            { "name": "searchUrl", "selector": "div>div>p>a[href]"},
+            { "name": "searchUrlText", "selector": "div>div>p>a"}
+          ]
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "search",
+      "fields": [
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "searchUrl",
+          "label": "Search URL",
+          "required": true
+        },
+        {
+          "component": "text",
+          "name": "searchUrlText",
+          "label": "Search URL Text",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": []
+}

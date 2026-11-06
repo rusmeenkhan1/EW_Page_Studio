@@ -1,0 +1,43 @@
+@import url('./quote-tokens.css');
+
+.quote blockquote { /* @boilerplate */
+  margin: 0 auto; /* @boilerplate */
+  padding: var(--quote-padding); /* @boilerplate */
+  max-width: var(--quote-max-width); /* @boilerplate */
+}
+
+@media (width >= 900px) { /* @boilerplate */
+  .quote blockquote { /* @boilerplate */
+    padding: var(--quote-padding-desktop); /* @boilerplate */
+  }
+}
+
+.quote blockquote .quote-quotation { /* @boilerplate */
+  font-size: var(--quote-quotation-font-size); /* @boilerplate */
+}
+
+.quote blockquote .quote-quotation > :first-child { /* @boilerplate */
+  text-indent: -0.5ch; /* @boilerplate */
+}
+
+.quote blockquote .quote-quotation p:first-child::before,
+.quote blockquote .quote-quotation p:last-child::after { /* @boilerplate */
+  line-height: 0; /* @boilerplate */
+}
+
+.quote blockquote .quote-quotation p:first-child::before { /* @boilerplate */
+  content: '“'; /* @boilerplate */
+}
+
+.quote blockquote .quote-quotation p:last-child::after { /* @boilerplate */
+  content: '”'; /* @boilerplate */
+}
+
+.quote blockquote .quote-attribution { /* @boilerplate */
+  text-align: right; /* @boilerplate */
+}
+
+.quote blockquote .quote-attribution p:first-child::before { /* @boilerplate */
+  content: '—'; /* @boilerplate */
+  padding-right: 0.5ch; /* @boilerplate */
+}

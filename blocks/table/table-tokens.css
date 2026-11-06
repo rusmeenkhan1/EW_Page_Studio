@@ -1,0 +1,6 @@
+/* table design tokens */
+:root { /* @boilerplate */
+  --table-header-border-width: 2px; /* @boilerplate */
+  --table-row-border-width: var(--border-width-s); /* @boilerplate */
+  --table-cell-padding: 0.5em; /* @boilerplate */
+}
