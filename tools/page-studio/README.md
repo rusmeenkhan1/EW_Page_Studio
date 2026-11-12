@@ -207,7 +207,9 @@ The command line (`node <Page Studio>/tools/page-studio/cli/studio.mjs <command>
 | `check [--sheet <library.json>] [--settings <page-studio.json>] [--strict]` | Check setup on the files, plus each style against the block's CSS and script and the site's global styles (`--strict`: warnings fail too) |
 | `sheet [--out <file>]` | the library sheet's `options` tab from the block files, for a site whose code Page Studio can't read (upload it to DA) |
 
-In this repository: `npm run studio:build`, `npm run studio:check` (CI runs it).
+In this repository: `npm run studio:build`, `npm run studio:check`. To run the checks in CI, add
+`- run: npm run test:studio` and `- run: npm run studio:check` after `npm run lint` in
+`.github/workflows/main.yaml` (a change to a workflow needs a token with the *Workflows* permission).
 
 **Reading the site file from another site.** Page Studio fetches `{code-origin}/page-studio.json`. When Page Studio is
 served by the site itself, that just works; served from this repository's site (the absolute registration), the
