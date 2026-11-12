@@ -8,7 +8,8 @@ Your project's description...
 ## Special features of this repo
 
 - **Page Studio** (`/tools/page-studio/`): one DA / Experience Workspace extension to add and style blocks, buttons
-  and section settings, generic for any EDS site (configured from DA sheets). See
+  and section settings, generic for any EDS site (what the site's code supports in block files next to the code,
+  built into `/page-studio.json`; what authors see in DA sheets; a Check setup view and `npm run studio:check`). See
   [`tools/page-studio/README.md`](tools/page-studio/README.md).
 
 - has both universal editor json for DA (enabled by default, see the `/ue/` folder) as well as Xwalk  (those _blockName.json files are in with the block folders, ignored by DA).

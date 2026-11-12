@@ -189,11 +189,17 @@ function scheduleRoute() {
   }, 0);
 }
 
+/** A frame's view loads now (a `data-lazy` one, e.g. Check setup, only once it is picked). */
+function load(frame) {
+  if (frame && !frame.getAttribute('src')) frame.src = frame.dataset.src;
+}
+
 // the Add here choices, and Check setup (a view picked the same way)
 document.querySelectorAll('.sb-choice, .sb-tool').forEach((choice) => {
   choice.addEventListener('click', () => {
     homeMessage.textContent = '';
     state.pick = choice.dataset.view;
+    load(frames[state.pick]);
     route();
     frames[state.pick]?.focus();
   });
@@ -210,8 +216,9 @@ back.addEventListener('click', () => {
 
 async function init() {
   onHostChange(scheduleRoute);
-  // this page's DA connection exists now (shared/da.js), so the panels loading in the frames use it
-  Object.values(frames).forEach((frame) => { frame.src = frame.dataset.src; });
+  // this page's DA connection exists now (shared/da.js), so the panels loading in the frames use it;
+  // a view only some open (Check setup) waits until it is picked, so it doesn't slow the others
+  Object.values(frames).filter((frame) => !('lazy' in frame.dataset)).forEach(load);
   route();
   const sdk = await connect();
   if (!sdk) {

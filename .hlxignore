@@ -8,3 +8,7 @@ test/
 workers/
 _*
 tests/
+# Page Studio: the sources of page-studio.json (built by studio.mjs build, which is served) and its command line
+*.studio.json
+page-studio.site.json
+tools/page-studio/cli/

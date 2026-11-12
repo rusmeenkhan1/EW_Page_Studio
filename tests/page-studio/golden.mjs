@@ -444,6 +444,22 @@ const SCENARIOS = [
     ],
   },
   {
+    // Check setup from the home: its frame loads only now (data-lazy), then shows its findings
+    name: 'shell-check',
+    panel: 'page-studio.html',
+    mock: {
+      capabilities: LIVE,
+      live: { html: page2('<div><p>Hello</p></div>'), selection: { blockIndex: null } },
+    },
+    steps: [
+      ['home', (p) => p.waitForFunction(() => !document.querySelector('iframe[data-view="check"]').getAttribute('src'), null, { timeout: WAIT })],
+      ['checked', async (p) => {
+        await p.click('.sb-tool');
+        await p.frameLocator('iframe[data-view="check"]').locator('.ck-summary:not([hidden])').waitFor({ timeout: WAIT });
+      }],
+    ],
+  },
+  {
     name: 'shell-add-block',
     panel: 'page-studio.html',
     mock: {

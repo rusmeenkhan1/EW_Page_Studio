@@ -1283,6 +1283,9 @@ async function init() {
       }
       state.blockIndex = selection?.blockIndex ?? null;
       followCursor();
+      // the cursor's section settings (Page Studio's line under the path) may have changed:
+      // say so now, not at the next look at the highlight
+      notifyChange();
     });
     watchSelection();
   }

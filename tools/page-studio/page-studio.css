@@ -157,14 +157,14 @@
   border: 0;
   padding: 0;
   background: none;
-  color: var(--ss-accent);
+  color: var(--ss-accent-hover); /* 5.7:1 on the home's grey (the lighter accent is 4.3:1) */
   font: inherit;
   text-decoration: underline;
   cursor: pointer;
 }
 
 .sb-shell .sb-tool:hover {
-  color: var(--ss-accent-hover);
+  color: var(--ss-gray-900);
 }
 
 .sb-shell .sb-tool:focus-visible {

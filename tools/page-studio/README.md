@@ -5,8 +5,9 @@ One Document Authoring (DA) / Experience Workspace extension to add and style **
 cursor: click in a block, highlight a button or a section's settings, and the right view opens with every
 property set; each change shows in the page as you make it.
 
-Generic: nothing in the code is tied to one customer. Each site describes its own blocks, button designs and
-section options in DA sheets (see [Configuration](#configuration)), and Page Studio writes plain DA markup that the
+Generic: nothing in the code is tied to one customer. Each site describes what its code supports (its blocks'
+styles and options, its buttons) in a **site file** next to its code, and what its authors see (labels, help,
+what to hide) in DA sheets (see [Configuration](#configuration)). Page Studio writes plain DA markup that the
 site's code renders (see [What Page Studio writes](#what-page-studio-writes)).
 
 | Part | Path |
@@ -15,8 +16,11 @@ site's code renders (see [What Page Studio writes](#what-page-studio-writes)).
 | Block view (also a panel on its own) | `tools/page-studio/views/block/block.html` |
 | Button view | `tools/page-studio/views/button/button.html` |
 | Section view | `tools/page-studio/views/section/section.html` |
-| Shared code and look | `tools/page-studio/shared/` (`da.js`, `sheet.js`, `dom.js`, `colour.js`, `ui.js`, `ui.css`) |
-| Regression check | `tests/page-studio/golden.mjs` + `fixtures/` (not served) |
+| Check view (Check setup) | `tools/page-studio/views/check/check.html` |
+| Each page's words | `<page>.messages.js` next to it (see [Words](#words)) |
+| Shared code and look | `tools/page-studio/shared/`: `da.js` (DA connection, configuration), `config.js` (settings and their checks), `library.js` (blocks and option rows: site file + sheet), `check.js` (Check setup), `write.js` (how views write to the page), `messages.js`, `sheet.js`, `dom.js`, `colour.js`, `ui.js`, `ui.css` |
+| Command line (not served) | `tools/page-studio/cli/studio.mjs` (see [The site file](#the-site-file--what-the-sites-code-supports)) |
+| Tests (not served) | `tests/page-studio/golden.mjs` + `fixtures/`, `tests/page-studio/library.test.mjs` |
 
 ---
 
@@ -36,6 +40,8 @@ site's code renders (see [What Page Studio writes](#what-page-studio-writes)).
 4. The path under the name says where the cursor is (**Page › Section 2 › Cards › Button: Join now**); its items
    are links to their view. With a block shown, the line under the path gives its section's settings.
 5. Undo (Ctrl+Z or ⌘Z) steps back through every change, as for any edit.
+6. **Check setup** (under the hints on the home) is for whoever sets the site up: it lists what in the settings,
+   the block library and the site file can't work, or works differently from what it says. It changes nothing.
 
 DA tells an extension only which block holds the cursor and what is highlighted, not where a plain cursor is in
 text or in a settings table: to change a section's settings, highlight one of its values.
@@ -70,11 +76,20 @@ DA config of the site (`https://da.live/config#/{org}/{site}/`) → `library` sh
 The sheets are DA sheets (saved; they don't need publishing). Page Studio reads them with the author's own DA
 login.
 
-### 3. The site's code
+### 3. The site's code (recommended: the site file)
 
-Nothing is needed for the boilerplate's own conventions (blocks, `section-metadata`, bold / italic buttons).
-Options that need the site to read them are off until a setting turns them on (see
-[What Page Studio writes](#what-page-studio-writes)).
+Nothing is needed for the boilerplate's own conventions (blocks, `section-metadata`, bold / italic buttons):
+everything can come from the sheets, as before. Options that need the site to read them are off until the site
+file or a setting turns them on (see [What Page Studio writes](#what-page-studio-writes)).
+
+For more than a few blocks, describe them next to their code instead (see
+[The site file](#the-site-file--what-the-sites-code-supports)): one small file per block, reviewed in the same pull
+request as its CSS, and a sheet that only holds what authors change.
+
+### 4. Check it
+
+Open **Page Studio → Check setup** in Experience Workspace (or run `studio.mjs check` in the site's repository).
+Fix what is under *To fix*; *To look at* works, but not as the setup says.
 
 ---
 
@@ -82,7 +97,9 @@ Options that need the site to read them are off until a setting turns them on (s
 
 ### Page Studio settings — `/.da/library/page-studio`, tab `settings`, columns `key` | `value`
 
-Every row is optional; unknown keys and invalid values are ignored (the default stays).
+Every row is optional; unknown keys and invalid values are ignored (the default stays) — **Check setup** lists
+them. The button settings and `icon-path` / `preview-css` take the site file's `capabilities` when the sheet
+leaves them empty; a value in the sheet always wins.
 
 | key | default | what it does |
 |---|---|---|
@@ -98,20 +115,33 @@ Every row is optional; unknown keys and invalid values are ignored (the default 
 | `icon-path` | `/icons/` | where the site's icons are (for the Icon picker preview) |
 | `send-timeout-ms` | `10000` | how long a view waits for DA to answer a write before it says so and goes on |
 | `look-timeout-ms` | `2000` | how long a look at the highlight may take |
+| `site-file` | `/page-studio.json` | the site file in the site's code (see [The site file](#the-site-file--what-the-sites-code-supports)); `no`: none |
+
+The same sheet may have these tabs too (each optional):
+
+| tab | columns | what it does |
+|---|---|---|
+| `cards` | `view` (`block` \| `section`), `label`, `keys` (comma-separated), `holds` (`styles` \| `properties`, Block view) | the cards a view groups its settings in, in order; rows for a view replace that view's own cards. A setting goes in the card listing its key, else (Block view) a style in the `styles` card and a property in the `properties` card; the rest under *More settings* |
+| `help` | `key`, `text`, `view` (optional) | a setting's help line, when its option row has no `description` help |
+| `messages` | `view` (`page-studio` \| `block` \| `button` \| `section` \| `check`), `element`, `message`, `text` | the site's own words for the panels (see [Words](#words)) |
 
 ### Block library — `library-sheet` (e.g. `/.da/library/blocks`)
 
 - **`data` tab:** `name`, `path` (the block's library document, a DA content address such as
   `https://content.da.live/{org}/{site}/.da/library/blocks/cards`). The block name is the path's last part. Its
-  library document gives the starting content of a new block (the example closest to the picked style).
-- **`options` tab:** one row per setting.
+  library document gives the starting content of a new block (the example closest to the picked style). Blocks
+  that only the site file lists are offered too (their library document: `<folder>/blocks/<name>`, next to the
+  sheet).
+- **`options` tab:** one row per setting. With a site file, only what authors change: see
+  [The sheet over the site file](#the-sheet-over-the-site-file).
+- **`groups` tab** (optional): `group`, `blocks` — named lists of blocks for the `blocks` column (`@group`).
 
 | column | meaning |
 |---|---|
 | `key` | the setting (a variant group, a property, or a section-metadata key) |
-| `blocks` | comma-separated block names it is for; `section-metadata` for the Section view |
+| `blocks` | the blocks it is for, comma-separated: names, `*` (every block of the library but section-metadata), `@group` (a row of the `groups` tab), `-name` or `-@group` (not those); `section-metadata` for the Section view. e.g. `*, -fragment` |
 | `values` | `Label=value \| Label=value` (a bare value is its own label) |
-| `type` | blocks: `variant` (one style, chips with Default), `variants` (combinable options), `multi` (checkboxes), `content` (names for the Content fields), empty (a `key \| value` property row). Sections: `multi`, `colour`, empty |
+| `type` | blocks: `variant` (one style, chips with Default), `variants` (combinable options), `multi` (checkboxes), `content` (names for the Content fields), `hidden` (takes out a site-file option), empty (a `key \| value` property row). Sections: `multi`, `colour`, empty |
 | `label` | the setting's name in the panel (else the key) |
 | `description` | `value=text \| …` tooltips; a part without `=` is the setting's help line |
 | `when` | show the row (`profile`) or a choice (`tall=split \| …`) only while one of those styles is picked |
@@ -119,6 +149,9 @@ Every row is optional; unknown keys and invalid values are ignored (the default 
 A property row (`key | value` in the block) is only right for blocks whose code reads it; any other block renders
 an extra row as content. Section options: any `section-metadata` row; values that are all `name=#hex` (or type
 `colour`) become colour swatches with Custom and a colour code field, writing the hex.
+
+A setting shared by many blocks is one row (`visibility` for `*, -fragment`), not one per block: a new block gets
+it without a sheet edit.
 
 Example rows for this boilerplate (the full sheet of the test site: `tests/page-studio/site/da/.da/library/blocks.json`):
 
@@ -142,6 +175,67 @@ Example rows for this boilerplate (the full sheet of the test site: `tests/page-
 Without a `styles` tab the built-in designs are used: **Primary** (bold), **Secondary** (italic), **Accent** (bold +
 italic), **Text link** — the boilerplate's `decorateButtons()`. Without the sheet, the built-in presets too.
 
+### The site file — what the site's code supports
+
+What a block's code supports changes with its code, so it is kept with its code, in the site's repository:
+
+| File | Written by | Holds |
+|---|---|---|
+| `blocks/<name>/<name>.studio.json` | the developer of the block (draft: `studio.mjs draft`) | `label`, `options` (rows as in the sheet: `key`, `type`, `label`, `values` as `{ "class": "Label" }` or the sheet's text, `when`, `description`), `content` (`{ "image": "Card image", … }`) |
+| `page-studio.site.json` | the site's developers | `capabilities` (`button-options`, `button-new-tab`: `true`/`false`; `button-icons`: `text` \| `option` \| `no`; `icon-path`; `preview-css`), `shared` (options for several blocks, each with a `blocks` cell: `*` = every block with a block file, `@group`, `-name`), `groups`, `section` (`options` for the Section view) |
+| `page-studio.json` | `studio.mjs build` (commit it) | both, merged: the one file Page Studio reads (`site-file`) |
+
+```json
+{
+  "label": "Cards",
+  "options": [
+    { "key": "layout", "type": "variant", "label": "Cards per row",
+      "values": { "two-up": "Two per row", "three-up": "Three per row" } },
+    { "key": "card-options", "type": "variants", "values": { "shadow": "Shadow", "rounded": "Rounded corners" } }
+  ],
+  "content": { "image": "Card image", "heading": "Card title" }
+}
+```
+
+The command line (`node <Page Studio>/tools/page-studio/cli/studio.mjs <command> [--root <site repository>]`):
+
+| Command | What it does |
+|---|---|
+| `draft [--force] [--block <name>]` | drafts block files from each block CSS's `/* ==== variants ==== */` part (each comment starts a group; one class: options, several: a style). Review the labels |
+| `from-sheet <library-sheet.json> [--force]` | moves an existing site over: block files, `shared` and `section` from its DA library sheet (download it as JSON) |
+| `build [--check]` | writes `page-studio.json` (`--check`: fails when it is out of date) |
+| `check [--sheet <library.json>] [--settings <page-studio.json>] [--strict]` | Check setup on the files, plus each style against the block's CSS and script and the site's global styles (`--strict`: warnings fail too) |
+| `sheet [--out <file>]` | the library sheet's `options` tab from the block files, for a site whose code Page Studio can't read (upload it to DA) |
+
+In this repository: `npm run studio:build`, `npm run studio:check` (CI runs it).
+
+**Reading the site file from another site.** Page Studio fetches `{code-origin}/page-studio.json`. When Page Studio is
+served by the site itself, that just works; served from this repository's site (the absolute registration), the
+site's code must allow it (an `access-control-allow-origin` header for `/page-studio.json`, in the site's
+headers configuration). Until then Check setup says the file can't be read, and everything comes from the sheet;
+`studio.mjs sheet` gives that sheet from the block files.
+
+### The sheet over the site file
+
+For a block in the site file, the library sheet's `options` rows change it, they don't repeat it:
+
+- a row with the same `key` changes only the cells it fills (e.g. only `label` and `description`);
+- type `hidden` takes the option out (for this site's authors);
+- any other row adds an option after the site file's.
+
+So the sheet holds what authors own — wording, help, order of extras, what to hide — and a developer adding a
+style to a block's CSS adds it to the block file in the same pull request; nothing else needs an edit.
+
+### Words
+
+What the panels say (statuses, messages, the labels they build) is in each page's messages module
+(`page-studio.messages.js`, `views/<view>/<view>.messages.js`): `element` (a CSS selector in the page;
+`selector@n` the nth of several) → `{ message: text }`. A site rewords any of them in the settings sheet's
+`messages` tab: `view`, `element` and `message` as in the module, `text` its own words (e.g. `block` |
+`#bs-form` | `choose` | `Pick a block…`). Check setup's findings: view `check`, element `finding`, message the
+finding's code (see `WORDS` in `shared/check.js`). The pages' fixed text (headings, field labels) is still in their
+HTML.
+
 ---
 
 ## What Page Studio writes
@@ -164,8 +258,8 @@ The contract between Page Studio and the site's code. It only changes with a new
 
 ## How it works
 
-- **One DA connection for three views.** `page-studio.html` holds the header (name, path, *All choices*), the
-  *Add here* home and three same-origin frames with the views. Its script creates the host
+- **One DA connection for every view.** `page-studio.html` holds the header (name, path, *All choices*), the
+  *Add here* home and a same-origin frame per view (Block, Button, Section, Check). Its script creates the host
   (`window.pageStudioHost`, `shared/da.js`) before setting the frames' `src`; a view finds the host on its parent
   and uses its SDK, its one `subscribeLiveDocument()` (each message to every view; a later one gets the latest at
   once) and its one look at the highlight every 0.7 s. Opened on its own (its parent is DA, another origin) a view
@@ -176,11 +270,17 @@ The contract between Page Studio and the site's code. It only changes with a new
   (`registerView()`), says when it changed (`notifyChange()`) and counts its adds (`addCount`, after which the home
   shows). Views ask each other through host commands (`registerCommand()` / `runCommand()`: `button:edit`,
   `button:done`).
-- **Writes to the page:** DA's `sendHTML(html, { replace: true })` swaps the top-level node at the cursor; with
-  `expected: { html, blockIndex }` DA refuses if the cursor left the block or the page changed (one retry on the newer
-  page). A section-metadata table or a paragraph has no `blockIndex`, so those writes are checked afterwards (only the
-  target changed) and whatever else they replaced is put back, or the author is asked to Undo. The saved source is
-  watched for 8 s for a lost page Metadata table (the live document leaves it out).
+- **Writes to the page** (`shared/write.js`, the same for every view): a change waits for a pause (`pauseTimer()`:
+  a pick 350 ms, typing 800 ms). DA's `sendHTML(html, { replace: true })` swaps the top-level node at the cursor;
+  `sendInBlock()` adds `expected: { html, blockIndex }`, so DA refuses if the cursor left the block or the page
+  changed (one retry on the newer page). A section-metadata table or a paragraph has no `blockIndex`
+  (`replaceAtCursor()`), so those writes are checked afterwards (only the target changed) and whatever else they
+  replaced is put back by the view, or the author is asked to Undo. The saved source is watched for 8 s for a lost
+  page Metadata table (the live document leaves it out). A new view uses the same three and adds its form and
+  what it reads and writes.
+- **The library** (`shared/library.js`): the site file's blocks, then the sheet's rows over them (see
+  [The sheet over the site file](#the-sheet-over-the-site-file)); `*`, `@group` and `-name` are resolved per block. The
+  configuration reads the site file once (`loadConfig()`, with a 3 s limit) for all views.
 - **Reading the page:** the live document is DA's `prose2aem()` output: blocks are `div.<name>.<variant>` with
   `data-block-index`; section-metadata is applied to `main > div` attributes and removed. A highlight
   (`getSelection()`) is only the highlighted part, so the whole button is read from the live document.
@@ -198,7 +298,11 @@ The contract between Page Studio and the site's code. It only changes with a new
 - All page writes are built from escaped text; DA HTML is parsed with `DOMParser` (inert) or built as elements —
   no `innerHTML` with outside text, no `eval`.
 - Links and colours are validated (see the contract). Sheet paths must be site paths ending in `.json`; preview
-  CSS and icon paths site paths; `code-origin` an `https://` host.
+  CSS and icon paths site paths; `code-origin` an `https://` host. The site file is read from `code-origin` only;
+  its capabilities pass the same checks as the settings, its block names must be `a-z0-9-` words, and its texts are
+  only ever set as text.
+- The site's words (`messages` tab) are set as attribute values of elements the page already has, and only for
+  messages the view has.
 - Images in the Content area are fetched with the author's DA token only from `content.da.live`; uploads go next
   to the page (`/{folder}/.{page}/{name}-{stamp}.{ext}`) with the author's own access.
 - Nothing is previewed or published by Page Studio.
@@ -214,10 +318,16 @@ node tests/page-studio/golden.mjs --compare /tmp/ps-baseline    # after it: ✗ 
 AXE=1 node tests/page-studio/golden.mjs --compare /tmp/ps-baseline   # with the tests/a11y axe rules
 ```
 
-25 cases with a mocked DA SDK and a neutral demo customer (`tests/page-studio/fixtures/`): each view on its own and
+30 cases with a mocked DA SDK and a neutral demo customer (`tests/page-studio/fixtures/`): each view on its own and
 inside Page Studio, adds, live edits, put-backs, the path, Button style, DA answering late, before its live
-document, or not at all. Options: `BASE_URL`, `ONLY=<part of a name>`, `CHROMIUM_PATH`. `npm run lint` covers
-`tools/page-studio/` (ESLint and stylelint).
+document, or not at all; a block from the site file (a case's `site` is served as `/page-studio.json`), Check
+setup with and without a site file and from the home (its frame loads only when opened), and a site's own words. Options: `BASE_URL`, `ONLY=<part of a name>`,
+`CHROMIUM_PATH`. `npm run lint` covers `tools/page-studio/` (ESLint and stylelint).
+
+```sh
+npm run test:studio     # the library's rules and Check setup, without a browser (node --test)
+npm run studio:check    # this repository's block files: up to date, and each style in the block's code
+```
 
 Not covered by the harness — check in a signed-in Experience Workspace session before a release: a real DA's
 answers and timing, image upload, the Layout view.
@@ -236,5 +346,8 @@ with DA).
 - Fonts of another site may not load in button previews unless that site allows CORS for its fonts (previews fall
   back to a system font).
 - `check-blocks: yes` from another origin needs the site to allow CORS; `auto` trusts the sheet there.
-- The view's own words are in each HTML page's `data-*` attributes (one language); the sheets' labels and
-  descriptions are the site's.
+- The site file from another origin needs the site to allow it (see
+  [Reading the site file from another site](#the-site-file--what-the-sites-code-supports)); without that, Page Studio
+  uses the sheet only.
+- The panels' messages can be reworded per site (`messages` tab); their fixed headings and field labels are in
+  the HTML (one language).

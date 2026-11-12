@@ -18,11 +18,20 @@ against this repository's own blocks. `tests/` is in `.hlxignore`: none of it is
     properties (Section title), `content` names, a `when` row (Hero *Image side*, only with *Image beside text*) and the
     section options (`multi`, `colour`, text).
   - `blocks/<block>.html`: one library document per block (from the ISE boilerplate's library, its images under
-    `blocks/.<block>/`), with one example per variant, each named by a `library-metadata` table, so DA's Blocks panel
-    lists every variant.
+    `blocks/.<block>/`), each example named by a `library-metadata` table. Since 2026-11-12 it keeps every plain
+    example and one example per content shape; examples that only showed a style class were taken out (Page Studio
+    sets the classes from the block file, and starts a new block from the closest example). So DA's own Blocks panel
+    lists fewer named variants; `/page-studio/variants` still shows every one. **Not uploaded yet**: DA still has the
+    longer documents until `upload.mjs --upload --changed` is run.
+  - The blocks' styles and options are also in this repository's block files (`blocks/<block>/<block>.studio.json`,
+    made from this sheet with `studio.mjs from-sheet`) and its site file (`page-studio.json`). The sheet's `options`
+    tab is left as it is, so the test site works whether or not Page Studio can read the site file; to try the
+    sheet as overrides only, keep just the rows that change labels or hide options.
   - `buttons.json`: button designs (`styles`), `presets` and the `options` (colours, icon).
   - `page-studio.json`: every Page Studio setting, with a description column. `button-options` is `yes` so colours can be
     tried, although this site's code does not read `[…]` after a button (such a button shows as a link with that text).
+    Check setup says so (the site file's capabilities say `button-options: false`): it is the example of a setting
+    that doesn't match the code.
 - **Pages:** `/` (how to test), `/page-studio/blocks` (every block, some with styles), `/page-studio/variants` (every
   variant of the main blocks), `/page-studio/buttons`, `/page-studio/sections`, `/page-studio/empty` (empty lines to add
   things), `/fragments/sample` (for the Fragment block), `/nav`, `/footer`.
