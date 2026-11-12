@@ -4,6 +4,11 @@
  * customer's configuration and the time limits on every DA call.
  */
 
+import { normalizeRow } from './sheet.js';
+import {
+  CONFIG_PATH, DEFAULTS, CAPABILITIES, settingProblem, yes,
+} from './config.js';
+
 export const DA_SOURCE = 'https://admin.da.live/source/';
 export const DA_CONTENT = 'https://content.da.live/';
 // DA sends sources without Cache-Control, so the browser may reuse an old copy for hours
@@ -305,62 +310,17 @@ export function liveWaiter() {
 
 /* ---- the customer's configuration ------------------------------------------------- */
 
-/** The configuration sheet, in the customer's DA (every row optional). */
-export const CONFIG_PATH = '/.da/library/page-studio.json';
+export {
+  CONFIG_PATH, DEFAULTS, CAPABILITIES, settingProblem,
+} from './config.js';
 
-/**
- * The settings and their defaults (the configuration sheet's `settings` tab, `key` | `value`).
- * Every setting is optional; see tools/page-studio/README.md, "Configuration".
- */
-export const DEFAULTS = {
-  'library-sheet': '/.da/library/blocks.json', // blocks, variants and section options
-  'buttons-sheet': '/.da/library/buttons.json', // button designs, colours, icons
-  'code-ref': 'main', // the customer code branch previews and checks read
-  'code-origin': '', // the customer code address, if not https://{code-ref}--{repo}--{org}.aem.page
-  'preview-css': '/styles/styles.css', // comma-separated, from the customer code: button previews
-  'check-blocks': 'auto', // offer only blocks with code: auto (when served by the same site), yes, no
-  'button-options': 'no', // colours and design names as `[…]` after a button (the site must read them)
-  'button-new-tab': 'no', // "Open in a new tab" as `#_blank` (the site must read it)
-  'button-icons': 'no', // icons as `:name:` in the button text (the site must keep them in buttons)
-  'icon-path': '/icons/', // where `:name:` icons are, in the customer code
-  'send-timeout-ms': '10000',
-  'look-timeout-ms': '2000',
-};
-
-const yes = (value) => ['yes', 'true', 'on', '1'].includes(String(value).trim().toLowerCase());
-
-/** A sheet path must be a site path to a JSON sheet: no host, no `..`. */
-const isSheetPath = (value) => /^\/[\w.-]+(?:\/[\w.-]+)*\.json$/.test(value) && !value.includes('..');
-
-/** A customer code path: a site path, no host, no `..`. */
-const isSitePath = (value) => /^\/[\w./-]*$/.test(value) && !value.includes('..');
-
-/**
- * Reads the configuration once per page (all views share it). Unknown keys and invalid
- * values are ignored, with the default kept.
- * @returns {Promise<{settings: Object<string, string>, flag: function(string): boolean}>}
- */
-export function loadConfig(actions, context) {
-  return host.memo('config', async () => {
-    const settings = { ...DEFAULTS };
-    const json = await readSheet(actions, context, CONFIG_PATH, NO_STALE);
-    const rows = json?.settings?.data || (Array.isArray(json?.data) ? json.data : []);
-    rows.forEach((row) => {
-      const key = String(row.key ?? '').trim().toLowerCase();
-      const value = String(row.value ?? '').trim();
-      if (!Object.hasOwn(DEFAULTS, key) || !value) return;
-      if (key.endsWith('-sheet') && !isSheetPath(value)) return;
-      if (['preview-css', 'icon-path'].includes(key)
-        && !value.split(',').every((v) => isSitePath(v.trim()))) return;
-      if (key === 'code-origin' && !/^https:\/\/[\w.-]+$/.test(value)) return;
-      settings[key] = value;
-    });
-    setLimits({
-      send: Number.parseInt(settings['send-timeout-ms'], 10),
-      look: Number.parseInt(settings['look-timeout-ms'], 10),
-    });
-    return { settings, flag: (key) => yes(settings[key]) };
-  });
+/** A site-file capability as a setting's text (`true` → `yes`), or '' when it isn't one. */
+function capabilityValue(key, value) {
+  let text = '';
+  if (typeof value === 'boolean') text = value ? 'yes' : 'no';
+  else if (Array.isArray(value)) text = value.join(', ');
+  else if (typeof value === 'string') text = value.trim();
+  return text && !settingProblem(key, text) ? text : '';
 }
 
 /**
@@ -372,3 +332,91 @@ export function codeOrigin(context, settings) {
   const label = (text) => String(text).toLowerCase().replace(/[^a-z0-9-]+/g, '-');
   return `https://${label(settings['code-ref'])}--${label(context.repo)}--${label(context.org)}.aem.page`;
 }
+
+/**
+ * The site file (setting `site-file`, default `/page-studio.json`) from the site's code:
+ * `{ version, capabilities, blocks }`.
+ * @returns {Promise<{status: string, url: string, data: Object|null}>} status `ok`, `off`,
+ *   `missing` (404), `unreadable` (no answer, or not allowed: CORS), `invalid` (not that JSON)
+ */
+export async function readSiteFile(context, settings, ms = 3000) {
+  const path = settings['site-file'];
+  if (!path || path === 'no') return { status: 'off', url: '', data: null };
+  const url = `${codeOrigin(context, settings)}${path}`;
+  try {
+    const resp = await Promise.race([fetch(url, NO_STALE), timeout(ms)]);
+    if (!resp) return { status: 'unreadable', url, data: null };
+    if (resp.status === 404) return { status: 'missing', url, data: null };
+    if (!resp.ok) return { status: 'unreadable', url, data: null };
+    const data = await resp.json();
+    const valid = data && typeof data === 'object' && !Array.isArray(data);
+    return valid ? { status: 'ok', url, data } : { status: 'invalid', url, data: null };
+  } catch (e) {
+    return { status: e instanceof SyntaxError ? 'invalid' : 'unreadable', url, data: null };
+  }
+}
+
+/**
+ * Reads the configuration once per page (all views share it), then the site file it names.
+ * Unknown keys and invalid values are ignored, with the default kept (Check setup lists them).
+ * The site file's `capabilities` set the button settings the sheet leaves empty.
+ * @returns {Promise<{
+ *   settings: Object<string, string>, flag: function(string): boolean,
+ *   rows: Object[], explicit: Set<string>, tabs: Object<string, Object[]>,
+ *   site: {status: string, url: string, data: Object|null},
+ * }>} rows: the settings tab as written; explicit: keys the sheet set; tabs: the other tabs
+ *   (`cards`, `help`, `messages`) as normalized rows
+ */
+export function loadConfig(actions, context) {
+  return host.memo('config', async () => {
+    const settings = { ...DEFAULTS };
+    const explicit = new Set();
+    const json = await readSheet(actions, context, CONFIG_PATH, NO_STALE);
+    const rows = json?.settings?.data || (Array.isArray(json?.data) ? json.data : []);
+    rows.forEach((row) => {
+      const key = String(row.key ?? '').trim().toLowerCase();
+      const value = String(row.value ?? '').trim();
+      if (!value || settingProblem(key, value)) return;
+      settings[key] = value;
+      explicit.add(key);
+    });
+    const tabs = Object.fromEntries(['cards', 'help', 'messages'].map((tab) => [tab,
+      (Array.isArray(json?.[tab]?.data) ? json[tab].data : []).map(normalizeRow)]));
+    const site = await readSiteFile(context, settings);
+    const capabilities = site.data?.capabilities;
+    if (capabilities && typeof capabilities === 'object') {
+      CAPABILITIES.filter((key) => !explicit.has(key)).forEach((key) => {
+        const value = capabilityValue(key, capabilities[key]);
+        if (value) settings[key] = value;
+      });
+    }
+    setLimits({
+      send: Number.parseInt(settings['send-timeout-ms'], 10),
+      look: Number.parseInt(settings['look-timeout-ms'], 10),
+    });
+    return {
+      settings, flag: (key) => yes(settings[key]), rows, explicit, tabs, site,
+    };
+  });
+}
+
+/**
+ * The panel's cards for a view from the configuration's `cards` tab (`view` | `label` | `keys`
+ * | `holds`), or null when it has none for that view (the panel's own stay).
+ */
+export function configCards(tabs, view) {
+  const rows = (tabs?.cards || []).filter((row) => row.label
+    && (!row.view || row.view.toLowerCase() === view));
+  if (!rows.length) return null;
+  return rows.map((row) => ({
+    label: row.label,
+    keys: (row.keys || '').split(',').map((k) => k.trim()).filter(Boolean),
+    classes: ['styles', 'classes', 'style'].includes((row.holds || '').toLowerCase()),
+    properties: ['properties', 'property'].includes((row.holds || '').toLowerCase()),
+  }));
+}
+
+/** The configuration's `help` tab (`key` | `text` | `view`): key (lower case) → text. */
+export const configHelp = (tabs, view) => Object.fromEntries((tabs?.help || [])
+  .filter((row) => row.key && row.text && (!row.view || row.view.toLowerCase() === view))
+  .map((row) => [row.key.toLowerCase(), row.text]));

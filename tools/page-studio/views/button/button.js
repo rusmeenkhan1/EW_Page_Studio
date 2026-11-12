@@ -38,11 +38,10 @@ import {
 import {
   selectionHint, findButton, currentButton, blockWrite, pageWrite, pageContent,
 } from './button-doc.js';
+import { pauseTimer, sendInBlock, replaceAtCursor } from '../../shared/write.js';
 
 const NEW_TAB = '#_blank';
 const WATCH_MS = 700; // how often the panel looks at what is highlighted in the page
-const PICK_MS = 350; // a pick changes the page after this pause
-const TYPE_MS = 800; // typing changes the page after this pause
 
 // the marks a design may use: outside the link (strong, em) and inside it (sub, sup, u)
 const OUTER_MARKS = ['strong', 'em'];
@@ -92,7 +91,6 @@ const state = {
   blockIndex: null, // the block holding the cursor (DA's live selection)
   // the page button being edited: findButton() (scope, where it is, its paragraph HTML)
   editing: null,
-  timer: null, // a change waiting to be written
   busy: false, // a write is on its way
   again: false, // a change came in while writing
   inserting: false, // Insert / Update on its way
@@ -101,6 +99,9 @@ const state = {
   dismissed: null, // the highlight Done was chosen on: it doesn't open the button again
 };
 const liveFeed = liveWaiter(); // waits for the next live document
+// a change reaches the page after a pause (shared/write.js)
+// eslint-disable-next-line no-use-before-define -- writeButton() is below, with the writes
+const pause = pauseTimer(() => writeButton());
 
 const isOpen = () => editor.classList.contains('is-open');
 
@@ -830,8 +831,7 @@ registerView('button', () => ({
  * @param {boolean} [refill] the same button changed in the page: refill the form only
  */
 function startEdit(found, refill = false) {
-  clearTimeout(state.timer);
-  state.timer = null;
+  pause.stop();
   state.editing = found;
   const values = parseSelection(found.html);
   if (values) openEditor(matchPreset(values), values, { focus: false });
@@ -844,8 +844,7 @@ function startEdit(found, refill = false) {
  * @param {boolean} [focus] the author chose Done in the panel (else the focus stays in the page)
  */
 function stopEdit(key, focus = false) {
-  clearTimeout(state.timer);
-  state.timer = null;
+  pause.stop();
   state.editing = null;
   showMode();
   if (isOpen()) closeEditor(focus);
@@ -891,7 +890,7 @@ const sameButton = (a, b) => a.scope === b.scope && (a.scope === 'block'
  * DA reports no caret position.
  */
 function lookAtSelection(html) {
-  if (state.busy || state.timer) return; // a change is on its way: it wins
+  if (state.busy || pause.waiting) return; // a change is on its way: it wins
   state.seen = html;
   // after Done the highlight is often still there: only a new one opens a button
   if (state.dismissed !== null) {
@@ -922,7 +921,7 @@ function watchSelection() {
  */
 function followLive() {
   const { editing } = state;
-  if (!editing || state.busy || state.timer) return;
+  if (!editing || state.busy || pause.waiting) return;
   const inBlock = Number.isInteger(state.blockIndex);
   if ((editing.scope === 'block' && state.blockIndex !== editing.blockIndex)
     || (editing.scope === 'page' && inBlock)) {
@@ -946,26 +945,16 @@ function onLive({ html, selection }) {
 /** A button in a block: the block is rewritten with only that button changed. */
 async function writeInBlock(html) {
   const { editing } = state;
-  let sent = '';
-  const send = () => {
-    const table = blockWrite(state.liveHtml, editing, html);
-    if (!table) return { ok: false, error: 'gone' };
-    sent = state.liveHtml;
-    return state.actions.sendHTML(table, {
-      replace: true, expected: { html: sent, blockIndex: editing.blockIndex },
-    });
-  };
-  let result = await send();
-  if (!result?.ok && result?.error === 'STALE_LIVE') {
-    // the author typed in the page meanwhile: retry once on the newer live document
-    const next = state.liveHtml !== sent ? state.liveHtml : await liveFeed.next(sent, 1500);
-    if (next) {
-      state.liveHtml = next;
-      result = await send();
-    }
-  }
+  // retried once on the newer live document when the author typed in the page meanwhile
+  const result = await sendInBlock({
+    actions: state.actions,
+    blockIndex: editing.blockIndex,
+    html: () => blockWrite(state.liveHtml, editing, html) || null,
+    live: () => state.liveHtml,
+    setLive: (next) => { state.liveHtml = next; },
+    next: (sent, ms) => liveFeed.next(sent, ms),
+  });
   if (!result?.ok) return result?.error || 'failed';
-  if (result.html) state.liveHtml = result.html;
   editing.html = currentButton(state.liveHtml, editing) || editing.html;
   return null;
 }
@@ -986,9 +975,9 @@ async function putBack(before, after) {
     html = removedNode(before, after); // a paragraph, heading, list or picture
   }
   if (!html) return false;
-  const result = await state.actions.sendHTML(html, { replace: true });
-  if (!result?.ok) return false;
-  const restored = result.html || (await liveFeed.next(after, 3000));
+  const { after: restored } = await replaceAtCursor({
+    actions: state.actions, html, before: after, next: (h, ms) => liveFeed.next(h, ms), fallback: null,
+  });
   if (restored) state.liveHtml = restored;
   return Boolean(restored) && pageContent(restored) === pageContent(before)
     && changedSections(before, restored)?.length === 0;
@@ -998,9 +987,10 @@ async function putBack(before, after) {
 async function writeInPage(html) {
   const { editing } = state;
   const before = state.liveHtml;
-  const result = await state.actions.sendHTML(html, { replace: true });
-  if (!result?.ok) return result?.error || 'failed';
-  const after = result.html || (await liveFeed.next(before, 3000)) || before;
+  const { result, after } = await replaceAtCursor({
+    actions: state.actions, html, before, next: (h, ms) => liveFeed.next(h, ms),
+  });
+  if (!after) return result?.error || 'failed';
   state.liveHtml = after;
   const check = pageWrite(before, after, editing.positions);
   if (check.ok) {
@@ -1024,7 +1014,7 @@ async function tryWrite(editing, html) {
 
 /** Writes the form to the page button being edited. */
 async function writeButton() {
-  state.timer = null;
+  pause.done();
   const { editing } = state;
   if (!editing || !state.canEdit) return;
   if (state.busy) {
@@ -1059,8 +1049,7 @@ async function writeButton() {
 /** A change in the form: in edit mode it reaches the page after a short pause. */
 function scheduleWrite(typing) {
   if (!state.editing || !state.canEdit) return;
-  clearTimeout(state.timer);
-  state.timer = setTimeout(writeButton, typing ? TYPE_MS : PICK_MS);
+  pause.start(typing);
 }
 
 form.addEventListener('input', (e) => {
@@ -1080,8 +1069,8 @@ $('.btn-plugin-canvas').addEventListener('change', (e) => {
 
 /** Done (editing a page button): a change still waiting goes in first, then editing ends. */
 async function doneEditing() {
-  if (state.timer) {
-    clearTimeout(state.timer);
+  if (pause.waiting) {
+    pause.stop();
     await writeButton();
   }
   for (let i = 0; i < 50 && state.busy; i += 1) {

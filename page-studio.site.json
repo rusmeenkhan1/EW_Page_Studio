@@ -1,0 +1,140 @@
+{
+  "version": 1,
+  "capabilities": {
+    "button-options": false,
+    "button-new-tab": false,
+    "button-icons": "text",
+    "icon-path": "/icons/",
+    "preview-css": "/styles/styles.css"
+  },
+  "groups": {
+    "text-blocks": [
+      "accordion",
+      "cards",
+      "card-carousel",
+      "carousel",
+      "columns",
+      "hero",
+      "quote",
+      "tabs",
+      "table"
+    ],
+    "media": [
+      "video",
+      "embed"
+    ]
+  },
+  "shared": [
+    {
+      "blocks": "@text-blocks",
+      "key": "alignment",
+      "type": "variant",
+      "label": "Text alignment",
+      "values": {
+        "left": "Left",
+        "center": "Centre",
+        "right": "Right"
+      },
+      "description": "center=Centres the block text (lists stay left-aligned). | The text alignment on every screen size."
+    },
+    {
+      "blocks": "@text-blocks",
+      "key": "responsive-alignment",
+      "type": "variants",
+      "label": "Alignment by screen size",
+      "values": {
+        "center-mobile": "Centre on mobile only",
+        "center-desktop": "Centre on desktop only",
+        "left-desktop": "Left on desktop only",
+        "right-desktop": "Right on desktop only"
+      }
+    },
+    {
+      "blocks": "@text-blocks",
+      "key": "text-colour",
+      "type": "variant",
+      "label": "Text colour",
+      "values": {
+        "brand-primary": "Brand primary",
+        "brand-secondary": "Brand secondary"
+      }
+    },
+    {
+      "blocks": "*, -fragment",
+      "key": "visibility",
+      "type": "variants",
+      "label": "Visibility",
+      "values": {
+        "hide-mobile": "Hide on mobile",
+        "hide-desktop": "Hide on desktop"
+      },
+      "description": "hide-mobile=Shown from 900px wide. | hide-desktop=Shown below 900px."
+    },
+    {
+      "blocks": "@media",
+      "key": "size",
+      "type": "variant",
+      "label": "Size",
+      "values": {
+        "small": "Small",
+        "wide": "Wide"
+      },
+      "description": "small=At most 560px wide. | wide=The full content width. | Default: at most 900px (video) or 800px (embed)."
+    },
+    {
+      "blocks": "@media",
+      "key": "frame",
+      "type": "variants",
+      "label": "Frame",
+      "values": {
+        "rounded": "Rounded corners",
+        "shadow": "Shadow"
+      }
+    }
+  ],
+  "section": {
+    "options": [
+      {
+        "key": "style",
+        "type": "multi",
+        "label": "Section style",
+        "values": {
+          "light": "Light background",
+          "highlight": "Highlight",
+          "center": "Centre text",
+          "center-mobile": "Centre on mobile only",
+          "center-desktop": "Centre on desktop only",
+          "hide-mobile": "Hide on mobile",
+          "hide-desktop": "Hide on desktop",
+          "brand-primary": "Brand text colour"
+        },
+        "description": "light=Grey background, extra space above and below. | highlight=Styled like Light background. | center=Centres the text of the whole section. | Classes on the section, styled by styles/styles.css."
+      },
+      {
+        "key": "background-color",
+        "type": "colour",
+        "label": "Background colour",
+        "values": {
+          "#f8f8f8": "Light grey",
+          "#d3d3d3": "Grey",
+          "#505050": "Dark grey",
+          "#3b63fb": "Link blue",
+          "#1d3ecf": "Deep blue"
+        },
+        "description": "Painted behind the section (the site reads background-color)."
+      },
+      {
+        "key": "background-image",
+        "label": "Background image",
+        "values": "An image address (https://…)",
+        "description": "A picture behind the section content."
+      },
+      {
+        "key": "id",
+        "label": "Section id",
+        "values": "e.g. help",
+        "description": "Lets a link jump here (#help); [#help] in another section repeats it there."
+      }
+    ]
+  }
+}

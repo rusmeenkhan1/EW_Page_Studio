@@ -1,0 +1,24 @@
+{
+  "label": "Fragment",
+  "options": [
+    {
+      "key": "fragment-style",
+      "type": "variant",
+      "label": "Fragment style",
+      "values": {
+        "boxed": "Boxed",
+        "bordered": "Line on the left"
+      },
+      "description": "boxed=The fragment on a light panel. | bordered=A coloured line on its left."
+    },
+    {
+      "key": "width",
+      "type": "variants",
+      "label": "Width",
+      "values": {
+        "narrow": "Narrow"
+      },
+      "description": "narrow=At most 800px wide, centred."
+    }
+  ]
+}

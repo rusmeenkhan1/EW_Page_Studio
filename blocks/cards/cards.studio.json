@@ -1,0 +1,42 @@
+{
+  "label": "Cards",
+  "options": [
+    {
+      "key": "layout",
+      "type": "variant",
+      "label": "Cards per row",
+      "values": {
+        "two-up": "Two per row",
+        "three-up": "Three per row",
+        "four-up": "Four per row"
+      },
+      "description": "From 900px wide (two per row from 600px). | Default: as many as fit."
+    },
+    {
+      "key": "card-style",
+      "type": "variant",
+      "label": "Card style",
+      "values": {
+        "borderless": "Borderless",
+        "overlay": "Text on image",
+        "horizontal": "Image beside text"
+      },
+      "description": "borderless=No border or background. | overlay=The text sits on the image, on a dark fade. | horizontal=One card per row, its image on the left."
+    },
+    {
+      "key": "card-options",
+      "type": "variants",
+      "label": "Card options",
+      "values": {
+        "shadow": "Shadow",
+        "rounded": "Rounded corners"
+      }
+    }
+  ],
+  "content": {
+    "image": "Card image",
+    "heading": "Card title",
+    "text": "Card text",
+    "button": "Card link"
+  }
+}

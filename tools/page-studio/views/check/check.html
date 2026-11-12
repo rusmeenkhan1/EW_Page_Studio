@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Page Studio · Check setup</title>
+  <link rel="stylesheet" href="/tools/page-studio/shared/ui.css">
+  <link rel="stylesheet" href="/tools/page-studio/views/check/check.css">
+  <script type="module" src="/tools/page-studio/views/check/check.js"></script>
+</head>
+<body>
+  <!-- Check setup: what in this site's Page Studio setup (the configuration and library sheets, the
+       site file in its code) can't work, or works differently from what it says (shared/check.js). -->
+  <main class="ss-plugin ck-panel">
+    <header class="ss-plugin-intro">
+      <div class="ss-plugin-title-row">
+        <h1 id="ck-title"><svg class="ss-plugin-icon" width="20" height="20" aria-hidden="true" focusable="false"><use href="/tools/page-studio/page-studio.svg#icon"></use></svg>Check setup</h1>
+      </div>
+      <p class="ss-plugin-lead">Looks through this site's Page Studio setup: its settings, block library and the
+        site file in its code. Nothing is changed.</p>
+    </header>
+
+    <p class="ss-plugin-status" role="status"
+      data-loading="Checking…"
+      data-standalone="Open this panel from the page editor in DA to check the site's setup.">Checking…</p>
+
+    <!-- {errors}, {warnings}, {notes}: how many of each -->
+    <p class="ck-summary" role="status" hidden
+      data-good="✓ All good: nothing to fix."
+      data-found="To fix: {errors} · To look at: {warnings} · Notes: {notes}"></p>
+
+    <!-- one list per area; data-* are the area names and the level words (not colour alone) -->
+    <div class="ck-results" hidden
+      data-settings="Settings (/.da/library/page-studio)"
+      data-site="Site file (in the site's code)"
+      data-library="Block library"
+      data-css="Styles and the site's code"
+      data-error="To fix"
+      data-warning="To look at"
+      data-info="Note"></div>
+
+    <dl class="ck-sources" hidden
+      data-library-sheet="Block library sheet" data-site-file="Site file" data-code="Site code"
+      data-site-ok="read" data-site-missing="none" data-site-unreadable="can't be read from here"
+      data-site-invalid="not valid" data-site-off="off"></dl>
+
+    <div class="ss-plugin-footer ck-footer">
+      <button type="button" class="ss-plugin-submit ck-again" hidden>Check again</button>
+    </div>
+  </main>
+</body>
+</html>

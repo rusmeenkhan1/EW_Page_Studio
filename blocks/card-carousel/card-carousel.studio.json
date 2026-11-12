@@ -1,0 +1,40 @@
+{
+  "label": "Card Carousel",
+  "options": [
+    {
+      "key": "layout",
+      "type": "variant",
+      "label": "Cards in view",
+      "values": {
+        "two-up": "Two in view",
+        "three-up": "Three in view",
+        "four-up": "Four in view"
+      },
+      "description": "From 900px wide. | Default: as many as fit."
+    },
+    {
+      "key": "card-style",
+      "type": "variant",
+      "label": "Card style",
+      "values": {
+        "borderless": "Borderless",
+        "overlay": "Text on image"
+      },
+      "description": "borderless=No border or background. | overlay=The text sits on the image, on a dark fade."
+    },
+    {
+      "key": "card-options",
+      "type": "variants",
+      "label": "Card options",
+      "values": {
+        "shadow": "Shadow",
+        "rounded": "Rounded corners"
+      }
+    }
+  ],
+  "content": {
+    "image": "Slide image",
+    "heading": "Slide title",
+    "text": "Slide text"
+  }
+}

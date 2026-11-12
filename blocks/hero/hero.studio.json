@@ -1,0 +1,49 @@
+{
+  "label": "Hero",
+  "options": [
+    {
+      "key": "hero-style",
+      "type": "variant",
+      "label": "Hero style",
+      "values": {
+        "centered": "Centred",
+        "split": "Image beside text"
+      },
+      "description": "centered=Text in the middle of the image. | split=The image beside the text, not behind it."
+    },
+    {
+      "key": "image-side",
+      "type": "variants",
+      "label": "Image side",
+      "values": {
+        "image-left": "Image on the left"
+      },
+      "when": "split",
+      "description": "Only for Image beside text: the image goes on the left."
+    },
+    {
+      "key": "height",
+      "type": "variant",
+      "label": "Height",
+      "values": {
+        "short": "Short",
+        "tall": "Tall"
+      }
+    },
+    {
+      "key": "overlay",
+      "type": "variants",
+      "label": "Image overlay",
+      "values": {
+        "dark-overlay": "Dark overlay"
+      },
+      "description": "dark-overlay=Darkens the image so white text reads on any picture."
+    }
+  ],
+  "content": {
+    "image": "Background image",
+    "heading": "Headline",
+    "text": "Intro",
+    "button": "Call to action"
+  }
+}

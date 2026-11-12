@@ -1,0 +1,978 @@
+{
+  "version": 1,
+  "generated": "by tools/page-studio/cli/studio.mjs build — edit blocks/*/*.studio.json and page-studio.site.json",
+  "capabilities": {
+    "button-options": false,
+    "button-new-tab": false,
+    "button-icons": "text",
+    "icon-path": "/icons/",
+    "preview-css": "/styles/styles.css"
+  },
+  "blocks": {
+    "accordion": {
+      "label": "Accordion",
+      "options": [
+        {
+          "key": "alignment",
+          "type": "variant",
+          "label": "Text alignment",
+          "values": {
+            "left": "Left",
+            "center": "Centre",
+            "right": "Right"
+          },
+          "description": "center=Centres the block text (lists stay left-aligned). | The text alignment on every screen size."
+        },
+        {
+          "key": "responsive-alignment",
+          "type": "variants",
+          "label": "Alignment by screen size",
+          "values": {
+            "center-mobile": "Centre on mobile only",
+            "center-desktop": "Centre on desktop only",
+            "left-desktop": "Left on desktop only",
+            "right-desktop": "Right on desktop only"
+          }
+        },
+        {
+          "key": "text-colour",
+          "type": "variant",
+          "label": "Text colour",
+          "values": {
+            "brand-primary": "Brand primary",
+            "brand-secondary": "Brand secondary"
+          }
+        },
+        {
+          "key": "visibility",
+          "type": "variants",
+          "label": "Visibility",
+          "values": {
+            "hide-mobile": "Hide on mobile",
+            "hide-desktop": "Hide on desktop"
+          },
+          "description": "hide-mobile=Shown from 900px wide. | hide-desktop=Shown below 900px."
+        },
+        {
+          "key": "accordion-style",
+          "type": "variant",
+          "label": "Accordion style",
+          "values": {
+            "flush": "Flush"
+          },
+          "description": "flush=Lines between the items, no boxes."
+        },
+        {
+          "key": "accordion-options",
+          "type": "variants",
+          "label": "Accordion options",
+          "values": {
+            "compact": "Compact",
+            "plus": "Plus sign"
+          },
+          "description": "compact=No space between the items. | plus=A plus / minus sign instead of the arrow."
+        }
+      ],
+      "content": {
+        "column1": "Question",
+        "column2": "Answer"
+      }
+    },
+    "card-carousel": {
+      "label": "Card Carousel",
+      "options": [
+        {
+          "key": "alignment",
+          "type": "variant",
+          "label": "Text alignment",
+          "values": {
+            "left": "Left",
+            "center": "Centre",
+            "right": "Right"
+          },
+          "description": "center=Centres the block text (lists stay left-aligned). | The text alignment on every screen size."
+        },
+        {
+          "key": "responsive-alignment",
+          "type": "variants",
+          "label": "Alignment by screen size",
+          "values": {
+            "center-mobile": "Centre on mobile only",
+            "center-desktop": "Centre on desktop only",
+            "left-desktop": "Left on desktop only",
+            "right-desktop": "Right on desktop only"
+          }
+        },
+        {
+          "key": "text-colour",
+          "type": "variant",
+          "label": "Text colour",
+          "values": {
+            "brand-primary": "Brand primary",
+            "brand-secondary": "Brand secondary"
+          }
+        },
+        {
+          "key": "visibility",
+          "type": "variants",
+          "label": "Visibility",
+          "values": {
+            "hide-mobile": "Hide on mobile",
+            "hide-desktop": "Hide on desktop"
+          },
+          "description": "hide-mobile=Shown from 900px wide. | hide-desktop=Shown below 900px."
+        },
+        {
+          "key": "layout",
+          "type": "variant",
+          "label": "Cards in view",
+          "values": {
+            "two-up": "Two in view",
+            "three-up": "Three in view",
+            "four-up": "Four in view"
+          },
+          "description": "From 900px wide. | Default: as many as fit."
+        },
+        {
+          "key": "card-style",
+          "type": "variant",
+          "label": "Card style",
+          "values": {
+            "borderless": "Borderless",
+            "overlay": "Text on image"
+          },
+          "description": "borderless=No border or background. | overlay=The text sits on the image, on a dark fade."
+        },
+        {
+          "key": "card-options",
+          "type": "variants",
+          "label": "Card options",
+          "values": {
+            "shadow": "Shadow",
+            "rounded": "Rounded corners"
+          }
+        }
+      ],
+      "content": {
+        "image": "Slide image",
+        "heading": "Slide title",
+        "text": "Slide text"
+      }
+    },
+    "cards": {
+      "label": "Cards",
+      "options": [
+        {
+          "key": "alignment",
+          "type": "variant",
+          "label": "Text alignment",
+          "values": {
+            "left": "Left",
+            "center": "Centre",
+            "right": "Right"
+          },
+          "description": "center=Centres the block text (lists stay left-aligned). | The text alignment on every screen size."
+        },
+        {
+          "key": "responsive-alignment",
+          "type": "variants",
+          "label": "Alignment by screen size",
+          "values": {
+            "center-mobile": "Centre on mobile only",
+            "center-desktop": "Centre on desktop only",
+            "left-desktop": "Left on desktop only",
+            "right-desktop": "Right on desktop only"
+          }
+        },
+        {
+          "key": "text-colour",
+          "type": "variant",
+          "label": "Text colour",
+          "values": {
+            "brand-primary": "Brand primary",
+            "brand-secondary": "Brand secondary"
+          }
+        },
+        {
+          "key": "visibility",
+          "type": "variants",
+          "label": "Visibility",
+          "values": {
+            "hide-mobile": "Hide on mobile",
+            "hide-desktop": "Hide on desktop"
+          },
+          "description": "hide-mobile=Shown from 900px wide. | hide-desktop=Shown below 900px."
+        },
+        {
+          "key": "layout",
+          "type": "variant",
+          "label": "Cards per row",
+          "values": {
+            "two-up": "Two per row",
+            "three-up": "Three per row",
+            "four-up": "Four per row"
+          },
+          "description": "From 900px wide (two per row from 600px). | Default: as many as fit."
+        },
+        {
+          "key": "card-style",
+          "type": "variant",
+          "label": "Card style",
+          "values": {
+            "borderless": "Borderless",
+            "overlay": "Text on image",
+            "horizontal": "Image beside text"
+          },
+          "description": "borderless=No border or background. | overlay=The text sits on the image, on a dark fade. | horizontal=One card per row, its image on the left."
+        },
+        {
+          "key": "card-options",
+          "type": "variants",
+          "label": "Card options",
+          "values": {
+            "shadow": "Shadow",
+            "rounded": "Rounded corners"
+          }
+        }
+      ],
+      "content": {
+        "image": "Card image",
+        "heading": "Card title",
+        "text": "Card text",
+        "button": "Card link"
+      }
+    },
+    "carousel": {
+      "label": "Carousel",
+      "options": [
+        {
+          "key": "alignment",
+          "type": "variant",
+          "label": "Text alignment",
+          "values": {
+            "left": "Left",
+            "center": "Centre",
+            "right": "Right"
+          },
+          "description": "center=Centres the block text (lists stay left-aligned). | The text alignment on every screen size."
+        },
+        {
+          "key": "responsive-alignment",
+          "type": "variants",
+          "label": "Alignment by screen size",
+          "values": {
+            "center-mobile": "Centre on mobile only",
+            "center-desktop": "Centre on desktop only",
+            "left-desktop": "Left on desktop only",
+            "right-desktop": "Right on desktop only"
+          }
+        },
+        {
+          "key": "text-colour",
+          "type": "variant",
+          "label": "Text colour",
+          "values": {
+            "brand-primary": "Brand primary",
+            "brand-secondary": "Brand secondary"
+          }
+        },
+        {
+          "key": "visibility",
+          "type": "variants",
+          "label": "Visibility",
+          "values": {
+            "hide-mobile": "Hide on mobile",
+            "hide-desktop": "Hide on desktop"
+          },
+          "description": "hide-mobile=Shown from 900px wide. | hide-desktop=Shown below 900px."
+        },
+        {
+          "key": "text-box",
+          "type": "variant",
+          "label": "Slide text",
+          "values": {
+            "light": "Light box",
+            "content-below": "Below the image"
+          },
+          "description": "light=A light box on the image. | content-below=The text under the image, not on it."
+        },
+        {
+          "key": "slide-height",
+          "type": "variants",
+          "label": "Slide height",
+          "values": {
+            "compact": "Compact"
+          },
+          "description": "compact=Shorter slides."
+        }
+      ],
+      "content": {
+        "image": "Slide image",
+        "heading": "Slide title",
+        "text": "Slide text"
+      }
+    },
+    "columns": {
+      "label": "Columns",
+      "options": [
+        {
+          "key": "alignment",
+          "type": "variant",
+          "label": "Text alignment",
+          "values": {
+            "left": "Left",
+            "center": "Centre",
+            "right": "Right"
+          },
+          "description": "center=Centres the block text (lists stay left-aligned). | The text alignment on every screen size."
+        },
+        {
+          "key": "responsive-alignment",
+          "type": "variants",
+          "label": "Alignment by screen size",
+          "values": {
+            "center-mobile": "Centre on mobile only",
+            "center-desktop": "Centre on desktop only",
+            "left-desktop": "Left on desktop only",
+            "right-desktop": "Right on desktop only"
+          }
+        },
+        {
+          "key": "text-colour",
+          "type": "variant",
+          "label": "Text colour",
+          "values": {
+            "brand-primary": "Brand primary",
+            "brand-secondary": "Brand secondary"
+          }
+        },
+        {
+          "key": "visibility",
+          "type": "variants",
+          "label": "Visibility",
+          "values": {
+            "hide-mobile": "Hide on mobile",
+            "hide-desktop": "Hide on desktop"
+          },
+          "description": "hide-mobile=Shown from 900px wide. | hide-desktop=Shown below 900px."
+        },
+        {
+          "key": "column-style",
+          "type": "variant",
+          "label": "Column style",
+          "values": {
+            "boxed": "Boxed",
+            "divided": "Divided"
+          },
+          "description": "boxed=Each text column on a light panel. | divided=A line between the columns."
+        },
+        {
+          "key": "widths",
+          "type": "variant",
+          "label": "Column widths",
+          "values": {
+            "image-wide": "Wide image",
+            "text-wide": "Wide text"
+          },
+          "description": "image-wide=The image column takes two thirds. | text-wide=The text takes two thirds. | From 900px wide."
+        },
+        {
+          "key": "vertical-alignment",
+          "type": "variant",
+          "label": "Vertical alignment",
+          "values": {
+            "align-top": "Top",
+            "align-bottom": "Bottom"
+          },
+          "description": "Default: columns are centred on each other."
+        }
+      ],
+      "content": {
+        "column1": "Left column",
+        "column2": "Right column"
+      }
+    },
+    "embed": {
+      "label": "Embed",
+      "options": [
+        {
+          "key": "visibility",
+          "type": "variants",
+          "label": "Visibility",
+          "values": {
+            "hide-mobile": "Hide on mobile",
+            "hide-desktop": "Hide on desktop"
+          },
+          "description": "hide-mobile=Shown from 900px wide. | hide-desktop=Shown below 900px."
+        },
+        {
+          "key": "size",
+          "type": "variant",
+          "label": "Size",
+          "values": {
+            "small": "Small",
+            "wide": "Wide"
+          },
+          "description": "small=At most 560px wide. | wide=The full content width. | Default: at most 900px (video) or 800px (embed)."
+        },
+        {
+          "key": "frame",
+          "type": "variants",
+          "label": "Frame",
+          "values": {
+            "rounded": "Rounded corners",
+            "shadow": "Shadow"
+          }
+        }
+      ]
+    },
+    "fragment": {
+      "label": "Fragment",
+      "options": [
+        {
+          "key": "fragment-style",
+          "type": "variant",
+          "label": "Fragment style",
+          "values": {
+            "boxed": "Boxed",
+            "bordered": "Line on the left"
+          },
+          "description": "boxed=The fragment on a light panel. | bordered=A coloured line on its left."
+        },
+        {
+          "key": "width",
+          "type": "variants",
+          "label": "Width",
+          "values": {
+            "narrow": "Narrow"
+          },
+          "description": "narrow=At most 800px wide, centred."
+        }
+      ]
+    },
+    "hero": {
+      "label": "Hero",
+      "options": [
+        {
+          "key": "alignment",
+          "type": "variant",
+          "label": "Text alignment",
+          "values": {
+            "left": "Left",
+            "center": "Centre",
+            "right": "Right"
+          },
+          "description": "center=Centres the block text (lists stay left-aligned). | The text alignment on every screen size."
+        },
+        {
+          "key": "responsive-alignment",
+          "type": "variants",
+          "label": "Alignment by screen size",
+          "values": {
+            "center-mobile": "Centre on mobile only",
+            "center-desktop": "Centre on desktop only",
+            "left-desktop": "Left on desktop only",
+            "right-desktop": "Right on desktop only"
+          }
+        },
+        {
+          "key": "text-colour",
+          "type": "variant",
+          "label": "Text colour",
+          "values": {
+            "brand-primary": "Brand primary",
+            "brand-secondary": "Brand secondary"
+          }
+        },
+        {
+          "key": "visibility",
+          "type": "variants",
+          "label": "Visibility",
+          "values": {
+            "hide-mobile": "Hide on mobile",
+            "hide-desktop": "Hide on desktop"
+          },
+          "description": "hide-mobile=Shown from 900px wide. | hide-desktop=Shown below 900px."
+        },
+        {
+          "key": "hero-style",
+          "type": "variant",
+          "label": "Hero style",
+          "values": {
+            "centered": "Centred",
+            "split": "Image beside text"
+          },
+          "description": "centered=Text in the middle of the image. | split=The image beside the text, not behind it."
+        },
+        {
+          "key": "image-side",
+          "type": "variants",
+          "label": "Image side",
+          "values": {
+            "image-left": "Image on the left"
+          },
+          "when": "split",
+          "description": "Only for Image beside text: the image goes on the left."
+        },
+        {
+          "key": "height",
+          "type": "variant",
+          "label": "Height",
+          "values": {
+            "short": "Short",
+            "tall": "Tall"
+          }
+        },
+        {
+          "key": "overlay",
+          "type": "variants",
+          "label": "Image overlay",
+          "values": {
+            "dark-overlay": "Dark overlay"
+          },
+          "description": "dark-overlay=Darkens the image so white text reads on any picture."
+        }
+      ],
+      "content": {
+        "image": "Background image",
+        "heading": "Headline",
+        "text": "Intro",
+        "button": "Call to action"
+      }
+    },
+    "quote": {
+      "label": "Quote",
+      "options": [
+        {
+          "key": "alignment",
+          "type": "variant",
+          "label": "Text alignment",
+          "values": {
+            "left": "Left",
+            "center": "Centre",
+            "right": "Right"
+          },
+          "description": "center=Centres the block text (lists stay left-aligned). | The text alignment on every screen size."
+        },
+        {
+          "key": "responsive-alignment",
+          "type": "variants",
+          "label": "Alignment by screen size",
+          "values": {
+            "center-mobile": "Centre on mobile only",
+            "center-desktop": "Centre on desktop only",
+            "left-desktop": "Left on desktop only",
+            "right-desktop": "Right on desktop only"
+          }
+        },
+        {
+          "key": "text-colour",
+          "type": "variant",
+          "label": "Text colour",
+          "values": {
+            "brand-primary": "Brand primary",
+            "brand-secondary": "Brand secondary"
+          }
+        },
+        {
+          "key": "visibility",
+          "type": "variants",
+          "label": "Visibility",
+          "values": {
+            "hide-mobile": "Hide on mobile",
+            "hide-desktop": "Hide on desktop"
+          },
+          "description": "hide-mobile=Shown from 900px wide. | hide-desktop=Shown below 900px."
+        },
+        {
+          "key": "quote-style",
+          "type": "variant",
+          "label": "Quote style",
+          "values": {
+            "large": "Large",
+            "boxed": "Boxed",
+            "bordered": "Bordered"
+          },
+          "description": "large=A big pull quote. | boxed=On a light panel. | bordered=A coloured line on its left."
+        }
+      ]
+    },
+    "search": {
+      "label": "Search",
+      "options": [
+        {
+          "key": "visibility",
+          "type": "variants",
+          "label": "Visibility",
+          "values": {
+            "hide-mobile": "Hide on mobile",
+            "hide-desktop": "Hide on desktop"
+          },
+          "description": "hide-mobile=Shown from 900px wide. | hide-desktop=Shown below 900px."
+        },
+        {
+          "key": "variant",
+          "type": "variant",
+          "label": "Search style",
+          "values": {
+            "minimal": "Minimal"
+          },
+          "description": "minimal=Only the search field, no result images."
+        },
+        {
+          "key": "search-box",
+          "type": "variants",
+          "label": "Search box",
+          "values": {
+            "large": "Large",
+            "rounded": "Rounded"
+          },
+          "description": "large=A bigger field and text. | rounded=A pill-shaped field."
+        },
+        {
+          "key": "results",
+          "type": "variant",
+          "label": "Results",
+          "values": {
+            "list": "List"
+          },
+          "description": "list=One result per row, its image beside the text."
+        }
+      ]
+    },
+    "section-title": {
+      "label": "Section Title",
+      "options": [
+        {
+          "key": "visibility",
+          "type": "variants",
+          "label": "Visibility",
+          "values": {
+            "hide-mobile": "Hide on mobile",
+            "hide-desktop": "Hide on desktop"
+          },
+          "description": "hide-mobile=Shown from 900px wide. | hide-desktop=Shown below 900px."
+        },
+        {
+          "key": "title-style",
+          "type": "variant",
+          "label": "Title style",
+          "values": {
+            "underline": "Underline",
+            "bordered": "Line on the left",
+            "divider": "Divider below"
+          },
+          "description": "underline=A short coloured bar under the title. | bordered=A coloured line on the left. | divider=A thin rule under the title and subtitle."
+        },
+        {
+          "key": "subtitle-style",
+          "type": "variants",
+          "label": "Subtitle",
+          "values": {
+            "subtitle-above": "Subtitle above",
+            "uppercase": "Capitals"
+          },
+          "description": "subtitle-above=The subtitle above the title, as an eyebrow. | uppercase=The subtitle in capitals."
+        },
+        {
+          "key": "title-type",
+          "label": "Heading level",
+          "values": {
+            "h1": "H1",
+            "h2": "H2",
+            "h3": "H3",
+            "h4": "H4",
+            "h5": "H5",
+            "h6": "H6",
+            "p": "Paragraph"
+          },
+          "description": "The title's heading level (one H1 per page)."
+        },
+        {
+          "key": "title-size",
+          "label": "Title size",
+          "values": {
+            "xxl": "XXL",
+            "xl": "XL",
+            "l": "L",
+            "m": "M",
+            "s": "S",
+            "xs": "XS"
+          }
+        },
+        {
+          "key": "alignment",
+          "label": "Alignment",
+          "values": {
+            "left": "Left",
+            "center": "Centre",
+            "right": "Right"
+          }
+        },
+        {
+          "key": "text-color",
+          "label": "Text colour",
+          "values": {
+            "text": "Text",
+            "dark": "Dark",
+            "light": "Light",
+            "link": "Link",
+            "link-hover": "Link hover",
+            "background": "Background"
+          },
+          "description": "One of the site's colour tokens."
+        },
+        {
+          "key": "subtitle",
+          "label": "Subtitle",
+          "values": "Type the subtitle (e.g. Everything we offer)"
+        },
+        {
+          "key": "subtitle-size",
+          "label": "Subtitle size",
+          "values": {
+            "xxl": "XXL",
+            "xl": "XL",
+            "l": "L",
+            "m": "M",
+            "s": "S",
+            "xs": "XS"
+          }
+        }
+      ]
+    },
+    "table": {
+      "label": "Table",
+      "options": [
+        {
+          "key": "alignment",
+          "type": "variant",
+          "label": "Text alignment",
+          "values": {
+            "left": "Left",
+            "center": "Centre",
+            "right": "Right"
+          },
+          "description": "center=Centres the block text (lists stay left-aligned). | The text alignment on every screen size."
+        },
+        {
+          "key": "responsive-alignment",
+          "type": "variants",
+          "label": "Alignment by screen size",
+          "values": {
+            "center-mobile": "Centre on mobile only",
+            "center-desktop": "Centre on desktop only",
+            "left-desktop": "Left on desktop only",
+            "right-desktop": "Right on desktop only"
+          }
+        },
+        {
+          "key": "text-colour",
+          "type": "variant",
+          "label": "Text colour",
+          "values": {
+            "brand-primary": "Brand primary",
+            "brand-secondary": "Brand secondary"
+          }
+        },
+        {
+          "key": "visibility",
+          "type": "variants",
+          "label": "Visibility",
+          "values": {
+            "hide-mobile": "Hide on mobile",
+            "hide-desktop": "Hide on desktop"
+          },
+          "description": "hide-mobile=Shown from 900px wide. | hide-desktop=Shown below 900px."
+        },
+        {
+          "key": "rows",
+          "type": "variants",
+          "label": "Table style",
+          "values": {
+            "striped": "Striped",
+            "bordered": "Bordered"
+          },
+          "description": "striped=Shades every other row. | bordered=Draws a line round every cell."
+        },
+        {
+          "key": "header",
+          "type": "variants",
+          "label": "Header row",
+          "values": {
+            "no-header": "No header"
+          },
+          "description": "no-header=The first row is a normal row, not a header."
+        },
+        {
+          "key": "table-options",
+          "type": "variants",
+          "label": "Table options",
+          "values": {
+            "compact": "Compact rows",
+            "first-column": "Bold first column",
+            "centered": "Centred cells"
+          }
+        },
+        {
+          "key": "header-style",
+          "type": "variant",
+          "label": "Header style",
+          "values": {
+            "header-dark": "Dark header"
+          },
+          "description": "header-dark=White text on a dark header row."
+        }
+      ]
+    },
+    "tabs": {
+      "label": "Tabs",
+      "options": [
+        {
+          "key": "alignment",
+          "type": "variant",
+          "label": "Text alignment",
+          "values": {
+            "left": "Left",
+            "center": "Centre",
+            "right": "Right"
+          },
+          "description": "center=Centres the block text (lists stay left-aligned). | The text alignment on every screen size."
+        },
+        {
+          "key": "responsive-alignment",
+          "type": "variants",
+          "label": "Alignment by screen size",
+          "values": {
+            "center-mobile": "Centre on mobile only",
+            "center-desktop": "Centre on desktop only",
+            "left-desktop": "Left on desktop only",
+            "right-desktop": "Right on desktop only"
+          }
+        },
+        {
+          "key": "text-colour",
+          "type": "variant",
+          "label": "Text colour",
+          "values": {
+            "brand-primary": "Brand primary",
+            "brand-secondary": "Brand secondary"
+          }
+        },
+        {
+          "key": "visibility",
+          "type": "variants",
+          "label": "Visibility",
+          "values": {
+            "hide-mobile": "Hide on mobile",
+            "hide-desktop": "Hide on desktop"
+          },
+          "description": "hide-mobile=Shown from 900px wide. | hide-desktop=Shown below 900px."
+        },
+        {
+          "key": "tab-style",
+          "type": "variant",
+          "label": "Tab style",
+          "values": {
+            "pills": "Pills",
+            "underline": "Underline",
+            "vertical": "Vertical"
+          },
+          "description": "pills=Rounded tabs. | underline=A line under the open tab. | vertical=Tabs in a column on the left (from 900px)."
+        }
+      ],
+      "content": {
+        "column1": "Tab label",
+        "column2": "Tab content"
+      }
+    },
+    "video": {
+      "label": "Video",
+      "options": [
+        {
+          "key": "visibility",
+          "type": "variants",
+          "label": "Visibility",
+          "values": {
+            "hide-mobile": "Hide on mobile",
+            "hide-desktop": "Hide on desktop"
+          },
+          "description": "hide-mobile=Shown from 900px wide. | hide-desktop=Shown below 900px."
+        },
+        {
+          "key": "size",
+          "type": "variant",
+          "label": "Size",
+          "values": {
+            "small": "Small",
+            "wide": "Wide"
+          },
+          "description": "small=At most 560px wide. | wide=The full content width. | Default: at most 900px (video) or 800px (embed)."
+        },
+        {
+          "key": "frame",
+          "type": "variants",
+          "label": "Frame",
+          "values": {
+            "rounded": "Rounded corners",
+            "shadow": "Shadow"
+          }
+        },
+        {
+          "key": "playback",
+          "type": "variants",
+          "label": "Playback",
+          "values": {
+            "autoplay": "Autoplay"
+          },
+          "description": "autoplay=Plays at once, muted and looping (when the visitor allows motion)."
+        }
+      ]
+    },
+    "section-metadata": {
+      "options": [
+        {
+          "key": "style",
+          "type": "multi",
+          "label": "Section style",
+          "values": {
+            "light": "Light background",
+            "highlight": "Highlight",
+            "center": "Centre text",
+            "center-mobile": "Centre on mobile only",
+            "center-desktop": "Centre on desktop only",
+            "hide-mobile": "Hide on mobile",
+            "hide-desktop": "Hide on desktop",
+            "brand-primary": "Brand text colour"
+          },
+          "description": "light=Grey background, extra space above and below. | highlight=Styled like Light background. | center=Centres the text of the whole section. | Classes on the section, styled by styles/styles.css."
+        },
+        {
+          "key": "background-color",
+          "type": "colour",
+          "label": "Background colour",
+          "values": {
+            "#f8f8f8": "Light grey",
+            "#d3d3d3": "Grey",
+            "#505050": "Dark grey",
+            "#3b63fb": "Link blue",
+            "#1d3ecf": "Deep blue"
+          },
+          "description": "Painted behind the section (the site reads background-color)."
+        },
+        {
+          "key": "background-image",
+          "label": "Background image",
+          "values": "An image address (https://…)",
+          "description": "A picture behind the section content."
+        },
+        {
+          "key": "id",
+          "label": "Section id",
+          "values": "e.g. help",
+          "description": "Lets a link jump here (#help); [#help] in another section repeats it there."
+        }
+      ]
+    }
+  }
+}

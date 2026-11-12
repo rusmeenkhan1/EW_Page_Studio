@@ -1,0 +1,20 @@
+{
+  "label": "Tabs",
+  "options": [
+    {
+      "key": "tab-style",
+      "type": "variant",
+      "label": "Tab style",
+      "values": {
+        "pills": "Pills",
+        "underline": "Underline",
+        "vertical": "Vertical"
+      },
+      "description": "pills=Rounded tabs. | underline=A line under the open tab. | vertical=Tabs in a column on the left (from 900px)."
+    }
+  ],
+  "content": {
+    "column1": "Tab label",
+    "column2": "Tab content"
+  }
+}

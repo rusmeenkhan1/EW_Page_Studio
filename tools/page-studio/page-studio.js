@@ -184,7 +184,8 @@ function scheduleRoute() {
   }, 0);
 }
 
-document.querySelectorAll('.sb-choice').forEach((choice) => {
+// the Add here choices, and Check setup (a view picked the same way)
+document.querySelectorAll('.sb-choice, .sb-tool').forEach((choice) => {
   choice.addEventListener('click', () => {
     homeMessage.textContent = '';
     state.pick = choice.dataset.view;

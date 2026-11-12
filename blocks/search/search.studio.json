@@ -1,0 +1,33 @@
+{
+  "label": "Search",
+  "options": [
+    {
+      "key": "variant",
+      "type": "variant",
+      "label": "Search style",
+      "values": {
+        "minimal": "Minimal"
+      },
+      "description": "minimal=Only the search field, no result images."
+    },
+    {
+      "key": "search-box",
+      "type": "variants",
+      "label": "Search box",
+      "values": {
+        "large": "Large",
+        "rounded": "Rounded"
+      },
+      "description": "large=A bigger field and text. | rounded=A pill-shaped field."
+    },
+    {
+      "key": "results",
+      "type": "variant",
+      "label": "Results",
+      "values": {
+        "list": "List"
+      },
+      "description": "list=One result per row, its image beside the text."
+    }
+  ]
+}

@@ -8,6 +8,24 @@
       { "key": "preview-css", "value": "/styles/styles.css" }
     ]
   },
-  ":names": ["settings"],
+  "cards": {
+    "total": 4,
+    "data": [
+      { "view": "block", "label": "Style", "keys": "", "holds": "styles" },
+      { "view": "block", "label": "Layout", "keys": "width, spacing-top, spacing-bottom", "holds": "" },
+      { "view": "block", "label": "Visibility", "keys": "visibility", "holds": "" },
+      { "view": "block", "label": "Settings", "keys": "", "holds": "properties" }
+    ]
+  },
+  "help": {
+    "total": 4,
+    "data": [
+      { "key": "width", "view": "block", "text": "Lines the block up with the Narrow, Medium or Wide section widths." },
+      { "key": "spacing-top", "view": "block", "text": "The gap above the block. Default keeps the site's usual gap." },
+      { "key": "spacing-bottom", "view": "block", "text": "The gap below the block. Default keeps the site's usual gap." },
+      { "key": "visibility", "view": "block", "text": "Hide the block on phones (under 768 px), tablets (768–991 px) or desktops (992 px and wider)." }
+    ]
+  },
+  ":names": ["settings", "cards", "help"],
   ":type": "multi-sheet"
 }

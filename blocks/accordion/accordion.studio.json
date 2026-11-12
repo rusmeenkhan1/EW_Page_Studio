@@ -1,0 +1,28 @@
+{
+  "label": "Accordion",
+  "options": [
+    {
+      "key": "accordion-style",
+      "type": "variant",
+      "label": "Accordion style",
+      "values": {
+        "flush": "Flush"
+      },
+      "description": "flush=Lines between the items, no boxes."
+    },
+    {
+      "key": "accordion-options",
+      "type": "variants",
+      "label": "Accordion options",
+      "values": {
+        "compact": "Compact",
+        "plus": "Plus sign"
+      },
+      "description": "compact=No space between the items. | plus=A plus / minus sign instead of the arrow."
+    }
+  ],
+  "content": {
+    "column1": "Question",
+    "column2": "Answer"
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "label": "Section Title",
+  "options": [
+    {
+      "key": "title-style",
+      "type": "variant",
+      "label": "Title style",
+      "values": {
+        "underline": "Underline",
+        "bordered": "Line on the left",
+        "divider": "Divider below"
+      },
+      "description": "underline=A short coloured bar under the title. | bordered=A coloured line on the left. | divider=A thin rule under the title and subtitle."
+    },
+    {
+      "key": "subtitle-style",
+      "type": "variants",
+      "label": "Subtitle",
+      "values": {
+        "subtitle-above": "Subtitle above",
+        "uppercase": "Capitals"
+      },
+      "description": "subtitle-above=The subtitle above the title, as an eyebrow. | uppercase=The subtitle in capitals."
+    },
+    {
+      "key": "title-type",
+      "label": "Heading level",
+      "values": {
+        "h1": "H1",
+        "h2": "H2",
+        "h3": "H3",
+        "h4": "H4",
+        "h5": "H5",
+        "h6": "H6",
+        "p": "Paragraph"
+      },
+      "description": "The title's heading level (one H1 per page)."
+    },
+    {
+      "key": "title-size",
+      "label": "Title size",
+      "values": {
+        "xxl": "XXL",
+        "xl": "XL",
+        "l": "L",
+        "m": "M",
+        "s": "S",
+        "xs": "XS"
+      }
+    },
+    {
+      "key": "alignment",
+      "label": "Alignment",
+      "values": {
+        "left": "Left",
+        "center": "Centre",
+        "right": "Right"
+      }
+    },
+    {
+      "key": "text-color",
+      "label": "Text colour",
+      "values": {
+        "text": "Text",
+        "dark": "Dark",
+        "light": "Light",
+        "link": "Link",
+        "link-hover": "Link hover",
+        "background": "Background"
+      },
+      "description": "One of the site's colour tokens."
+    },
+    {
+      "key": "subtitle",
+      "label": "Subtitle",
+      "values": "Type the subtitle (e.g. Everything we offer)"
+    },
+    {
+      "key": "subtitle-size",
+      "label": "Subtitle size",
+      "values": {
+        "xxl": "XXL",
+        "xl": "XL",
+        "l": "L",
+        "m": "M",
+        "s": "S",
+        "xs": "XS"
+      }
+    }
+  ]
+}

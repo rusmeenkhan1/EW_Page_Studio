@@ -22,30 +22,22 @@
       <p class="ss-plugin-lead">Style a block on the page, or add a new one. The page shows each change as you pick.</p>
     </header>
 
-    <!-- How the settings are shown. groups: the cards, in order; a field goes in the group listing its
-         sheet `key`, else a style or option row in the `classes` group and a property in the `properties`
-         group. help: a field's text under its name, by `key` (a sheet `description` cell's own text, the
-         part without `=`, comes first). -->
+    <!-- How the settings are shown, by default (generic: nothing of one site here). groups: the cards, in
+         order; a field goes in the group listing its sheet `key`, else a style or option row in the `classes`
+         group and a property in the `properties` group. help: a field's text under its name, by `key` (a sheet
+         `description` cell's own text, the part without `=`, comes first). A site changes both in the
+         configuration sheet: its `cards` tab replaces the groups, its `help` tab adds texts. -->
     <script type="application/json" class="bs-layout">
       {
         "groups": [
           { "label": "Style", "classes": true },
-          { "label": "Layout", "keys": ["width", "spacing-top", "spacing-bottom"] },
           { "label": "Visibility", "keys": ["visibility"] },
           { "label": "Settings", "properties": true }
         ],
         "help": {
           "variant": "The block's look.",
           "options": "Extras for the picked style. Only the ones that work with it are shown.",
-          "width": "Lines the block up with the Narrow, Medium or Wide section widths.",
-          "spacing-top": "The gap above the block. Default keeps the site's usual gap.",
-          "spacing-bottom": "The gap below the block. Default keeps the site's usual gap.",
-          "visibility": "Hide the block on phones (under 768 px), tablets (768–991 px) or desktops (992 px and wider).",
-          "consent group": "The cookie consent a visitor must give before the video or post loads.",
-          "color": "The spacer's background colour.",
-          "desktop": "The spacer's height on desktops.",
-          "tablet": "The spacer's height on tablets.",
-          "mobile": "The spacer's height on phones."
+          "visibility": "Hide the block on smaller or on larger screens (where they change is the site's choice)."
         }
       }
     </script>

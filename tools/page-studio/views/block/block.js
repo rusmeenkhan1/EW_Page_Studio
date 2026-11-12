@@ -48,19 +48,16 @@ import renderContent from './content-form.js';
 import {
   DA_CONTENT, DA_SOURCE, NO_STALE, timeout, connect, canEditLive, trackCursor, sourceUrl,
   readSheet, savedSource, watchSaved, liveWaiter, onLiveDocument, registerView, notifyChange,
-  isEmbedded, hasCommand, runCommand, loadConfig, codeOrigin,
+  isEmbedded, hasCommand, runCommand, loadConfig, codeOrigin, configCards, configHelp,
 } from '../../shared/da.js';
-import {
-  normalizeRow, parseValues, parseDescriptions, parseWhen,
-} from '../../shared/sheet.js';
+import { parseValues, parseDescriptions, parseWhen } from '../../shared/sheet.js';
+import { buildLibrary, contentNames } from '../../shared/library.js';
 import { HEX_COLOR, colourName } from '../../shared/colour.js';
 import {
   toClassName, metadataCount, settingsTable, buttonLink,
 } from '../../shared/dom.js';
 import { messenger, settingsCard, swatchButton } from '../../shared/ui.js';
-
-const PICK_MS = 350; // a pick changes the page after this pause
-const TYPE_MS = 800; // typing changes the page after this pause
+import { pauseTimer, sendInBlock, replaceAtCursor } from '../../shared/write.js';
 
 const $ = (selector) => document.querySelector(selector);
 const status = $('.ss-plugin-status');
@@ -78,7 +75,11 @@ const contentRoot = $('.bs-content');
 const modeBadge = $('.bs-mode');
 const startNote = $('.bs-start');
 
-/** The settings cards and help texts (`.bs-layout` JSON in block.html). */
+/**
+ * The settings cards and help texts: the panel's generic ones (`.bs-layout` JSON in
+ * block.html), the configuration's `cards` and `help` tabs instead when they have rows for
+ * the Block view (applyLayout()).
+ */
 const LAYOUT = (() => {
   try {
     return JSON.parse($('.bs-layout')?.textContent || '{}');
@@ -86,8 +87,15 @@ const LAYOUT = (() => {
     return {};
   }
 })();
-const HELP = Object.fromEntries(Object.entries(LAYOUT.help || {})
+let HELP = Object.fromEntries(Object.entries(LAYOUT.help || {})
   .map(([k, v]) => [k.toLowerCase(), v]));
+
+/** The configuration's cards and help for this view, over the panel's own. */
+function applyLayout(tabs) {
+  const cards = configCards(tabs, 'block');
+  if (cards) LAYOUT.groups = cards;
+  HELP = { ...HELP, ...configHelp(tabs, 'block') };
+}
 
 const state = {
   actions: null,
@@ -106,7 +114,6 @@ const state = {
   added: null,
   addCount: 0, // blocks added (Add block, Insert): Page Studio goes home after each
   kept: [], // its variant classes the sheet doesn't list (kept as they are)
-  timer: null,
   applying: false,
   again: false, // a pick came in while applying
   busy: null, // 'adding' while inserting, 'placing' / 'removing' a trial block
@@ -116,6 +123,9 @@ const state = {
   content: null, // { name, el, touched }: the working copy of the block's content
 };
 const liveFeed = liveWaiter(); // waits for the next live document
+// a pick reaches the page after a pause (shared/write.js)
+// eslint-disable-next-line no-use-before-define -- apply() is below, with the writes
+const pause = pauseTimer(() => apply());
 
 const TONES = {
   applying: 'info',
@@ -210,28 +220,26 @@ function examplePath(row, name) {
   return path.endsWith('.html') ? path : `${path}.html`;
 }
 
-async function loadSheet() {
+/**
+ * The blocks and their rows: the library sheet over the site file (shared/library.js), so a
+ * site whose code describes its blocks needs sheet rows only for what authors change.
+ */
+async function loadSheet(site) {
   const { context, actions } = state;
   const json = await readSheet(actions, context, state.settings['library-sheet'], NO_STALE);
-  if (!json) return;
+  if (!json && !site) return;
   try {
-    const entries = (json?.data?.data || []).map(normalizeRow)
-      .map((row) => {
-        const name = toClassName(String(row.path || '').split('/').pop() || '');
-        return { label: row.name, name, example: name ? examplePath(row, name) : '' };
-      })
-      .filter((b) => b.name);
+    const library = buildLibrary(json, site);
+    const entries = library.entries
+      .map(({ label, name, path }) => ({ label, name, example: examplePath({ path }, name) }));
     const known = await Promise.all(entries.map((b) => isBlock(b.name)));
     state.blocks = entries.filter((b, i) => known[i]);
-    const rows = (json?.options?.data || []).map(normalizeRow).filter((row) => row.key);
     const isContent = (row) => row.type.toLowerCase() === 'content';
     state.blocks.forEach(({ name }) => {
-      const own = rows.filter((row) => row.blocks.split(',').some((b) => toClassName(b) === name));
+      const own = library.rowsFor(name);
       state.fields[name] = own.filter((row) => !isContent(row)).map(parseField);
-      state.names[name] = Object.fromEntries(own.filter(isContent)
-        .flatMap((row) => parseValues(row.values || ''))
-        // keys as written, lower case: `item`, `row-image`, `profile/text`, `text-2`, `column1`
-        .map(({ label, value }) => [label.toLowerCase().replace(/\s+/g, ''), value]));
+      // keys as written, lower case: `item`, `row-image`, `profile/text`, `text-2`, `column1`
+      state.names[name] = contentNames(own);
     });
   } catch { /* no sheet: the panel says so */ }
 }
@@ -604,8 +612,7 @@ const APPLY_ERRORS = {
  * newer live document (already here, or the next one) and say whether to send again.
  * @param {boolean} panelEdits the panel's Content area had changes in that write
  */
-async function takeNewerPage(editing, sent, panelEdits) {
-  const next = state.liveHtml !== sent ? state.liveHtml : await nextLive(state.liveHtml, 1500);
+function takeNewerPage(editing, next, panelEdits) {
   const block = next && readBlock(next, editing.index);
   if (!block || state.editing !== editing) return false;
   state.liveHtml = next;
@@ -630,7 +637,7 @@ function applied(result, editing) {
 
 /** Replaces the block at the cursor with the form's style, options and properties. */
 async function apply() {
-  state.timer = null;
+  pause.done();
   if (!state.editing) return;
   if (state.applying) {
     state.again = true;
@@ -642,19 +649,16 @@ async function apply() {
   // the panel's own content edits go with this write; any made from now on go with the next
   const panelEdits = Boolean(state.content?.edited);
   if (state.content) state.content.edited = false;
-  let sent = '';
-  const send = () => {
-    sent = state.liveHtml;
-    return state.actions.sendHTML(
-      buildTable(withContent(editing.block), ...Object.values(readFields())),
-      { replace: true, expected: { html: sent, blockIndex: editing.index } },
-    );
-  };
   try {
-    let result = await send();
-    if (result?.error === 'STALE_LIVE' && await takeNewerPage(editing, sent, panelEdits)) {
-      result = await send();
-    }
+    const result = await sendInBlock({
+      actions: state.actions,
+      blockIndex: editing.index,
+      html: () => buildTable(withContent(editing.block), ...Object.values(readFields())),
+      live: () => state.liveHtml,
+      setLive: (html) => { state.liveHtml = html; },
+      next: nextLive,
+      takeNewer: (newer) => takeNewerPage(editing, newer, panelEdits),
+    });
     applied(result, editing);
   } catch {
     say('apply-failed');
@@ -673,8 +677,7 @@ async function apply() {
 /** A change in the form: in edit mode it reaches the page after a short pause. */
 function scheduleApply(typing) {
   if (!state.editing) return;
-  clearTimeout(state.timer);
-  state.timer = setTimeout(apply, typing ? TYPE_MS : PICK_MS);
+  pause.start(typing);
 }
 
 /* ---- content ----------------------------------------------------------- */
@@ -719,9 +722,8 @@ async function uploadImage(file) {
  */
 async function openButtonStyle(partEl) {
   if (!state.editing || !state.content) return;
-  if (state.timer) {
-    clearTimeout(state.timer);
-    state.timer = null;
+  if (pause.waiting) {
+    pause.stop();
     await apply();
   }
   const position = [...state.content.el.querySelectorAll('p')].filter((p) => buttonLink(p))
@@ -841,8 +843,7 @@ registerView('block', () => ({
  * @param {boolean} [trial] the panel just placed it (Add block / Cancel, its block can change)
  */
 function startEdit(index, block, trial = false) {
-  clearTimeout(state.timer);
-  state.timer = null;
+  pause.stop();
   state.editing = { index, block };
   state.trial = trial;
   if (!state.fields[block.name]) state.fields[block.name] = [];
@@ -857,8 +858,7 @@ function startEdit(index, block, trial = false) {
 }
 
 function startInsert() {
-  clearTimeout(state.timer);
-  state.timer = null;
+  pause.stop();
   state.editing = null;
   state.trial = false;
   state.kept = [];
@@ -878,7 +878,7 @@ function refreshEdit(block) {
     && !sameContent(withContent(block), block)) {
     setContent(block, true);
   }
-  if (state.timer || state.applying) return; // the author's picks win
+  if (pause.waiting || state.applying) return; // the author's picks win
   const now = readFields();
   const picked = new Set(now.variants);
   const rowValue = (key) => block.rows.find(([k]) => toClassName(k) === toClassName(key))?.[1] || '';
@@ -928,7 +928,7 @@ function followCursor(changed = false) {
   }
   if (!block && !editing) return;
   // a pick still waiting was for the old block; an old block's result isn't this one's
-  const note = (state.timer && 'moved') || (left && 'left') || null;
+  const note = (pause.waiting && 'moved') || (left && 'left') || null;
   if (block) startEdit(index, block);
   else startInsert();
   say(note);
@@ -1037,24 +1037,14 @@ async function watchMetadata(before) {
  * @returns {Promise<Object>} DA's result ({ ok, html, selection } or { ok: false, error })
  */
 async function replaceBlock(html, index) {
-  let sent = '';
-  const send = () => {
-    sent = state.liveHtml;
-    return state.actions.sendHTML(html, {
-      replace: true, expected: { html: sent, blockIndex: index },
-    });
-  };
-  let result = await send();
-  if (!result?.ok && result?.error === 'STALE_LIVE') {
-    // the newer page may be here already (it came while DA answered), else wait for it
-    const next = state.liveHtml !== sent ? state.liveHtml : await nextLive(state.liveHtml, 1500);
-    if (next) {
-      state.liveHtml = next;
-      result = await send();
-    }
-  }
-  if (result?.ok && result.html) state.liveHtml = result.html;
-  return result;
+  return sendInBlock({
+    actions: state.actions,
+    blockIndex: index,
+    html: () => html,
+    live: () => state.liveHtml,
+    setLive: (next) => { state.liveHtml = next; },
+    next: nextLive,
+  });
 }
 
 /**
@@ -1115,12 +1105,13 @@ async function placeTrial(name) {
     }
     const before = state.liveHtml;
     const metadata = savedMetadata();
-    const result = await state.actions.sendHTML(await exampleTable(name), { replace: true });
-    if (!result?.ok) {
+    const { result, after } = await replaceAtCursor({
+      actions: state.actions, html: await exampleTable(name), before, next: nextLive,
+    });
+    if (!after) {
       say(APPLY_ERRORS[result?.error] || 'not-placed');
       return;
     }
-    const after = result.html || (await nextLive(before, 3000)) || before;
     state.liveHtml = after;
     const index = result.selection?.blockIndex ?? addedBlock(before, after);
     // the page lost more than an empty line
@@ -1183,9 +1174,8 @@ async function swapTrial(name) {
 /** Add block: the trial block stays, and the Block selector is ready for the next one. */
 async function keepTrial() {
   // a pick still waiting goes in first, and one on its way is waited for
-  if (state.timer) {
-    clearTimeout(state.timer);
-    state.timer = null;
+  if (pause.waiting) {
+    pause.stop();
     await apply();
   }
   for (let i = 0; i < 50 && (state.applying || state.busy); i += 1) {
@@ -1201,8 +1191,7 @@ async function keepTrial() {
 
 /** Remove: the trial block goes and the empty line it took is back. */
 async function removeTrial() {
-  clearTimeout(state.timer);
-  state.timer = null;
+  pause.stop();
   state.busy = 'removing';
   showMode();
   try {
@@ -1282,8 +1271,10 @@ async function init() {
   } = sdk;
   Object.assign(state, { context, token: typeof token === 'string' ? token : '' });
   state.actions = trackCursor(actions, (index) => { state.blockIndex = index; });
-  ({ settings: state.settings } = await loadConfig(actions, context));
-  await loadSheet();
+  const config = await loadConfig(actions, context);
+  state.settings = config.settings;
+  applyLayout(config.tabs);
+  await loadSheet(config.site.data);
   if (!state.blocks.length) { say('missing'); return; }
   blockSelect.append(
     new Option(form.dataset.choose, ''),

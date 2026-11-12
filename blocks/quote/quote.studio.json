@@ -1,0 +1,16 @@
+{
+  "label": "Quote",
+  "options": [
+    {
+      "key": "quote-style",
+      "type": "variant",
+      "label": "Quote style",
+      "values": {
+        "large": "Large",
+        "boxed": "Boxed",
+        "bordered": "Bordered"
+      },
+      "description": "large=A big pull quote. | boxed=On a light panel. | bordered=A coloured line on its left."
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "label": "Carousel",
+  "options": [
+    {
+      "key": "text-box",
+      "type": "variant",
+      "label": "Slide text",
+      "values": {
+        "light": "Light box",
+        "content-below": "Below the image"
+      },
+      "description": "light=A light box on the image. | content-below=The text under the image, not on it."
+    },
+    {
+      "key": "slide-height",
+      "type": "variants",
+      "label": "Slide height",
+      "values": {
+        "compact": "Compact"
+      },
+      "description": "compact=Shorter slides."
+    }
+  ],
+  "content": {
+    "image": "Slide image",
+    "heading": "Slide title",
+    "text": "Slide text"
+  }
+}

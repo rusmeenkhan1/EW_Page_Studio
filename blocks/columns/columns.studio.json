@@ -1,0 +1,39 @@
+{
+  "label": "Columns",
+  "options": [
+    {
+      "key": "column-style",
+      "type": "variant",
+      "label": "Column style",
+      "values": {
+        "boxed": "Boxed",
+        "divided": "Divided"
+      },
+      "description": "boxed=Each text column on a light panel. | divided=A line between the columns."
+    },
+    {
+      "key": "widths",
+      "type": "variant",
+      "label": "Column widths",
+      "values": {
+        "image-wide": "Wide image",
+        "text-wide": "Wide text"
+      },
+      "description": "image-wide=The image column takes two thirds. | text-wide=The text takes two thirds. | From 900px wide."
+    },
+    {
+      "key": "vertical-alignment",
+      "type": "variant",
+      "label": "Vertical alignment",
+      "values": {
+        "align-top": "Top",
+        "align-bottom": "Bottom"
+      },
+      "description": "Default: columns are centred on each other."
+    }
+  ],
+  "content": {
+    "column1": "Left column",
+    "column2": "Right column"
+  }
+}

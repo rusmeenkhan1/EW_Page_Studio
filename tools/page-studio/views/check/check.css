@@ -1,0 +1,81 @@
+/* Check setup (views/check/): the findings, one card per area. Tokens and cards: shared/ui.css. */
+
+.ck-panel .ck-summary {
+  margin: 0 0 var(--ss-gap);
+  padding: 8px 12px;
+  border-radius: var(--ss-radius-field);
+  background-color: var(--ss-success-bg);
+  color: var(--ss-success);
+  font-size: var(--ss-text-l);
+  font-weight: 700;
+}
+
+.ck-panel .ck-summary[data-tone="error"] {
+  background-color: var(--ss-error-bg);
+  color: var(--ss-error);
+}
+
+.ck-panel .ck-summary[data-tone="warning"] {
+  background-color: var(--ss-warning-bg);
+  color: var(--ss-warning);
+}
+
+.ck-panel .ck-results {
+  display: grid;
+  gap: var(--ss-gap);
+}
+
+.ck-panel .ck-list {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ck-panel .ck-item {
+  padding: 8px 10px;
+  border-left: 3px solid var(--ss-gray-300);
+  border-radius: 4px;
+  background-color: var(--ss-gray-50);
+  font-size: var(--ss-text-m);
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.ck-panel .ck-item[data-level="error"] {
+  border-left-color: var(--ss-error);
+  background-color: var(--ss-error-bg);
+}
+
+.ck-panel .ck-item[data-level="warning"] {
+  border-left-color: var(--ss-warning);
+  background-color: var(--ss-warning-bg);
+}
+
+.ck-panel .ck-level {
+  margin-right: 4px;
+  font-weight: 700;
+}
+
+.ck-panel .ck-sources {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 4px 12px;
+  margin: var(--ss-gap) 0 0;
+  color: var(--ss-gray-700);
+  font-size: var(--ss-text-s);
+}
+
+.ck-panel .ck-sources dt {
+  font-weight: 700;
+}
+
+.ck-panel .ck-sources dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.ck-panel .ck-footer {
+  margin-top: var(--ss-gap);
+}

@@ -1,0 +1,14 @@
+{
+  "label": "Video",
+  "options": [
+    {
+      "key": "playback",
+      "type": "variants",
+      "label": "Playback",
+      "values": {
+        "autoplay": "Autoplay"
+      },
+      "description": "autoplay=Plays at once, muted and looping (when the visitor allows motion)."
+    }
+  ]
+}

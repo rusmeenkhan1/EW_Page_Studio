@@ -1,0 +1,43 @@
+{
+  "label": "Table",
+  "options": [
+    {
+      "key": "rows",
+      "type": "variants",
+      "label": "Table style",
+      "values": {
+        "striped": "Striped",
+        "bordered": "Bordered"
+      },
+      "description": "striped=Shades every other row. | bordered=Draws a line round every cell."
+    },
+    {
+      "key": "header",
+      "type": "variants",
+      "label": "Header row",
+      "values": {
+        "no-header": "No header"
+      },
+      "description": "no-header=The first row is a normal row, not a header."
+    },
+    {
+      "key": "table-options",
+      "type": "variants",
+      "label": "Table options",
+      "values": {
+        "compact": "Compact rows",
+        "first-column": "Bold first column",
+        "centered": "Centred cells"
+      }
+    },
+    {
+      "key": "header-style",
+      "type": "variant",
+      "label": "Header style",
+      "values": {
+        "header-dark": "Dark header"
+      },
+      "description": "header-dark=White text on a dark header row."
+    }
+  ]
+}

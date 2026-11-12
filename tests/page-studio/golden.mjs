@@ -778,6 +778,54 @@ const SCENARIOS = [
       }],
     ],
   },
+  {
+    // the site's code describes a block (site file): its rows come first, the sheet's after them
+    name: 'block-site-file',
+    panel: 'views/block/block.html',
+    site: {
+      version: 1,
+      capabilities: {},
+      blocks: {
+        cards: {
+          options: [{
+            key: 'layout', type: 'variant', label: 'Cards per row', values: { 'two-up': 'Two per row', 'three-up': 'Three per row' },
+          }],
+        },
+      },
+    },
+    mock: {},
+    steps: [
+      ['ready', (p) => p.waitForSelector('#bs-form:not([hidden])', { timeout: WAIT })],
+      ['chosen', async (p) => {
+        await p.selectOption('#bs-block', 'cards');
+        await p.waitForSelector('input[name="bs-layout-variant"][value="two-up"]', { timeout: WAIT });
+      }],
+      ['styled', (p) => p.click('input[name="bs-layout-variant"][value="three-up"]')],
+      ['inserted', async (p) => {
+        await p.click('.ss-plugin-submit');
+        await sent(p, 1);
+      }],
+    ],
+  },
+  {
+    // Check setup: the configuration turns on button options the site's code says it doesn't read
+    name: 'check-view',
+    panel: 'views/check/check.html',
+    site: { version: 1, capabilities: { 'button-options': false, 'button-new-tab': true } },
+    mock: {},
+    steps: [
+      ['checked', (p) => p.waitForSelector('.ck-summary:not([hidden])', { timeout: WAIT })],
+    ],
+  },
+  {
+    // Check setup without a site file and without the configuration: a note, nothing to fix
+    name: 'check-view-plain',
+    panel: 'views/check/check.html',
+    mock: { files: { [`${SOURCE}/.da/library/page-studio.json`]: null } },
+    steps: [
+      ['checked', (p) => p.waitForSelector('.ck-summary:not([hidden])', { timeout: WAIT })],
+    ],
+  },
 ];
 
 async function run(scenario, browser) {
@@ -789,6 +837,15 @@ async function run(scenario, browser) {
   await context.route('https://da.live/nx/utils/sdk.js', (route) => route.fulfill({
     status: 200, contentType: 'text/javascript', body: SDK,
   }));
+  // the site file in the customer's code (shared/da.js readSiteFile()): a case's `site`, else none
+  await context.route('https://*.aem.page/page-studio.json', (route) => route.fulfill(scenario.site
+    ? {
+      status: 200,
+      contentType: 'application/json',
+      headers: { 'access-control-allow-origin': '*' },
+      body: JSON.stringify(scenario.site),
+    }
+    : { status: 404, headers: { 'access-control-allow-origin': '*' }, body: '' }));
   // a case may change the files: a value of null takes one away (e.g. the configuration)
   const files = Object.fromEntries(Object.entries({ ...FILES, ...scenario.mock.files })
     .filter(([, body]) => body !== null));

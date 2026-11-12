@@ -49,22 +49,22 @@ import {
 } from '../../shared/colour.js';
 import {
   NO_STALE, connect, canEditLive, trackCursor, readSheet, savedSource as readSaved, watchSaved,
-  liveWaiter, onLiveDocument, onSelection, registerView, notifyChange, loadConfig,
+  liveWaiter, onLiveDocument, onSelection, registerView, notifyChange, loadConfig, configCards,
+  configHelp,
 } from '../../shared/da.js';
 import {
-  normalizeRow, byKey, parseValues, parseDescriptions, parseWhen,
+  byKey, parseValues, parseDescriptions, parseWhen,
 } from '../../shared/sheet.js';
+import { buildLibrary, SECTION } from '../../shared/library.js';
 import { metadataCount, settingsTable } from '../../shared/dom.js';
 import { messenger, settingsCard, swatchButton } from '../../shared/ui.js';
+import { pauseTimer, replaceAtCursor as replaceNode } from '../../shared/write.js';
 import {
   readDocument, readPageMetadata, locateSelection, sameRows, cursorBlock, sectionSettings,
   pageSignature, changedSections, removedNode, settingsTables,
 } from './live-doc.js';
 
-const BLOCK = 'section-metadata';
 const WATCH_MS = 700; // how often the panel looks at what is highlighted in the page
-const PICK_MS = 350; // a pick changes the page after this pause
-const TYPE_MS = 800; // typing changes the page after this pause
 
 const $ = (selector) => document.querySelector(selector);
 const status = $('.ss-plugin-status');
@@ -95,12 +95,14 @@ const state = {
   trial: false, // the panel put that table there (Add settings / Cancel)
   found: null, // { unsure } when a highlight matches several sections' settings
   busy: null, // 'adding' (Apply without the live document), 'writing', 'removing'
-  timer: null, // a pick waiting to be written
   again: false, // a pick came in while writing
   liveHtml: '',
   addCount: 0, // settings added (Add settings, Apply): Page Studio goes home after each
 };
 const liveFeed = liveWaiter(); // waits for the next live document
+// a pick reaches the page after a pause (shared/write.js)
+// eslint-disable-next-line no-use-before-define -- writeTable() is below, with the writes
+const pause = pauseTimer(() => writeTable());
 
 /* ---- messages --------------------------------------------------------- */
 
@@ -146,19 +148,27 @@ function readJson(className) {
 }
 
 /**
- * @param {Object[]} rows the options tab rows
+ * The cards the fields sit in (`.ss-plugin-layout` JSON in section.html), the configuration's
+ * `cards` tab instead when it has rows for the Section view.
+ */
+let layoutCards = null;
+
+/**
+ * @param {Object[]} rows the section-metadata rows (normalized, shared/library.js)
+ * @param {Object<string, string>} help the configuration's help texts for this view, by key
  * @returns {Object[]} one field per section-metadata row
  */
-function parseFields(rows) {
+function parseFields(rows, help = {}) {
   const seen = new Set();
   const defaults = byKey(readJson('ss-plugin-descriptions'));
+  Object.entries(help).forEach(([key, text]) => { defaults[key] = { ...defaults[key], '*': text }; });
   const layout = readJson('ss-plugin-layout');
   const labels = byKey(layout.labels);
   const groups = byKey(layout.groups);
   const hidden = byKey(layout.hidden);
   const more = (layout.more || []).map((k) => k.toLowerCase());
-  return rows.map(normalizeRow)
-    .filter((row) => row.key && row.blocks.split(',').some((b) => b.trim().toLowerCase() === BLOCK))
+  return rows
+    .filter((row) => row.key && row.type.toLowerCase() !== 'content')
     .filter((row) => !seen.has(row.key.toLowerCase()) && seen.add(row.key.toLowerCase()))
     .map((row) => {
       const key = row.key.toLowerCase();
@@ -189,10 +199,11 @@ function parseFields(rows) {
 }
 
 async function loadFields(context, actions) {
-  const { settings } = await loadConfig(actions, context);
+  const { settings, tabs, site } = await loadConfig(actions, context);
+  layoutCards = configCards(tabs, 'section');
   const json = await readSheet(actions, context, settings['library-sheet'], NO_STALE);
   try {
-    return Array.isArray(json?.options?.data) ? parseFields(json.options.data) : [];
+    return parseFields(buildLibrary(json, site.data).rowsFor(SECTION), configHelp(tabs, 'section'));
   } catch {
     return [];
   }
@@ -537,10 +548,14 @@ function sectionCard(label, fields) {
   return card;
 }
 
-/** The fields in the layout JSON's `sections`, in order; fields in none go in "Other settings". */
+/**
+ * The fields in the layout's cards (the configuration's, else the layout JSON's `sections`), in
+ * order; fields in none go in "Other settings".
+ */
 function renderSections(fields) {
   const placed = new Set();
-  const sections = (readJson('ss-plugin-layout').sections || []).map(({ label, keys = [] }) => {
+  const cards = layoutCards || readJson('ss-plugin-layout').sections || [];
+  const sections = cards.map(({ label, keys = [] }) => {
     const wanted = keys.map((k) => k.toLowerCase());
     const own = fields.filter((f) => wanted.includes(f.key.toLowerCase()));
     own.forEach((f) => placed.add(f));
@@ -797,10 +812,7 @@ async function locate() {
  *   (the form already says it, and a pick made meanwhile stays)
  */
 function startEdit(rows, sections, { trial = false, fill = !trial } = {}) {
-  if (fill) {
-    clearTimeout(state.timer);
-    state.timer = null;
-  }
+  if (fill) pause.stop();
   const extras = fill ? fillForm(rows) : { values: {}, fallback: {}, rows: [] };
   state.editing = { rows, extras, sections };
   state.trial = trial;
@@ -810,8 +822,7 @@ function startEdit(rows, sections, { trial = false, fill = !trial } = {}) {
 
 /** Back to the panel as it opens: adding, an empty form. */
 function resetForm() {
-  clearTimeout(state.timer);
-  state.timer = null;
+  pause.stop();
   state.editing = null;
   state.trial = false;
   state.found = null;
@@ -841,7 +852,7 @@ function followCursor() {
 /** One look at what is highlighted in the page (the shared watch, onSelection()). */
 function lookAtSelection(html) {
   // a pick or a write is on its way: it wins
-  if (state.busy || state.timer) return;
+  if (state.busy || pause.waiting) return;
   const found = locateHtml(html);
   const { editing } = state;
   if (found.where === 'metadata') {
@@ -901,12 +912,13 @@ function takeLive(html) {
  * @returns {Promise<string|null>} the live document after it, or null when DA refused
  */
 async function replaceAtCursor(html) {
-  const result = await state.actions.sendHTML(html, { replace: true });
-  if (!result?.ok) {
+  const { result, after } = await replaceNode({
+    actions: state.actions, html, before: state.liveHtml, next: nextLive,
+  });
+  if (!after) {
     say(REPLACE_ERRORS[result?.error] || 'updateFailed');
     return null;
   }
-  const after = result.html || (await nextLive(state.liveHtml)) || state.liveHtml;
   takeLive(after);
   return after;
 }
@@ -1029,7 +1041,7 @@ async function updatedTable(rows, changed, editing, metadata) {
  * section's settings may change; anything else is put back (or Undo is asked for).
  */
 async function writeTable() {
-  state.timer = null;
+  pause.done();
   if (!state.canEdit || cursorBlock(state.live, state.blockIndex) !== null) return;
   if (state.busy) {
     state.again = true;
@@ -1081,15 +1093,14 @@ async function writeTable() {
 /** A change in the form: it reaches the page after a short pause (typing waits longer). */
 function scheduleWrite(typing) {
   if (!state.canEdit) return;
-  clearTimeout(state.timer);
-  state.timer = setTimeout(writeTable, typing ? TYPE_MS : PICK_MS);
+  pause.start(typing);
 }
 
 /** Add settings: the table the panel put there stays, and the form is ready for another section. */
 async function keepTrial() {
   // a pick still waiting goes in first
-  if (state.timer) {
-    clearTimeout(state.timer);
+  if (pause.waiting) {
+    pause.stop();
     await writeTable();
   }
   if (!state.trial) return; // the write found the cursor elsewhere, and said so
@@ -1101,8 +1112,7 @@ async function keepTrial() {
 
 /** Remove (a trial, or an existing table): the table goes and an empty line takes its place. */
 async function removeTable(doneKey = 'removed') {
-  clearTimeout(state.timer);
-  state.timer = null;
+  pause.stop();
   const { editing } = state;
   if (!editing || state.busy) return;
   state.busy = 'removing';
@@ -1138,7 +1148,7 @@ async function removeTable(doneKey = 'removed') {
  */
 function followLive() {
   const { editing } = state;
-  if (!editing || state.busy || state.timer || editing.sections.length !== 1) return;
+  if (!editing || state.busy || pause.waiting || editing.sections.length !== 1) return;
   const rows = sectionSettings(state.live, editing.sections[0]);
   if (!rows.length) {
     resetForm();
