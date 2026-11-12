@@ -63,6 +63,11 @@ import {
   readDocument, readPageMetadata, locateSelection, sameRows, cursorBlock, sectionSettings,
   pageSignature, changedSections, removedNode, settingsTables,
 } from './live-doc.js';
+import messages from './section.messages.js';
+import { applyMessages, applySiteMessages } from '../../shared/messages.js';
+
+// the view's words (its messages module), on the page before anything reads them
+applyMessages(messages);
 
 const WATCH_MS = 700; // how often the panel looks at what is highlighted in the page
 
@@ -200,6 +205,7 @@ function parseFields(rows, help = {}) {
 
 async function loadFields(context, actions) {
   const { settings, tabs, site } = await loadConfig(actions, context);
+  applySiteMessages(tabs, 'section');
   layoutCards = configCards(tabs, 'section');
   const json = await readSheet(actions, context, settings['library-sheet'], NO_STALE);
   try {

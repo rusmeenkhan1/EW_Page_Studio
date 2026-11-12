@@ -16,7 +16,7 @@
         <!-- the panel's icon, also the DA menu's -->
         <h1 id="bs-title"><svg class="ss-plugin-icon" width="20" height="20" aria-hidden="true" focusable="false"><use href="/tools/page-studio/views/block/block.svg#icon"></use></svg>Blocks</h1>
         <!-- what the panel is doing: styling the page block at the cursor, trying a new one, or adding -->
-        <p class="bs-mode ss-plugin-mode" data-edit="Editing a block" data-trial="New block · not added yet" data-insert="Add a block"
+        <p class="bs-mode ss-plugin-mode"
           hidden></p>
       </div>
       <p class="ss-plugin-lead">Style a block on the page, or add a new one. The page shows each change as you pick.</p>
@@ -43,13 +43,9 @@
     </script>
 
     <!-- only before the form is ready (loading, outside DA, no blocks) -->
-    <p class="ss-plugin-status" role="status"
-      data-loading="Loading…"
-      data-standalone="Open this panel from the page editor in DA to style a block."
-      data-missing="No blocks are set up for this site yet (DA sheet /.da/library/blocks, data tab).">Loading…</p>
+    <p class="ss-plugin-status" role="status">Loading…</p>
 
-    <form class="ss-plugin-form" id="bs-form" novalidate aria-labelledby="bs-title"
-      data-choose="Choose a block…" data-default="Default" data-none="None" data-other="More settings" hidden>
+    <form class="ss-plugin-form" id="bs-form" novalidate aria-labelledby="bs-title" hidden>
 
       <!-- the block: chosen here to add one, or the page block being styled -->
       <div class="bs-block-card">
@@ -57,7 +53,7 @@
           <label class="bs-row-label" for="bs-block">Block</label>
           <div class="bs-row-control">
             <select id="bs-block" name="bs-block"></select>
-            <p class="bs-current" data-text="{block} · in the page" hidden></p>
+            <p class="bs-current" hidden></p>
           </div>
         </div>
         <!-- a block the panel just placed: it is in the page; keep it, or take it out again -->
@@ -86,27 +82,7 @@
       <p class="bs-empty" hidden>This block has no styles to set.</p>
 
       <!-- the block's own content as fields (content-form.js): images, headings, texts, buttons, lists, items -->
-      <details class="ss-plugin-section bs-content" open hidden
-        data-image="Image" data-heading="Heading" data-text="Text" data-button="Button" data-list="List"
-        data-rich="Formatted text" data-item="Item" data-empty="Empty" data-column="column"
-        data-main-heading="Main heading" data-title="Title" data-subtitle="Subheading" data-description="Description"
-        data-paragraph="Paragraph" data-date="Date" data-attribution="Attribution" data-number="Number"
-        data-number-label="Label" data-video-link="Video link" data-post-link="Instagram post link"
-        data-column-title="Column" data-caption="Caption" data-row-name="Name" data-ordinals="First,Second,Third,Fourth,Fifth,Sixth,Seventh,Eighth"
-        data-add="Add" data-add-item="Add {item}" data-remove="Remove" data-up="Move up" data-down="Move down"
-        data-new-heading="New heading" data-new-text="New text" data-new-button="Button"
-        data-button-style="Button style"
-        data-upload="Upload image…" data-uploading="Uploading…"
-        data-upload-failed="Couldn't upload the image. Try again, or drag it into the page."
-        data-bad-type="Use a PNG, JPEG, GIF, WebP, AVIF or SVG image." data-too-big="The image is over 20 MB."
-        data-empty-image="No image yet: upload one or paste a link."
-        data-image-link="Image link" data-bad-image="Use an image link that starts with https://."
-        data-alt="Alt text" data-decorative="Decorative image (no alt text)"
-        data-alt-missing="Describe the image, or tick Decorative."
-        data-level="Level" data-label="Label" data-link="Link"
-        data-bad-link="Use a page path (/…), a link starting with https://, mailto: or tel:."
-        data-lines="One item per line."
-        data-rich-note="This has formatting or links inside the text: edit it in the page.">
+      <details class="ss-plugin-section bs-content" open hidden>
         <summary><span class="ss-plugin-section-title">Content</span><span class="ss-plugin-section-sum"></span></summary>
         <div class="ss-plugin-section-body">
           <div class="bs-content-list" tabindex="-1"></div>
@@ -115,36 +91,11 @@
 
       <!-- while the page cursor is in a block: that block is the one styled, live -->
       <p class="bs-live-note" hidden>Changes apply to the page as you pick. Undo: Ctrl+Z or ⌘Z.</p>
-      <p class="bs-kept" data-label="Also kept as it is:" hidden></p>
+      <p class="bs-kept" hidden></p>
 
       <footer class="ss-plugin-foot">
-        <p class="ss-plugin-message" role="status" aria-live="polite"
-          data-pick="Choose a block first."
-          data-applying="Applying…"
-          data-applied="✓ Applied to the page."
-          data-moved="The cursor left that block, so the last change wasn't applied. Click the block and pick again."
-          data-stale="The page changed while applying. Pick again to apply."
-          data-read-only="This page is read-only."
-          data-apply-failed="Couldn't change the block. Click it in the page and try again."
-          data-button-style-failed="Couldn't open that button. Highlight its text in the page to change it."
-          data-text-selected="Some text is highlighted in the page and would be replaced. Click on an empty line instead."
-          data-done="✓ Block inserted."
-          data-misplaced="⚠ The block went inside a table (such as Section Metadata), not into the page. Undo (Ctrl+Z or ⌘Z), then click on an empty line."
-          data-failed="Couldn't insert the block. Click on an empty line in the page and try again."
-          data-timeout="DA didn't answer in time, so the panel stopped waiting. Check the page: if the change shows twice, press Undo (Ctrl+Z or ⌘Z)."
-          data-placing="Placing the block…"
-          data-placed="It's in the page so you can see it. Set it up, then choose Add block (or Cancel)."
-          data-kept="✓ Block added. To add another, click an empty line and choose a block; to change one, click it."
-          data-in-block="Your cursor is still in a block. Click an empty line above or below it, then choose the block."
-          data-removed="Cancelled: the block is gone and the empty line is back."
-          data-left="✓ Block added. Click it any time to change it, or Undo (Ctrl+Z or ⌘Z) to take it out."
-          data-restored="⚠ That line wasn't empty, so it was put back. Click on an empty line, then choose the block again."
-          data-settings-restored="⚠ The cursor was in the section's settings table, so it was put back. Click on an empty line, then choose the block again."
-          data-replaced="⚠ The block replaced part of the page (such as a section's settings). Undo (Ctrl+Z or ⌘Z), then click on an empty line."
-          data-metadata-lost="⚠ The block replaced the page's Metadata table. Undo (Ctrl+Z or ⌘Z), then click on an empty line."
-          data-not-inside="The block was added. Click it in the page to style it."
-          data-not-placed="Couldn't place the block here. Click on an empty line in the page, then choose the block again."></p>
-        <button type="submit" class="ss-plugin-submit" data-insert="Insert block" data-adding="Inserting…">Insert
+        <p class="ss-plugin-message" role="status" aria-live="polite"></p>
+        <button type="submit" class="ss-plugin-submit">Insert
           block</button>
         <button type="button" class="ss-plugin-reset">Start over</button>
       </footer>

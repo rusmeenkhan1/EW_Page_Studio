@@ -14,9 +14,14 @@
  * under the path gives that section's settings.
  */
 import {
-  connect, onHostChange, viewStatus, lastLiveDocument, runCommand,
+  connect, onHostChange, viewStatus, lastLiveDocument, runCommand, loadConfig,
 } from './shared/da.js';
 import { readDocument } from './views/section/live-doc.js';
+import messages from './page-studio.messages.js';
+import { applyMessages, applySiteMessages } from './shared/messages.js';
+
+// the view's words (its messages module), on the page before anything reads them
+applyMessages(messages);
 
 const $ = (selector) => document.querySelector(selector);
 const home = $('.sb-home');
@@ -209,7 +214,13 @@ async function init() {
   Object.values(frames).forEach((frame) => { frame.src = frame.dataset.src; });
   route();
   const sdk = await connect();
-  if (!sdk) status.textContent = status.dataset.standalone;
+  if (!sdk) {
+    status.textContent = status.dataset.standalone;
+    return;
+  }
+  // the site's own words for this page (its views take theirs)
+  const { tabs } = await loadConfig(sdk.actions, sdk.context);
+  applySiteMessages(tabs, 'page-studio');
 }
 
 init();

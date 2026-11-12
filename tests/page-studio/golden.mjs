@@ -826,6 +826,37 @@ const SCENARIOS = [
       ['checked', (p) => p.waitForSelector('.ck-summary:not([hidden])', { timeout: WAIT })],
     ],
   },
+  {
+    // a site's own words (the configuration's messages tab): the Block view's selector and a
+    // Check finding; a row for an element or message the view doesn't have changes nothing
+    name: 'site-words',
+    panel: 'views/block/block.html',
+    mock: {
+      files: {
+        [`${SOURCE}/.da/library/page-studio.json`]: JSON.stringify({
+          settings: { data: [] },
+          messages: {
+            data: [
+              {
+                view: 'block', element: '#bs-form', message: 'choose', text: 'Pick a block…',
+              },
+              {
+                view: 'block', element: '#bs-form', message: 'not-there', text: 'ignored',
+              },
+              {
+                view: 'block', element: '.nothing', message: 'choose', text: 'ignored',
+              },
+            ],
+          },
+          ':names': ['settings', 'messages'],
+          ':type': 'multi-sheet',
+        }),
+      },
+    },
+    steps: [
+      ['ready', (p) => p.waitForSelector('#bs-form:not([hidden])', { timeout: WAIT })],
+    ],
+  },
 ];
 
 async function run(scenario, browser) {

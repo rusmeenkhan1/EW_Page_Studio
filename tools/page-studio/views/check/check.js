@@ -11,6 +11,11 @@ import { settingProblem } from '../../shared/config.js';
 import { checkSetup, WORDS } from '../../shared/check.js';
 import { buildLibrary, SECTION } from '../../shared/library.js';
 import { settingsCard } from '../../shared/ui.js';
+import messages from './check.messages.js';
+import { applyMessages, applySiteMessages } from '../../shared/messages.js';
+
+// the view's words (its messages module), on the page before anything reads them
+applyMessages(messages);
 
 const $ = (selector) => document.querySelector(selector);
 const status = $('.ss-plugin-status');
@@ -39,12 +44,17 @@ async function codeBlocks(names, context, settings) {
   return new Set(found.filter(Boolean));
 }
 
-/** The site's own words for a finding (the configuration's `messages` tab, `check:<code>`). */
+/**
+ * The site's own words for the findings: the configuration's `messages` tab, rows of view `check`
+ * and element `finding` (message: the finding's code, e.g. `site-missing`).
+ */
 function wordsOf(tabs) {
   const words = { ...WORDS };
   (tabs.messages || []).forEach((row) => {
-    const key = String(row.key || '');
-    if (key.startsWith('check:') && row.text) words[key.slice(6)] = row.text;
+    if (String(row.view || '').toLowerCase() === 'check' && row.element === 'finding'
+      && WORDS[row.message] && row.text) {
+      words[row.message] = row.text;
+    }
   });
   return words;
 }
@@ -105,6 +115,7 @@ async function run() {
   try {
     const { context, actions } = state.sdk;
     const config = await loadConfig(actions, context);
+    applySiteMessages(config.tabs, 'check');
     const { settings } = config;
     const library = await readSheet(actions, context, settings['library-sheet'], NO_STALE);
     const names = buildLibrary(library, config.site.data).entries.map((b) => b.name)

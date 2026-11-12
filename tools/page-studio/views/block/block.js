@@ -58,6 +58,11 @@ import {
 } from '../../shared/dom.js';
 import { messenger, settingsCard, swatchButton } from '../../shared/ui.js';
 import { pauseTimer, sendInBlock, replaceAtCursor } from '../../shared/write.js';
+import messages from './block.messages.js';
+import { applyMessages, applySiteMessages } from '../../shared/messages.js';
+
+// the view's words (its messages module), on the page before anything reads them
+applyMessages(messages);
 
 const $ = (selector) => document.querySelector(selector);
 const status = $('.ss-plugin-status');
@@ -1272,6 +1277,7 @@ async function init() {
   Object.assign(state, { context, token: typeof token === 'string' ? token : '' });
   state.actions = trackCursor(actions, (index) => { state.blockIndex = index; });
   const config = await loadConfig(actions, context);
+  applySiteMessages(config.tabs, 'block');
   state.settings = config.settings;
   applyLayout(config.tabs);
   await loadSheet(config.site.data);

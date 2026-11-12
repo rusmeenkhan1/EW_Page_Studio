@@ -39,6 +39,11 @@ import {
   selectionHint, findButton, currentButton, blockWrite, pageWrite, pageContent,
 } from './button-doc.js';
 import { pauseTimer, sendInBlock, replaceAtCursor } from '../../shared/write.js';
+import messages from './button.messages.js';
+import { applyMessages, applySiteMessages } from '../../shared/messages.js';
+
+// the view's words (its messages module), on the page before anything reads them
+applyMessages(messages);
 
 const NEW_TAB = '#_blank';
 const WATCH_MS = 700; // how often the panel looks at what is highlighted in the page
@@ -1155,6 +1160,7 @@ async function init() {
   const { context, actions, capabilities } = sdk;
   state.actions = trackCursor(actions, (index) => { state.blockIndex = index; });
   const config = await loadConfig(actions, context);
+  applySiteMessages(config.tabs, 'button');
   const { settings } = config;
   state.features = readFeatures(config);
   state.origin = codeOrigin(context, settings);
